@@ -1,0 +1,37 @@
+- jar files contain classes for javac 
+  (for building JavaCard 2.0 applets, 
+  applet.java->applet.class).
+- jibdb files contain static linkages for BuildJiBlet 
+  (for building Java Powered iButton jiblets,
+  applet.class->applet.jib).
+
+Java iButton Firmware Version 0.03.0003
+javaone.jibdb, iButton32.jar
+
+iButton with Java - Firmware Version 1.00.0004
+jib33.jibdb, iButton33.jar
+
+iButton with Java - Firmware Version 1.01.0004
+jib34.jibdb, iButton34.jar
+
+iButton with Java - Firmware Version 1.02.0005
+jib35.jibdb, iButton35.jar
+
+iButton with Java - Firmware Version 1.03.0005
+jib36.jibdb, iButton36.jar
+
+iButton with Java - Firmware Version 1.10.0006
+jib40.jibdb, iButton40.jar
+
+iButton with Java - Firmware Version 1.11.0006
+jib41.jibdb, iButton41.jar
+
+Java Powered iButton - Firmware Version 2.00.0006
+jib51.jibdb, iButton51.jar
+
+Java Powered iButton - Firmware Revision 2.2.0007
+jib52.jibdb, iButton52.jar
+
+Java Powered iButton - Firmware Revision 2.21.0008
+jib53.jibdb, iButton53.jar
+

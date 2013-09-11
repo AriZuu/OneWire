@@ -1,0 +1,492 @@
+<!DOCTYPE HTML PUBLIC "-//IETF//DTD HTML//EN">
+<html>
+
+<head>
+<meta http-equiv="Content-Type"
+content="text/html; charset=iso-8859-1">
+<meta name="Template"
+content="D:\PROGRAM FILES\MICROSOFT OFFICE\OFFICE\html.dot">
+<meta name="GENERATOR" content="Microsoft FrontPage 2.0">
+<title>Java iButton Status Word Responses</title>
+</head>
+
+<body bgcolor="#FFFFFF" link="#0000FF" vlink="#800080">
+
+<p><font size="4" face="Arial, helvetica"><b><u><img
+src="ibidehelpicon.jpg" align="right" hspace="0"
+width="200" height="101"></u></b></font></p>
+
+<hr>
+
+<p><font size="4" face="Arial, helvetica"><b><u>i</u></b><b>Button
+with Java</b></font><font size="1" face="Arial, helvetica"><sup><b>TM</b></sup></font><font
+size="4" face="Arial, helvetica"><b> Status Word Responses, Error
+Codes and Exception Codes</b></font></p>
+
+<hr>
+<br>
+Some of these error codes are also hyper-text links.  Following these links will take
+you to the <a href="javaringfaq.html">Java Ring FAQ</a> section that has a 
+discussion of this error by a Dallas Semiconductor engineer.<br>
+<br>
+<hr>
+
+<h1>Status Words</h1>
+
+
+<a name="loader"></a>
+<a name="6A87"></a>
+<a name="6982"></a>
+<a name="6A84"></a>
+<a name="6A86"></a>
+<a name="6901"></a>
+<a name="6902"></a>
+<a name="6903"></a>
+<a name="6904"></a>
+<a name="6905"></a>
+<a name="6906"></a>
+<a name="6301"></a>
+<a name="9000"></a>
+<p><b>Loader Status Words</b> </p>
+
+<table border="1" cellpadding="7" cellspacing="1" width="590">
+    <tr>
+        <td valign="top" width="50%"><font size="2"><a href="javaringfaq.html#6400">
+        Insufficient Memory&nbsp;</a></font></td>
+        <td valign="top" width="50%"><font size="2"><a href="javaringfaq.html#6400">
+        0x6400</a></font></td>
+    </tr>
+    <tr>
+        <td valign="top" width="50%"><font size="2">Incomplete
+        Packet&nbsp;</font></td>
+        <td valign="top" width="50%"><font size="2">0x6A87</font></td>
+    </tr>
+    <tr>
+        <td valign="top" width="50%"><font size="2">Invalid
+        Signature&nbsp;</font></td>
+        <td valign="top" width="50%"><font size="2">0x6982</font></td>
+    </tr>
+    <tr>
+        <td valign="top" width="50%"><font size="2">Invalid
+        Packet&nbsp;</font></td>
+        <td valign="top" width="50%"><font size="2">0x6A87</font></td>
+    </tr>
+    <tr>
+        <td valign="top" width="50%"><font size="2"><a href="javaringfaq.html#6A84">
+        Class Length Overrun&nbsp;</a></font></td>
+        <td valign="top" width="50%"><font size="2"><a href="javaringfaq.html#6A84">
+        0x6A84</a></font></td>
+    </tr>
+    <tr>
+        <td valign="top" width="50%"><font size="2">Invalid
+        Loader Command&nbsp;</font></td>
+        <td valign="top" width="50%"><font size="2">0x6A86</font></td>
+    </tr>
+    <tr>
+        <td valign="top" width="50%"><font size="2">Invalid AID
+        Length&nbsp;</font></td>
+        <td valign="top" width="50%"><font size="2">0x6901</font></td>
+    </tr>
+    <tr>
+        <td valign="top" width="50%"><font size="2"><a href="javaringfaq.html#12">
+	Invalid API Version&nbsp;</a></font></td>
+        <td valign="top" width="50%"><font size="2"><a href="javaringfaq.html#12">
+	0x6902</a></font></td>
+    </tr>
+    <tr>
+        <td valign="top" width="50%"><font size="2"><a href="javaringfaq.html#11">
+	Invalid Password&nbsp;</a></font></td>
+        <td valign="top" width="50%"><font size="2"><a href="javaringfaq.html#11">
+	0x6903</a></font></td>
+    </tr>
+    <tr>
+        <td valign="top" width="50%"><font size="2">Invalid
+        Signature Length&nbsp;</font></td>
+        <td valign="top" width="50%"><font size="2">0x6904</font></td>
+    </tr>
+    <tr>
+        <td valign="top" width="50%"><font size="2">Hash
+        Corruption&nbsp;</font></td>
+        <td valign="top" width="50%"><font size="2">0x6905</font></td>
+    </tr>
+    <tr>
+        <td valign="top" width="50%"><font size="2">Hash
+        Failure&nbsp;</font></td>
+        <td valign="top" width="50%"><font size="2">0x6906</font></td>
+    </tr>
+    <tr>
+        <td valign="top" width="50%"><font size="2">Success
+        Packet&nbsp;</font></td>
+        <td valign="top" width="50%"><font size="2">0x6301</font></td>
+    </tr>
+    <tr>
+        <td valign="top" width="50%"><font size="2">Success
+        Load&nbsp;</font></td>
+        <td valign="top" width="50%"><font size="2">0x9000</font></td>
+    </tr>
+</table>
+
+<p><b>&nbsp;</b> </p>
+
+<a name="aid"></a>
+<a name="8453"></a>
+<a name="8450"></a>
+<p><b>AID Status Words</b> &nbsp; </p>
+
+<table border="1" cellpadding="7" cellspacing="1" width="590">
+    <tr>
+        <td valign="top" width="50%"><font size="2"><a href="javaringfaq.html#13">
+	Unable to Select Applet</a></font></td>
+        <td valign="top" width="50%"><font size="2"><a href="javaringfaq.html#13">
+	0x8453</a></font></td>
+    </tr>
+    <tr>
+        <td valign="top" width="50%"><font size="2">Unable to
+        Find Applet</font></td>
+        <td valign="top" width="50%"><font size="2">0x8450</font></td>
+    </tr>
+    <tr>
+        <td><font size="2"><a name="6A82">Unable to Select Applet</a></font></td>
+        <td><font size="2">0x6A82</font></td>
+    </tr>
+</table>
+
+<p><b>&nbsp;</b> <br>
+&nbsp; </p>
+
+<a name="command"></a>
+<a name="6681"></a>
+<p><b>Command Processor Status Words</b> &nbsp; </p>
+
+<table border="1" cellpadding="7" cellspacing="1" width="590">
+    <tr>
+        <td valign="top" width="50%"><font size="2"><a href="javaringfaq.html#10">
+	Bad Master PIN</a></font></td>
+        <td valign="top" width="50%"><font size="2"><a href="javaringfaq.html#10">
+	0x6681</a></font></td>
+    </tr>
+</table>
+
+<p><b>&nbsp;</b> </p>
+
+<a name="virtual"></a>
+<a name="6F00"></a>
+<p><b>Virtual Machine Status Words</b>&nbsp; </p>
+
+<table border="1" cellpadding="7" cellspacing="1" width="590">
+    <tr>
+        <td valign="top" width="50%"><font size="2"><a href="javaringfaq.html#6F00">
+        Uncaught Exception</a></font></td>
+        <td valign="top" width="50%"><font size="2"><a href="javaringfaq.html#6F00">
+        0x6F00</a></font></td>
+    </tr>
+</table>
+
+<p>&nbsp; </p>
+
+<a name="iso"></a>
+<a name="6100"></a>
+<a name="6E00"></a>
+<a name="6985"></a>
+<a name="6C00"></a>
+<a name="6984"></a>
+<a name="6A81"></a>
+<a name="6A86"></a>
+<a name="6D00"></a>
+<a name="9000"></a>
+<a name="6982"></a>
+<a name="6A83"></a>
+<a name="6982"></a>
+<a name="6F00"></a>
+<a name="6A80"></a>
+<a name="6700"></a>
+<a name="6B00"></a>
+<p><b>ISOExceptions</b></p>
+
+<table border="1" cellpadding="7" cellspacing="1" width="588">
+    <tr>
+        <td valign="top" width="50%" height="6"><font size="2">SW_BYTES_REMAINING_00</font></td>
+        <td valign="top" width="50%" height="6"><font size="2">0x6100</font></td>
+    </tr>
+    <tr>
+        <td valign="top" width="50%" height="6"><font size="2">SW_CLA_NOT_SUPPORTED</font></td>
+        <td valign="top" width="50%" height="6"><font size="2">0x6E00</font></td>
+    </tr>
+    <tr>
+        <td valign="top" width="50%" height="6"><font size="2"><a href="javaringfaq.html#6985">
+        SW_CONDITIONS_NOT_SATISIFED</a></font></td>
+        <td valign="top" width="50%" height="6"><font size="2"><a href="javaringfaq.html#6985">
+        0x6985</a></font></td>
+    </tr>
+    <tr>
+        <td valign="top" width="50%" height="6"><font size="2">SW_CORRECT_LENGTH_00</font></td>
+        <td valign="top" width="50%" height="6"><font size="2">0x6C00</font></td>
+    </tr>
+    <tr>
+        <td valign="top" width="50%" height="6"><font size="2">SW_DATA_INVALID</font></td>
+        <td valign="top" width="50%" height="6"><font size="2">0x6984</font></td>
+    </tr>
+    <tr>
+        <td><font size="2">SW_FUNC_NOT_SUPPORTED</font></td>
+        <td><font size="2">0x6A81</font></td>
+    </tr>
+    <tr>
+        <td><font size="2">SW_INCORRECT_P1P2</font></td>
+        <td><font size="2">0x6A86</font></td>
+    </tr>
+    <tr>
+        <td><font size="2">SW_INS_NOT_SUPPORTED</font></td>
+        <td><font size="2">0x6D00</font></td>
+    </tr>
+    <tr>
+        <td><font size="2">SW_NO_ERROR</font></td>
+        <td><font size="2">0x9000</font></td>
+    </tr>
+    <tr>
+        <td><font size="2">SW_PIN_REQUIRED</font></td>
+        <td><font size="2">0x6982</font></td>
+    </tr>
+    <tr>
+        <td><font size="2">SW_RECORD_NOT_FOUND</font></td>
+        <td><font size="2">0x6A83</font></td>
+    </tr>
+    <tr>
+        <td><font size="2">SW_SECURITY_STATUS_NOT_SATISFIED</font></td>
+        <td><font size="2">0x6982</font></td>
+    </tr>
+    <tr>
+        <td><font size="2"><a href="javaringfaq.html#6F00">SW_UNKNOWN</a></font></td>
+        <td><font size="2"><a href="javaringfaq.html#6F00">0x6F00</a></font></td>
+    </tr>
+    <tr>
+        <td><font size="2">SW_WRONG_DATA</font></td>
+        <td><font size="2">0x6A80</font></td>
+    </tr>
+    <tr>
+        <td><font size="2">SW_WRONG_LENGTH</font></td>
+        <td><font size="2">0x6700</font></td>
+    </tr>
+    <tr>
+        <td><font size="2">SW_WRONG_P1P2</font></td>
+        <td><font size="2">0x6B00</font></td>
+    </tr>
+</table>
+
+<p>&nbsp;</p>
+
+
+<h1>Error and Exception Bytes</h1>
+<br>
+<a href="javaringfaq.html#coproc_error">What does it mean when APDU 
+Sender's Get Last Error method reports "None or Coprocessor"?</a>
+<br>
+
+
+<a name="error"></a>
+<p><b>Error bytes </b>(values supplied by the JCRE when a VM
+generated error occurs)</p>
+
+<table border="1" cellpadding="7" cellspacing="1" width="588">
+    <tr>
+        <td valign="top" width="50%" height="6"><font size="2">StackOverflowError</font></td>
+        <td valign="top" width="50%" height="6"><font size="2">0x61</font></td>
+    </tr>
+    <tr>
+        <td valign="top" width="50%" height="6"><font size="2"><a href="javaringfaq.html#6400">
+        OutOfMemoryError</a></font></td>
+        <td valign="top" width="50%" height="6"><font size="2"><a href="javaringfaq.html#6400">
+        0x62</a></font></td>
+    </tr>
+    <tr>
+        <td valign="top" width="50%" height="6"><font size="2">UnknownError</font></td>
+        <td valign="top" width="50%" height="6"><font size="2">0x63</font></td>
+    </tr>
+    <tr>
+        <td valign="top" width="50%" height="6"><font size="2">InternalError</font></td>
+        <td valign="top" width="50%" height="6"><font size="2">0x64</font></td>
+    </tr>
+    <tr>
+        <td valign="top" width="50%" height="6"><font size="2">IllegalAccessError</font></td>
+        <td valign="top" width="50%" height="6"><font size="2">0x65</font></td>
+    </tr>
+</table>
+
+<p>&nbsp;</p>
+
+<a name="exception"></a>
+<p><b>Exception bytes </b>(values supplied by the JCRE when an
+uncaught exception occurs)</p>
+
+<table border="1" cellpadding="7" cellspacing="1" width="700">
+    <tr>
+        <td valign="top" width="28%"><b>Exception Name</b></td>
+        <td valign="top" width="14%"><b><center>JiB32             <br> (ver. 0.03)        </center></b></td>
+        <td valign="top" width="14%"><b><center>JiB33, 34, 35, 36 <br> (ver. 1.0x) </center></b></td>
+        <td valign="top" width="14%"><b><center>JiB4x, JiB51  <br> (ver. 1.1x, 2.00) </center></b></td>
+        <td valign="top" width="14%"><b><center>JiB52         <br> (ver. 2.2) </center></b></td>
+    </tr>
+    <tr>
+        <td valign="top" width="28%"><font size="2">ArithmeticException</font></td>
+        <td valign="top" width="14%"><font size="2"><center>0x01,0x81</font></td>
+        <td valign="top" width="14%"><font size="2"><center>0x04,0x84</font></td>
+        <td valign="top" width="14%"><font size="2"><center>0x07,0x87</font></td>
+        <td valign="top" width="14%"><font size="2"><center>0x0D,0x8D</font></td>
+    </tr>
+    <tr>
+        <td valign="top" width="28%"><font size="2">ArrayIndexOutOfBoundsException
+        </font></td>
+        <td valign="top" width="14%"><font size="2"><center>0x02,0x82</font></td>
+        <td valign="top" width="14%"><font size="2"><center>0x05,0x85</font></td>
+        <td valign="top" width="14%"><font size="2"><center>0x08,0x88</font></td>
+        <td valign="top" width="14%"><font size="2"><center>0x0E,0x8E</font></td>
+    </tr>
+    <tr>
+        <td valign="top" width="28%"><font size="2">ArrayStoreException
+        </font></td>
+        <td valign="top" width="14%"><font size="2"><center>0x03,0x83</font></td>
+        <td valign="top" width="14%"><font size="2"><center>0x06,0x86</font></td>
+        <td valign="top" width="14%"><font size="2"><center>0x09,0x89</font></td>
+        <td valign="top" width="14%"><font size="2"><center>0x10,0x90</font></td>
+    </tr>
+    <tr>
+        <td valign="top" width="28%"><font size="2">ClassCastException</font></td>
+        <td valign="top" width="14%"><font size="2"><center>0x04,0x84</font></td>
+        <td valign="top" width="14%"><font size="2"><center>0x07,0x87</font></td>
+        <td valign="top" width="14%"><font size="2"><center>0x0A,0x8A</font></td>
+        <td valign="top" width="14%"><font size="2"><center>0x11,0x91</font></td>
+    </tr>
+    <tr>
+        <td valign="top" width="28%"><font size="2">Exception</font></td>
+        <td valign="top" width="14%"><font size="2"><center>0x05,0x85</font></td>
+        <td valign="top" width="14%"><font size="2"><center>0x08,0x88</font></td>
+        <td valign="top" width="14%"><font size="2"><center>0x0B,0x8B</font></td>
+        <td valign="top" width="14%"><font size="2"><center>0x0B,0x8B</font></td>
+    </tr>
+    <tr>
+        <td valign="top" width="28%"><font size="2">IndexOutOfBoundsException</font></td>
+        <td valign="top" width="14%"><font size="2"><center>0x06,0x86</font></td>
+        <td valign="top" width="14%"><font size="2"><center>0x09,0x89</font></td>
+        <td valign="top" width="14%"><font size="2"><center>0x0C,0x8C</font></td>
+        <td valign="top" width="14%"><font size="2"><center>0x0F,0x8F</font></td>
+    </tr>
+    <tr>
+        <td valign="top" width="28%"><font size="2">NegativeArraySizeException</font></td>
+        <td valign="top" width="14%"><font size="2"><center>0x07,0x87</font></td>
+        <td valign="top" width="14%"><font size="2"><center>0x0A,0x8A</font></td>
+        <td valign="top" width="14%"><font size="2"><center>0x0D,0x8D</font></td>
+        <td valign="top" width="14%"><font size="2"><center>0x12,0x92</font></td>
+    </tr>
+    <tr>
+        <td valign="top" width="28%"><font size="2">NullPointerException</font></td>
+        <td valign="top" width="14%"><font size="2"><center>0x08,0x88</font></td>
+        <td valign="top" width="14%"><font size="2"><center>0x0B,0x8B</font></td>
+        <td valign="top" width="14%"><font size="2"><center>0x0E,0x8E</font></td>
+        <td valign="top" width="14%"><font size="2"><center>0x13,0x93</font></td>
+    </tr>
+    <tr>
+        <td valign="top" width="28%"><font size="2">RuntimeException</font></td>
+        <td valign="top" width="14%"><font size="2"><center>0x0A,0x8A</font></td>
+        <td valign="top" width="14%"><font size="2"><center>0x0D,0x8D</font></td>
+        <td valign="top" width="14%"><font size="2"><center>0x10,0x90</font></td>
+        <td valign="top" width="14%"><font size="2"><center>0x0A,0x8A</font></td>
+    </tr>
+    <tr>
+        <td valign="top" width="28%"><font size="2">SecurityException</font></td>
+        <td valign="top" width="14%"><font size="2"><center>0x0B,0x8B</font></td>
+        <td valign="top" width="14%"><font size="2"><center>0x0E,0x8E</font></td>
+        <td valign="top" width="14%"><font size="2"><center>0x11,0x91</font></td>
+        <td valign="top" width="14%"><font size="2"><center>0x14,0x94</font></td>
+    </tr>
+    <tr>
+        <td valign="top" width="28%"><font size="2">Throwable</font></td>
+        <td valign="top" width="14%"><font size="2"><center>0x0C,0x8C</font></td>
+        <td valign="top" width="14%"><font size="2"><center>0x0F,0x8F</font></td>
+        <td valign="top" width="14%"><font size="2"><center>0x12,0x92</font></td>
+        <td valign="top" width="14%"><font size="2"><center>0x0C,0x8C</font></td>
+    </tr>
+    <tr>
+        <td valign="top" width="28%"><font size="2">APDUException</font></td>
+        <td valign="top" width="14%"><font size="2"><center>0x0F,0x8F</font></td>
+        <td valign="top" width="14%"><font size="2"><center>0x12,0x92</font></td>
+        <td valign="top" width="14%"><font size="2"><center>0x15,0x95</font></td>
+        <td valign="top" width="14%"><font size="2"><center>0x18,0x98</font></td>
+    </tr>
+    <tr>
+        <td valign="top" width="28%"><font size="2">ISOException</font></td>
+        <td valign="top" width="14%"><font size="2"><center>0x12,0x92</font></td>
+        <td valign="top" width="14%"><font size="2"><center>0x15,0x95</font></td>
+        <td valign="top" width="14%"><font size="2"><center>0x18,0x98</font></td>
+        <td valign="top" width="14%"><font size="2"><center>0x1B,0x9B</font></td>
+    </tr>
+    <tr>
+        <td valign="top" width="28%"><font size="2">PINException</font></td>
+        <td valign="top" width="14%"><font size="2"><center>0x14,0x94</font></td>
+        <td valign="top" width="14%"><font size="2"><center>0x18,0x98</font></td>
+        <td valign="top" width="14%"><font size="2"><center>0x1B,0x9B</font></td>
+        <td valign="top" width="14%"><font size="2"><center>0x15,0x95</font></td>
+    </tr>
+    <tr>
+        <td valign="top" width="28%"><font size="2">SystemException</font></td>
+        <td valign="top" width="14%"><font size="2"><center>0x17,0x97</font></td>
+        <td valign="top" width="14%"><font size="2"><center>0x1B,0x9B</font></td>
+        <td valign="top" width="14%"><font size="2"><center>0x1E,0x9E</font></td>
+        <td valign="top" width="14%"><font size="2"><center>0x1F,0x9F</font></td>
+    </tr>
+    <tr>
+        <td valign="top" width="28%"><font size="2">TransactionException</font></td>
+        <td valign="top" width="14%"><font size="2"><center>0x18,0x98</font></td>
+        <td valign="top" width="14%"><font size="2"><center>0x1C,0x9C</font></td>
+        <td valign="top" width="14%"><font size="2"><center>0x1F,0x9F</font></td>
+        <td valign="top" width="14%"><font size="2"><center>0x20,0xA0</font></td>
+    </tr>
+    <tr>
+        <td valign="top" width="28%"><font size="2">UserException</font></td>
+        <td valign="top" width="14%"><font size="2"><center>0x19,0x99</font></td>
+        <td valign="top" width="14%"><font size="2"><center>0x1D,0x9D</font></td>
+        <td valign="top" width="14%"><font size="2"><center>0x20,0xA0</font></td>
+        <td valign="top" width="14%"><font size="2"><center>0x21,0xA1</font></td>
+    </tr>
+    <tr>
+        <td valign="top" width="28%"><font size="2">CoprocessorException</font></td>
+        <td valign="top" width="14%"><font size="2"><center>N/A</font></td>
+        <td valign="top" width="14%"><font size="2"><center>0x02,0x82</font></td>
+        <td valign="top" width="14%"><font size="2"><center>0x02,0x82</font></td>
+        <td valign="top" width="14%"><font size="2"><center>0x00,0x80</font></td>
+    </tr>
+    <tr>
+        <td valign="top" width="28%"><font size="2">PrimeException</font></td>
+        <td valign="top" width="14%"><font size="2"><center>N/A</font></td>
+        <td valign="top" width="14%"><font size="2"><center>N/A</font></td>
+        <td valign="top" width="14%"><font size="2"><center>0x06,0x86</font></td>
+        <td valign="top" width="14%"><font size="2"><center>0x08,0x88</font></td>
+    </tr>
+    <tr>
+        <td valign="top" width="28%"><font size="2">CryptoException</font></td>
+        <td valign="top" width="14%"><font size="2"><center>N/A</font></td>
+        <td valign="top" width="14%"><font size="2"><center>N/A</font></td>
+        <td valign="top" width="14%"><font size="2"><center>0x23,0xA3</font></td>
+        <td valign="top" width="14%"><font size="2"><center>0x27,0xA7</font></td>
+    </tr>
+    <tr>
+        <td valign="top" width="28%"><font size="2">RSAKeyGeneratorException</font></td>
+        <td valign="top" width="14%"><font size="2"><center>N/A</font></td>
+        <td valign="top" width="14%"><font size="2"><center>N/A</font></td>
+        <td valign="top" width="14%"><font size="2"><center>N/A</font></td>
+        <td valign="top" width="14%"><font size="2"><center>0x06,0x86</font></td>
+    </tr>
+
+</table>
+
+<p><font size="2"><i>Can Ignore MS bit of exception code!</i></font></p>
+
+<p><font size="2"><i><img src="Image3.gif" width="536"
+height="5"></i></font></p>
+
+<p><font size="2" face="Arial, helvetica"><b><u>i</u></b><b>Button
+Homepage: </b></font><a href="http://www.ibutton.com/"><font
+size="2" face="Arial, helvetica"><b>http://www.ibutton.com/</b></font></a><font
+size="2" face="Arial, helvetica"><b> </b></font></p>
+
+<p><img src="dsc.jpg" width="96" height="39"></p>
+</body>
+</html>

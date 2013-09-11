@@ -1,0 +1,824 @@
+<!DOCTYPE HTML PUBLIC "-//IETF//DTD HTML//EN">
+<html>
+
+<head>
+<meta http-equiv="Content-Type"
+content="text/html; charset=iso-8859-1">
+<meta name="GENERATOR" content="Microsoft FrontPage 2.0">
+<title>Dallas Semiconductor Corp iButton: The 1-Wire API for Java</title>
+<!-- Title of document is as follows:
+Dallas Semiconductor Corp iButton: JiBKit FAQ Sheet
+NOTE THAT THE <TITLE> AREA IS THE ONLY PLACE IBUTTON IS NOT UNDERLINED! -->
+</head>
+
+<body bgcolor="#FFFFFF">
+
+<h2><img src="ibidehelpicon.jpg" align="right"
+hspace="0" width="200" height="101"></h2>
+
+<hr>
+
+<h2>The 1-Wire API for Java<font size="1"><sup>TM</sup></font></h2>
+
+<hr>
+
+<!-- ---------------------beginning of the document -->
+
+<p>
+This page provides more information about the 1-Wire API for Java.
+</p>
+
+<!--<a href="#primer">A 1-Wire Programming Primer</a> -->
+
+
+<br>
+
+
+
+<a name="primer"></a>
+<h2>1-Wire API Primer</h2>
+<ul>
+  <li><a href="#default">The Default 1-Wire Network</a>
+  <li><a href="#access">Access to 1-Wire Network</a>
+  <li><a href="#finding">Finding 1-Wire devices (and iButtons)</a>
+  <li><a href="#containers">1-Wire Containers</a>
+  <li><a href="#types">Types of Containers</a>
+
+
+</ul>
+
+
+<p>
+   Communication with the 1-Wire Network is through an 'adapter'
+   (<codE>com.dalsemi.onewire.adapter.DSPortAdapter</codE> class).  The static class,
+   <code>com.dalsemi.onewire.OneWireAccessProvider</code> is used to get an adapter
+   class instance.  All of the adapters can be enumerated or a particular
+   or the default adapter can be retrieved (<code>enumerateAllAdapters()</code>,
+   <code>getAdapter()</code>, and <code>getDefaultAdapter()</code>).  Each adapter may support
+   multiple 'ports' so a 1-Wire Network consists of an adapter/port
+   combination.  Here is a brief list of the operations needed to access
+   and use the 1-Wire network
+<ol>
+     <li> Get an adapter instance
+     <li> Get exclusive use of the 1-Wire network
+     <li> Find a 1-Wire device
+     <li> Perform operations through the device's container
+     <li> End exclusive use of the 1-wire network
+     <li> Free the port when ending application
+</ol>
+</p>   
+   
+<p>
+   Note that '1.' and '6.' are performed only once at the beginning and end
+   of the application.  '2.' through '5.' comprise the bulk of the 1-Wire
+   operations and are performed multiple times during the execution of an
+   application.
+</p>
+   
+<a name="default"></a>
+<h3>Default 1-Wire Network</h3>
+   
+<p>
+    The default 1-Wire Network is specified with two properties:
+<ul>     
+     <li>     onewire.adapter.default - the adapter name, for example DS9097U
+     <li>     onewire.port.default - the port name, for example COM1
+</ul>
+</p>
+    
+<p> 
+     The values for properties are retrieved in the following search order:
+   
+<ol>  
+          <li> System.properties (use -D option on java command line)
+          <li> onewire.properties file in current directory
+          <li> onewire.properties file [javahome]/lib/ (Desktop) or /etc/ (TINI)
+</ol>
+</p>
+
+<p>     
+     If these properties cannot be found then a platform dependent "Smart
+     default" is used.  For Win32 native it is the iButton-TMEX default 1-
+     Wire Net, for TINI it is TINIExternalAdapter/serial1, and for all
+     other platforms it is DS9097U/(first serial communications port).
+</p>
+
+<a name="access"></a>
+<h3>Access to 1-Wire Network</h3>
+   
+<p>
+     To allow for multi-thread access to the 1-Wire network, a pair of
+     methods are provided in the adapter class to give exclusive access.
+     They are <code>beginExclusive(boolean)</code> and <code>endExclusive()</code>.  It is recommended
+     that this pair wrap any access to the 1-Wire network.
+</p>
+   
+<a name="finding"></a>
+<h3>Finding 1-Wire devices (and iButtons)</h3>
+   
+<p>
+     Each 1-Wire device type is identified with a 1 byte 'family code'.
+     This family code is used to provide the appropriate container and can
+     also be used to limit the search of the 1-Wire Network to one or more
+     device types.  For example the following code fragment will search for
+     devices with 0x10 family code. Note that 'adapter' is a working
+     instance of <code>DSPortAdapter</code>.
+</p>
+<code><pre>
+          // clear any previous search restrictions
+          adapter.setSearchAllDevices();
+          adapter.targetAllFamilies();
+          adapter.setSpeed(adapter.SPEED_REGULAR);
+          
+          // target 0x10 family devices
+          adapter.targetFamily(0x10);
+          
+          // enumerate through all the 1-Wire devices found
+          for(Enumeration owd_enum = adapter.getAllDeviceContainers();
+          owd_enum.hasMoreElements(); )
+          {
+            OneWireContainer owd =
+          (OneWireContainer)owd_enum.nextElement();
+            // do something with the container
+          }
+</pre></code>
+     
+<p>
+     Note that there are other search methods (<code>findFirstDevice()</code> and
+     <code>findNextDevice()</code>) that do not automatically create a container and may
+     be quicker if speed is essential.  Also see these other methods for
+     search options: <code>getAddress()</code>, <code>getDeviceContainer()</code>, <code>excludeFamily()</code>,
+     <code>setSearchOnlyAlarmDevices()</code>, and  <code>setNoResetSearch()</code>.
+</p>
+     
+<a name="containers"></a>
+<h3>1-Wire Containers</h3>
+<p>
+     As described in the 'Finding 1-Wire Devices' section, each type of 1-
+     Wire device has a 'family code' that indicates its functionality. The
+     adapter uses this family code to provide a 'container' to interface to
+     it.  The container (<codE>com.dalsemi.onewire.container.OneWireContainer</codE>) is
+     then used by the application to manipulate the device.  Each container
+     class has the following format OneWireContainerXX where XX is the
+     'family code'.  For example, the DS1920 has a family code of 0x10 so
+     the container to use it is <codE>OneWireContainer10</code>.  The adapter will
+     automatically provide the correct container.  If the family code is
+     unknown then the adapter will provide the super-class generic
+     container.
+</p>
+<p>
+     Here is a list of the containers provided in this kit.
+</p>
+     
+<table border="2">
+  <tr>
+    <td>Device Name</td>
+    <td>Family</td>
+    <td>Description</td>
+    <td>Interfaces</td>
+    <td>MemoryBanks</td>
+  </tr>
+    
+  <tr>
+    <td>
+     DS1990A<br>
+     DS2401
+    </td>
+    <td>
+      01
+    </td>
+    <td>
+      1-Wire Address only
+    </td>
+    <td>
+    </td>
+    <td>
+    </td>
+  </tr>                  
+                    
+  <tr>
+    <td>
+     DS1991<br>
+     DS1425
+    </td>
+    <td>
+      02
+    </td>
+    <td>
+      Secure memory device
+    </td>
+    <td>
+    </td>
+    <td>
+    </td>
+  </tr>
+                    
+  <tr>
+    <td>
+     DS1994<br>
+     DS2404
+    </td>
+    <td>
+      04
+    </td>
+    <td>
+      4K NVRAM memory and clock, timer, alarms
+    </td>
+    <td>
+      ClockContainer
+    </td>
+    <td>
+      MemoryBank<br>
+      PagedMemoryBank
+    </td>
+
+  </tr>       
+                    
+  <tr>
+    <td>
+      DS2405
+    </td>
+    <td>
+      05
+    </td>
+    <td>
+      Single addressable switch
+    </td>
+    <td>
+    </td>
+    <td>
+    </td>
+  </tr>       
+                    
+  <tr>
+    <td>
+      DS1993
+    </td>
+    <td>
+      06
+    </td>
+    <td>
+      4K NVRAM memory
+    </td>
+    <td>
+    </td>
+    <td>
+      MemoryBank<br>
+      PagedMemoryBank
+    </td>
+  </tr>       
+                                                      
+  <tr>
+    <td>
+      DS1992
+    </td>
+    <td>
+      08
+    </td>
+    <td>
+      1K NVRAM memory
+    </td>
+    <td>
+    </td>
+    <td>
+      MemoryBank<br>
+      PagedMemoryBank
+    </td>
+  </tr>       
+                                                      
+  <tr>
+    <td>
+      DS1982<br>
+      DS2502
+    </td>
+    <td>
+      09
+    </td>
+    <td>
+      1K EPROM memory
+    </td>
+    <td>
+    </td>
+    <td>
+      MemoryBank<br>
+      PagedMemoryBank<br>
+      OTPMemoryBank
+    </td>
+  </tr>       
+                                                      
+  <tr>
+    <td>
+      DS1995
+    </td>
+    <td>
+      0A
+    </td>
+    <td>
+      16K NVRAM memory
+    </td>
+    <td>
+    </td>
+    <td>
+      MemoryBank<br>
+      PagedMemoryBank
+    </td>
+  </tr>       
+
+  <tr>
+    <td>
+      DS1985<br>
+      DS2505
+    </td>
+    <td>
+      0B
+    </td>
+    <td>
+      16K EPROM memory
+    </td>
+    <td>
+    </td>
+    <td>
+      MemoryBank<br>
+      PagedMemoryBank<br>
+      OTPMemoryBank
+    </td>
+  </tr>       
+                                                      
+  <tr>
+    <td>
+      DS1996
+    </td>
+    <td>
+      0C
+    </td>
+    <td>
+      64K NVRAM memory
+    </td>
+    <td>
+    </td>
+    <td>
+      MemoryBank<br>
+      PagedMemoryBank
+    </td>
+  </tr>       
+                    
+  <tr>
+    <td>
+      DS1986<br>
+      DS2506
+    </td>
+    <td>
+      0F
+    </td>
+    <td>
+      64K EPROM memory
+    </td>
+    <td>
+    </td>
+    <td>
+      MemoryBank<br>
+      PagedMemoryBank<br>
+      OTPMemoryBank
+    </td>
+  </tr>       
+                                                      
+  <tr>
+    <td>
+      DS1920<br>
+      DS1820<br>
+      DS18S20
+    </td>
+    <td>
+      10
+    </td>
+    <td>
+      Temperature and alarm trips
+    </td>
+    <td>
+      TemperatureContainer
+    </td>
+    <td>
+    </td>
+  </tr>       
+                    
+  <tr>
+    <td>
+      DS2406<br>
+      DS2407
+    </td>
+    <td>
+      12
+    </td>
+    <td>
+      1K EPROM memory, dual switch
+    </td>
+    <td>
+      SwitchContainer
+    </td>
+    <td>
+      MemoryBank<br>
+      PagedMemoryBank<br>
+      OTPMemoryBank
+    </td>
+  </tr>       
+                    
+  <tr>
+    <td>
+      DS1983<br>
+      DS2503
+    </td>
+    <td>
+      13
+    </td>
+    <td>
+      4K EPROM memory
+    </td>
+    <td>
+    </td>
+    <td>
+      MemoryBank<br>
+      PagedMemoryBank<br>
+      OTPMemoryBank
+    </td>
+  </tr>       
+                                                      
+  <tr>
+    <td>
+      DS1971
+    </td>
+    <td>
+      14
+    </td>
+    <td>
+      265 bit EEPROM memory and OTP register
+    </td>
+    <td>
+    </td>
+    <td>
+      MemoryBank<br>
+      PagedMemoryBank<br>
+      OTPMemoryBank
+    </td>
+  </tr>       
+                                                      
+  <tr>
+    <td>
+      DS1954
+    </td>
+    <td>
+      16
+    </td>
+    <td>
+      Java Powered Cryptographic <u>i</u>Button
+    </td>
+    <td>
+    </td>
+    <td>
+    </td>
+  </tr>       
+                    
+  <tr>
+    <td>
+      DS1963S
+    </td>
+    <td>
+      18
+    </td>
+    <td>
+      4K NVRAM memory and SHA-1 Engine
+    </td>
+    <td>
+    </td>
+    <td>
+      MemoryBank<br>
+      PagedMemoryBank
+    </td>
+  </tr>       
+                                                      
+  <tr>
+    <td>
+      DS1963L
+    </td>
+    <td>
+      1A
+    </td>
+    <td>
+      4K NVRAM memory with write cycle counters
+    </td>
+    <td>
+    </td>
+    <td>
+      MemoryBank<br>
+      PagedMemoryBank
+    </td>
+  </tr>       
+                    
+  <tr>
+    <td>
+      DS2423
+    </td>
+    <td>
+      1D
+    </td>
+    <td>
+      4K NVRAM memory with external counters
+    </td>
+    <td>
+    </td>
+    <td>
+      MemoryBank<br>
+      PagedMemoryBank
+    </td>
+  </tr>       
+                    
+  <tr>
+    <td>
+      DS2409
+    </td>
+    <td>
+      1F
+    </td>
+    <td>
+      Dual switch, coupler
+    </td>
+    <td>
+      SwitchContainer
+    </td>
+    <td>
+    </td>
+  </tr>       
+                    
+  <tr>
+    <td>
+      DS2450
+    </td>
+    <td>
+      20
+    </td>
+    <td>
+      Quad A/D
+    </td>
+    <td>
+      ADContainer
+    </td>
+    <td>
+      MemoryBank<br>
+      PagedMemoryBank
+    </td>
+  </tr>       
+                                                      
+  <tr>
+    <td>
+      DS1921
+    </td>
+    <td>
+      21
+    </td>
+    <td>
+      Thermocron temperature logger
+    </td>
+    <td>
+      TemperatureContainer<br>
+      ClockContainer
+    </td>
+    <td>
+      MemoryBank<br>
+      PagedMemoryBank
+    </td>
+  </tr>       
+                    
+  <tr>
+    <td>
+      DS1973
+    </td>
+    <td>
+      23
+    </td>
+    <td>
+      4K EEPROM memory
+    </td>
+    <td>
+    </td>
+    <td>
+      MemoryBank<br>
+      PagedMemoryBank
+    </td>
+  </tr>       
+                    
+  <tr>
+    <td>
+      DS2438
+    </td>
+    <td>
+      26
+    </td>
+    <td>
+      Temperature, A/D
+    </td>
+    <td>
+      ClockContainer<br>
+      ADContainer<br>
+      TemperatureContainer
+    </td>
+    <td>
+    </td>
+  </tr>       
+                                     
+  <tr>
+    <td>
+      DS18B20
+    </td>
+    <td>
+      28
+    </td>
+    <td>
+      Adjustable resolution temperature
+    </td>
+    <td>
+      TemperatureContainer
+    </td>
+    <td>
+    </td>
+  </tr>       
+                    
+  <tr>
+    <td>
+      DS2890
+    </td>
+    <td>
+      2C
+    </td>
+    <td>
+      Single channel digital potentiometer
+    </td>
+    <td>
+      PotentiometerContainer
+    </td>
+    <td>
+    </td>
+  </tr>       
+                                     
+  <tr>
+    <td>
+      DS2760
+    </td>
+    <td>
+      30
+    </td>
+    <td>
+      Temperature, current, A/D
+    </td>
+    <td>
+      ADContainer<br>
+      TemperatureContainer
+    </td>
+    <td>
+    </td>
+  </tr>       
+                                     
+  <tr>
+    <td>
+      DS1961S<br>
+      DS2432
+    </td>
+    <td>
+      33
+    </td>
+    <td>
+      1K EEPROM memory with SHA-1 Engine
+    </td>
+    <td>
+    </td>
+    <td>
+      MemoryBank<br>
+      PagedMemoryBank
+    </td>
+  </tr>       
+</table>
+
+     
+<a name="types"></a>
+<h3>Types of Containers</h3>
+
+<ul>
+<li> <b>Memory</b>
+<p>        
+           The base class of all containers <code>OneWireContainer</code> has a method
+           called <code>getMemoryBanks()</code> that returns an enumeration of memory
+           bank instances.  A memory bank is a section of memory on a 1-Wire 
+           device that has specific properties.  For example the 1-Wire
+           Network Address of a device is a read-only bank of 8 bytes.
+           This technique is used to get a handle on the diverse types of
+           memory that comprise 1-Wire devices. There are three interfaces
+           that the memory bank may implement.  These interfaces are
+           hierarchical:
+</p>
+    
+  <ul>       
+      <li>     <i>MemoryBank</i> - basic read/write (getSize(), read(), write()..)
+      <li>     <i>PagedMemoryBank</i> (extends <i>MemoryBank</i>) - paged read/write with
+                   packets (getNumberPages(), readPage(), writePagePacket()..)
+      <li>     <i>OTPMemoryBank</i> (extends <i>PagedMemoryBank</i>) - One-Time-Programmable,
+                   usually EPROM (canRedirectPage(), lockPage())
+  </ul>
+
+<p>
+           See the examples 'OWDump' and 'OWMemUtil' for applications that
+           utilize memory banks.
+</p>
+    
+<p>       
+           Any 1-Wire devices that contain memory can also use the 1-Wire
+           File system.  The following classes in the
+           com.dalsemi.onewire.utils package can be used just like the Java
+           equivalient:
+</P>
+  <ul>           
+       <li>    <i>OWFile</i> - Like <code>java.io.File</code>
+       <li>    <i>OWFileInputStream</i> - Like <code>java.io.FileInputStream</code>
+       <li>    <i>OWFileOutputSTream</i> - Like <code>java.io.FileInputStream</code>
+       <li>    <i>OWFileDescriptor</i> - Like <code>java.io.FileDescriptor</code>
+  </ul>
+         
+<p>      
+          The specification for the 1-Wire file system can be
+          found in Application Note 114:<a href="http://www.dalsemi.com/datasheets/pdfs/app114.pdf">
+          http://www.dalsemi.com/datasheets/pdfs/app114.pdf</a>
+</p>
+          
+<li>       <b>Sensor</b>
+           
+<p>
+           A 1-Wire Sensor is a device that can make a reading or change
+           the state of something physical (such as a DS2406 switch).
+           Typically the operations of 1-Wire Sensors is memory mapped so
+           writing to a particular location causes the state to change.  To
+           accommodate this type of architecture and reduce the number of 1-
+           Wire operations that need to take place, a 'read-modify-write'
+           technique is used.  Each Sensor interface is derived from a
+           super-interface (<code>com.dalsemi.onewire.container.OneWireSensor</code>)
+           that contain just two methods: <code>readDevice()</codE>, <code>writeDevice()</code>.  The
+           read returns a byte array and the write takes a byte array.  The
+           byte array is the state of the device.  The interfaces that
+           extend this interface have 'get' and 'set' methods that
+           manipulate the byte array.  So a OneWireSensor operation is:
+</p>
+           
+  <ol>
+      <li>      readDevice()
+      <li>     'get' and 'set' methods
+      <li>      writeDevice()
+  </ol>
+           
+<p>
+           The following is a list of the interfaces and a brief
+           description.  Note that the container list above indicates the
+           interfaces used.
+</p>
+   
+<ul>        
+    <li>           ADContainer  - A/D sensor
+    <li>           ClockContainer - clock
+    <li>           SwitchContainer - switch
+    <li>           TemperatureContainer - temperature reading sensor
+    <li>           PotentiometerContainer - digital potentiometer device
+</ul>
+           
+<li>       <b>Other</b>
+           
+<p>
+           The most celebrated 'other' device Dallas Semiconductor has is
+           the Java Powered Cryptographic <u>i</u>Button.  This is a
+           microprocessor in an iButton package that has a Java Virtual
+           Machine that can run Java applets.  These applets typically
+           perform highly secure cryptographic operations.  See this web
+           page for more information:<a href="http://www.ibutton.com/ibuttons/java.html">
+           http://www.ibutton.com/ibuttons/java.html</a>
+</p>           
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<!-- ----------------------------end of the document -->
+
+<p><img src="Image3.gif" width="536" height="5"></p>
+
+<p><font size="2" face="Arial, helvetica"><b><u>i</u></b><b>Button
+Homepage: </b></font><a href="http://www.ibutton.com/"><font
+size="2" face="Arial, helvetica"><b>http://www.ibutton.com/</b></font></a><font
+size="2" face="Arial, helvetica"><b> </b></font></p>
+
+<p><img src="dsc.jpg" width="96" height="39"></p>
+</body>
+</html>

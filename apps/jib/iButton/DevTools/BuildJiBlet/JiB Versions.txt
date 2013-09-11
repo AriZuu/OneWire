@@ -1,0 +1,35 @@
+
+Java iButton Firmware Version 0.03.0003
+javaone.jibdb
+
+iButton with Java - Firmware Version 1.00.0004
+jib33.jibdb
+
+iButton with Java - Firmware Version 1.01.0004
+jib34.jibdb
+
+iButton with Java - Firmware Version 1.02.0005
+jib35.jibdb
+
+iButton with Java - Firmware Version 1.03.0005
+jib36.jibdb
+
+iButton with Java - Firmware Version 1.10.0006
+jib40.jibdb
+
+iButton with Java - Firmware Version 1.11.0006
+jib41.jibdb
+
+This one was experimental ONLY!
+Java Powered iButton - Firmware Version 2.0X.0006
+jib50.jibdb
+
+Java Powered iButton - Firmware Version 2.00.0006
+jib51.jibdb
+
+Java Powered iButton - Firmware Revision 2.2.0007
+jib52.jibdb
+
+Java Powered iButton - Firmware Revision 2.21.0008
+jib53.jibdb
+

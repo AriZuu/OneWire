@@ -1,0 +1,606 @@
+JiB ROM API Name Database Version:0007
+NativeMethods
+ modMulNative:([B[B[B[B)S:00
+ modPowNative:([B[B[B[B)S:01
+ modSquareMulNative:([B[B[B[B)S:02
+ modSquareNative:([B[B[B[B)S:03
+ getClockRawNative:()I:04
+ getButtonIdNative:([B)V:05
+ getClassNumberNative:(Ljava/lang/Object;)B:06
+ GenerateKeyNative:([BI[BI)[B:07
+ SubtractAccNative:([BIB)V:08
+ generatePrimeNative:([BIZ)V:09
+ copyToNative:([BS)B:0a
+ isEqualNative:([BSB)Z:0b
+ getBufferNative:()[B:0c
+ getLcNative:()B:0d
+ getOutgoingFlagNative:()Z:0e
+ getOutgoingLengthNative:()S:0f
+ sendReceiveNative:(Z[BSS)S:10
+ setOutgoingFlagNative:(Z)V:11
+ setOutgoingLengthNative:(S)S:12
+ JCRERegister:(Ljavacard/framework/Applet;)V:13
+ selectingAppletNative:()Z:14
+ arrayCopyNative:([BS[BSS)S:15
+ arrayCopyNonAtomicNative:([BS[BSS)S:16
+ abortTransactionNative:()S:17
+ beginTransactionNative:()S:18
+ commitTransactionNative:()S:19
+ getMaxCommitCapacityNative:()S:1a
+ getTransactionDepthNative:()B:1b
+ getUnusedCommitCapacityNative:()S:1c
+ getVersionNative:()S:1d
+ isTransientNative:(Ljava/lang/Object;)B:1e
+ makeTransientNative:(Ljava/lang/Object;B)V:1f
+ shareNative:(Ljava/lang/Object;Ljavacard/framework/AID;)V:20
+ doDESCryptNative:([B[B[BB)S:21
+ generateDataNative:([BSS)V:22
+ signCRTNative:([B[B[B)S:23
+ generateSHA1DigestNative:([BSS[BS)V:24
+InterfaceMethods
+InterfaceClasses
+Class
+ com/dalsemi/system/CoprocessorException:java/lang/Exception:00
+InstanceFields
+StaticFields
+ systemInstance:Lcom/dalsemi/system/CoprocessorException;:00
+Methods
+ <init>:()V:00
+ <init>:(S)V:01
+ throwIt:(S)V:02
+Interfaces
+Class
+ com/dalsemi/system/Coprocessor:java/lang/Object:01
+InstanceFields
+StaticFields
+Methods
+ <init>:()V:00
+ modExp:([B[B[B)[B:01
+ modMul:([B[B[B)[B:02
+ modSquare:([B[B)[B:03
+ modSquareMul:([B[B[B)[B:04
+ stripLeadingZeros:([B)[B:05
+Interfaces
+Class
+ com/dalsemi/system/Clock:java/lang/Object:02
+InstanceFields
+StaticFields
+Methods
+ <init>:()V:00
+ getClock:()I:01
+ getClock:(I)I:02
+Interfaces
+Class
+ com/dalsemi/system/Properties:java/lang/Object:03
+InstanceFields
+StaticFields
+Methods
+ <init>:()V:00
+ getClassNumber:(Ljava/lang/Object;)B:01
+ getSerialId:()[B:02
+Interfaces
+Class
+ com/dalsemi/system/Util:java/lang/Object:04
+InstanceFields
+StaticFields
+Methods
+ <init>:()V:00
+ boundsCheck:([BSS)V:01
+Interfaces
+Class
+ com/dalsemi/security/RSAKeyGenerator:java/lang/Object:05
+InstanceFields
+ exp:[B:00
+ d:[B:01
+ n:[B:02
+ pInt:[B:03
+ qInt:[B:04
+ phi:[B:05
+StaticFields
+Methods
+ <init>:()V:00
+ generateKey:(S)[B:01
+ generateKey:([B[B)[B:02
+ getModulus:()[B:03
+ getP:()[B:04
+ getPhi:()[B:05
+ getPrivateExponent:()[B:06
+ getPublicExponent:()[B:07
+ getQ:()[B:08
+ setPublicExponent:([B)V:09
+ subtractAcc:([BB)V:0a
+Interfaces
+Class
+ com/dalsemi/security/RSAKeyGeneratorException:java/lang/Exception:06
+InstanceFields
+ reason:S:00
+StaticFields
+Methods
+ <init>:(S)V:00
+Interfaces
+Class
+ com/dalsemi/math/Prime:java/lang/Object:07
+InstanceFields
+ primearray:[B:00
+StaticFields
+Methods
+ <init>:(IIZ)V:00
+ getPrime:()[B:01
+Interfaces
+Class
+ com/dalsemi/math/PrimeException:java/lang/Exception:08
+InstanceFields
+StaticFields
+ systemInstance:Lcom/dalsemi/math/PrimeException;:00
+Methods
+ <init>:()V:00
+ <init>:(S)V:01
+ throwIt:(S)V:02
+Interfaces
+Class
+ java/lang/Object:java/lang/Object:09
+InstanceFields
+StaticFields
+Methods
+ <init>:()V:00
+ equals:(Ljava/lang/Object;)Z:01
+Interfaces
+Class
+ java/lang/RuntimeException:java/lang/Exception:0a
+InstanceFields
+StaticFields
+ systemInstance:Ljava/lang/RuntimeException;:00
+Methods
+ <init>:()V:00
+ <init>:(S)V:01
+ throwIt:(S)V:02
+Interfaces
+Class
+ java/lang/Exception:java/lang/Throwable:0b
+InstanceFields
+StaticFields
+ systemInstance:Ljava/lang/Exception;:00
+Methods
+ <init>:()V:00
+ <init>:(S)V:01
+ throwIt:(S)V:02
+Interfaces
+Class
+ java/lang/Throwable:java/lang/Object:0c
+InstanceFields
+ reason:S:00
+StaticFields
+Methods
+ <init>:()V:00
+ getReason:()S:01
+ setReason:(S)V:02
+Interfaces
+Class
+ java/lang/ArithmeticException:java/lang/RuntimeException:0d
+InstanceFields
+StaticFields
+Methods
+ <init>:(S)V:00
+Interfaces
+Class
+ java/lang/ArrayIndexOutOfBoundsException:java/lang/IndexOutOfBoundsException:0e
+InstanceFields
+StaticFields
+Methods
+ <init>:(S)V:00
+Interfaces
+Class
+ java/lang/IndexOutOfBoundsException:java/lang/RuntimeException:0f
+InstanceFields
+StaticFields
+Methods
+ <init>:(S)V:00
+Interfaces
+Class
+ java/lang/ArrayStoreException:java/lang/RuntimeException:10
+InstanceFields
+StaticFields
+Methods
+ <init>:(S)V:00
+Interfaces
+Class
+ java/lang/ClassCastException:java/lang/RuntimeException:11
+InstanceFields
+StaticFields
+Methods
+ <init>:(S)V:00
+Interfaces
+Class
+ java/lang/NegativeArraySizeException:java/lang/RuntimeException:12
+InstanceFields
+StaticFields
+Methods
+ <init>:(S)V:00
+Interfaces
+Class
+ java/lang/NullPointerException:java/lang/RuntimeException:13
+InstanceFields
+StaticFields
+Methods
+ <init>:(S)V:00
+Interfaces
+Class
+ java/lang/SecurityException:java/lang/RuntimeException:14
+InstanceFields
+StaticFields
+Methods
+ <init>:(S)V:00
+Interfaces
+Class
+ javacard/framework/PIN:java/lang/Object:15
+InstanceFields
+StaticFields
+Methods
+ <init>:()V:00
+ check:([BSB)Z:01
+ getTriesRemaining:()B:02
+ isValidated:()Z:03
+ reset:()V:04
+Interfaces
+Class
+ javacard/framework/AID:java/lang/Object:16
+InstanceFields
+StaticFields
+Methods
+ <init>:()V:00
+ copyTo:([BS)B:01
+ isEqual:([BSB)Z:02
+ isSameRID:(Ljavacard/framework/AID;)Z:03
+Interfaces
+Class
+ javacard/framework/APDU:java/lang/Object:17
+InstanceFields
+StaticFields
+Methods
+ <init>:()V:00
+ getBuffer:()[B:01
+ getInBlockSize:()B:02
+ getNAD:()B:03
+ receiveBytes:(S)S:04
+ sendBytes:(SS)V:05
+ sendBytesLong:([BSS)V:06
+ setIncomingAndReceive:()S:07
+ setOutgoing:()S:08
+ setOutgoingAndSend:(SS)V:09
+ setOutgoingLength:(S)V:0a
+ waitExtension:(B)V:0b
+Interfaces
+Class
+ javacard/framework/APDUException:java/lang/RuntimeException:18
+InstanceFields
+StaticFields
+ systemInstance:Ljavacard/framework/APDUException;:00
+Methods
+ <init>:(S)V:00
+ throwIt:(S)V:01
+Interfaces
+Class
+ javacard/framework/Applet:java/lang/Object:19
+InstanceFields
+StaticFields
+Methods
+ <init>:()V:00
+ deselect:()V:01
+ install:(Ljavacard/framework/APDU;)V:02
+ process:(Ljavacard/framework/APDU;)V:03
+ register:()V:04
+ select:()Z:05
+ selectingApplet:()Z:06
+Interfaces
+Class
+ javacard/framework/ISO:java/lang/Object:1a
+InstanceFields
+StaticFields
+Methods
+ <init>:()V:00
+Interfaces
+Class
+ javacard/framework/ISOException:java/lang/RuntimeException:1b
+InstanceFields
+StaticFields
+ systemInstance:Ljavacard/framework/ISOException;:00
+Methods
+ <init>:(S)V:00
+ throwIt:(S)V:01
+Interfaces
+Class
+ javacard/framework/OwnerPIN:javacard/framework/PIN:1c
+InstanceFields
+ tryLimit:B:00
+ maxPINSize:B:01
+ pinValue:[B:02
+ pinSize:B:03
+ triesLeft:B:04
+ flags:[Z:05
+StaticFields
+Methods
+ <init>:(BB)V:00
+ check:([BSB)Z:01
+ createFlags:()V:02
+ getTriesRemaining:()B:03
+ getValidatedFlag:()Z:04
+ isValidated:()Z:05
+ reset:()V:06
+ resetAndUnblock:()V:07
+ setValidatedFlag:(Z)V:08
+ updateAndUnblock:([BSB)V:09
+Interfaces
+Class
+ javacard/framework/PINException:java/lang/RuntimeException:1d
+InstanceFields
+StaticFields
+ systemInstance:Ljavacard/framework/PINException;:00
+Methods
+ <init>:(S)V:00
+ throwIt:(S)V:01
+Interfaces
+Class
+ javacard/framework/ProxyPIN:javacard/framework/PIN:1e
+InstanceFields
+ realPIN:Ljavacard/framework/PIN;:00
+StaticFields
+Methods
+ <init>:(Ljavacard/framework/PIN;)V:00
+ check:([BSB)Z:01
+ getTriesRemaining:()B:02
+ isValidated:()Z:03
+ reset:()V:04
+Interfaces
+Class
+ javacard/framework/SystemException:java/lang/RuntimeException:1f
+InstanceFields
+StaticFields
+ systemInstance:Ljavacard/framework/SystemException;:00
+Methods
+ <init>:(S)V:00
+ throwIt:(S)V:01
+Interfaces
+Class
+ javacard/framework/TransactionException:java/lang/RuntimeException:20
+InstanceFields
+StaticFields
+ systemInstance:Ljavacard/framework/TransactionException;:00
+Methods
+ <init>:(S)V:00
+ throwIt:(S)V:01
+Interfaces
+Class
+ javacard/framework/UserException:java/lang/Exception:21
+InstanceFields
+StaticFields
+ systemInstance:Ljavacard/framework/UserException;:00
+Methods
+ <init>:()V:00
+ <init>:(S)V:01
+ throwIt:(S)V:02
+Interfaces
+Class
+ javacard/framework/Util:java/lang/Object:22
+InstanceFields
+StaticFields
+Methods
+ <init>:()V:00
+ arrayCompare:([BS[BSS)B:01
+ arrayCopy:([BS[BSS)S:02
+ arrayCopyNonAtomic:([BS[BSS)S:03
+ arrayFillNonAtomic:([BB)V:04
+ getShort:([BS)S:05
+ makeShort:(BB)S:06
+ setShort:([BSS)S:07
+Interfaces
+Class
+ javacard/framework/System:java/lang/Object:23
+InstanceFields
+StaticFields
+Methods
+ <init>:()V:00
+ abortTransaction:()V:01
+ beginTransaction:()V:02
+ commitTransaction:()V:03
+ getAID:()Ljavacard/framework/AID;:04
+ getMaxCommitCapacity:()S:05
+ getTransactionDepth:()B:06
+ getUnusedCommitCapacity:()S:07
+ getVersion:()S:08
+ isTransient:(Ljava/lang/Object;)B:09
+ makeTransient:(Ljava/lang/Object;B)V:0a
+ share:(Ljava/lang/Object;)V:0b
+ share:(Ljava/lang/Object;Ljavacard/framework/AID;)V:0c
+Interfaces
+Class
+ javacardx/crypto/Key:java/lang/Object:24
+InstanceFields
+ length:S:00
+ key:[B:01
+StaticFields
+Methods
+ <init>:()V:00
+ clearKey:()V:01
+ isInitialized:()Z:02
+Interfaces
+Class
+ javacardx/crypto/SymKey:javacardx/crypto/Key:25
+InstanceFields
+ keyLength:S:00
+ blockSize:S:01
+ icv:[B:02
+ keySchedule:[B:03
+StaticFields
+Methods
+ <init>:(SS)V:00
+ clearICV:()V:01
+ clearKey:()V:02
+ decryptCBC:([BSS[BS)V:03
+ decryptECB:([BSS[BS)V:04
+ encryptCBC:([BSS[BS)V:05
+ encryptECB:([BSS[BS)V:06
+ generateMAC:([BSS[BSB)V:07
+ getBlockSize:()S:08
+ getKeyLength:()S:09
+ isInitialized:()Z:0a
+ makeKeyTransient:(B)V:0b
+ setICV:([BS)V:0c
+ setKey:([BS)V:0d
+ verifyMAC:([BSB[BSS)Z:0e
+Interfaces
+Class
+ javacardx/crypto/AsymKey:javacardx/crypto/Key:26
+InstanceFields
+ exponentInitialized:Z:00
+ modulusInitialized:Z:01
+ exponent:[B:02
+ modulus:[B:03
+StaticFields
+Methods
+ <init>:(S)V:00
+ getBitLength:()S:01
+ isSupportedLength:(S)Z:02
+Interfaces
+Class
+ javacardx/crypto/CryptoException:java/lang/RuntimeException:27
+InstanceFields
+StaticFields
+ systemInstance:Ljavacardx/crypto/CryptoException;:00
+Methods
+ <init>:(S)V:00
+ throwIt:(S)V:01
+Interfaces
+Class
+ javacardx/crypto/DES3_Key:javacardx/crypto/SymKey:28
+InstanceFields
+StaticFields
+Methods
+ <init>:()V:00
+ decryptCBC:([BSS[BS)V:01
+ decryptECB:([BSS[BS)V:02
+ generateMAC:([BSS[BSB)V:03
+ setKey:([BS)V:04
+ verifyMAC:([BSB[BSS)Z:05
+Interfaces
+Class
+ javacardx/crypto/DES_Key:javacardx/crypto/SymKey:29
+InstanceFields
+StaticFields
+Methods
+ <init>:()V:00
+ decryptCBC:([BSS[BS)V:01
+ decryptECB:([BSS[BS)V:02
+ generateMAC:([BSS[BSB)V:03
+ setKey:([BS)V:04
+ verifyMAC:([BSB[BSS)Z:05
+Interfaces
+Class
+ javacardx/crypto/MessageDigest:java/lang/Object:2a
+InstanceFields
+StaticFields
+Methods
+ <init>:()V:00
+ <init>:(SS)V:01
+ blockSize:()S:02
+ generateDigest:([BSS[BS)V:03
+ hashSize:()S:04
+Interfaces
+Class
+ javacardx/crypto/PrivateKey:javacardx/crypto/AsymKey:2b
+InstanceFields
+StaticFields
+Methods
+ <init>:(S)V:00
+ sign:([BSS[BS)V:01
+Interfaces
+Class
+ javacardx/crypto/PublicKey:javacardx/crypto/AsymKey:2c
+InstanceFields
+StaticFields
+Methods
+ <init>:(S)V:00
+ verify:([BSS[BSS)Z:01
+Interfaces
+Class
+ javacardx/crypto/RandomData:java/lang/Object:2d
+InstanceFields
+StaticFields
+Methods
+ <init>:()V:00
+ generateData:([BSS)V:01
+ setSeed:([BSS)V:02
+Interfaces
+Class
+ javacardx/crypto/RSA_CRT_PrivateKey:javacardx/crypto/PrivateKey:2e
+InstanceFields
+ p:[B:00
+ q:[B:01
+ dP1:[B:02
+ dQ1:[B:03
+ pQ:[B:04
+ pInitialized:Z:05
+ qInitialized:Z:06
+ dP1Initialized:Z:07
+ dQ1Initialized:Z:08
+ pQInitialized:Z:09
+StaticFields
+Methods
+ <init>:(S)V:00
+ isInitialized:()Z:01
+ setDP1:([BSS)V:02
+ setDQ1:([BSS)V:03
+ setP:([BSS)V:04
+ setPQ:([BSS)V:05
+ setQ:([BSS)V:06
+ sign:([BSS[BS)V:07
+Interfaces
+Class
+ javacardx/crypto/RSA_PrivateKey:javacardx/crypto/PrivateKey:2f
+InstanceFields
+StaticFields
+Methods
+ <init>:(S)V:00
+ isInitialized:()Z:01
+ setExponent:([BSS)V:02
+ setModulus:([BSS)V:03
+ sign:([BSS[BS)V:04
+Interfaces
+Class
+ javacardx/crypto/RSA_PublicKey:javacardx/crypto/PublicKey:30
+InstanceFields
+StaticFields
+Methods
+ <init>:(S)V:00
+ isInitialized:()Z:01
+ setExponent:([BSS)V:02
+ setModulus:([BSS)V:03
+ verify:([BSS[BSS)Z:04
+Interfaces
+Class
+ javacardx/crypto/Sha1MessageDigest:javacardx/crypto/MessageDigest:31
+InstanceFields
+StaticFields
+Methods
+ <init>:()V:00
+ generateDigest:([BSS[BS)V:01
+Interfaces
+Class
+ javacardx/cryptoEnc/DES3_EncKey:javacardx/crypto/DES3_Key:32
+InstanceFields
+StaticFields
+Methods
+ <init>:()V:00
+ encryptCBC:([BSS[BS)V:01
+ encryptECB:([BSS[BS)V:02
+Interfaces
+Class
+ javacardx/cryptoEnc/DES_EncKey:javacardx/crypto/DES_Key:33
+InstanceFields
+StaticFields
+Methods
+ <init>:()V:00
+ encryptCBC:([BSS[BS)V:01
+ encryptECB:([BSS[BS)V:02
+Interfaces
+----------------------------
+A9477452

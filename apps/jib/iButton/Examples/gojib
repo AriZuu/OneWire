@@ -1,0 +1,163 @@
+#
+# This file assumes Java version 1.2 or greater.
+# If you use 1.1 this batch file will work if you skip
+# the javac step!!!
+#
+# This file was written for bash
+#
+
+#
+# did they specify a directory?
+# if not, gig them
+#
+if [ ! $1 ]; then
+  echo "No Directory Specified"
+  echo "Usage: <applet directory> <last four digits of firmware version string>"
+  exit 1
+fi
+
+#
+# does that directory exist?
+# if not, we are out of here
+#
+ls $1 >/dev/null
+retval=$?
+
+if [ "$retval" != "0" ]; then
+  echo "$1 not found"
+  exit 2
+fi
+
+#
+# did they specify a version?
+#  if so, is is valid?
+#    if so set up the correct jar and jibdb file
+#          and spew the corresponding FVS
+#    otherwise slap them down
+#
+if [ ! $2 ]; then
+  echo "No Version Specified"
+  echo "Usage: <applet directory> <last four digits of firmware version string>"
+  exit 3
+elif [ "$2" = "0003" ]; then
+  JIBDB="javaone.jibdb"
+  JIBAPI="iButton32.jar"
+  echo "Using FVS Java iButton Firmware Version 0.03.0003"
+elif [ "$2" = "0004" ]; then
+  JIBDB="jib33.jibdb"
+  JIBAPI="iButton33.jar"
+  echo "Using FVS iButton with Java - Firmware Version 1.00.0004"
+elif [ "$2" = "0005" ]; then
+  JIBDB="jib35.jibdb"
+  JIBAPI="iButton35.jar"
+  echo "Using FVS iButton with Java - Firmware Version 1.01.0005"
+elif [ "$2" = "0006" ]; then
+  JIBDB="jib51.jibdb"
+  JIBAPI="iButton51.jar"
+  echo "Using FVS iButton with Java - Firmware Version 1.10.0006 OR"
+  echo "          iButton with Java - Firmware Version 1.11.0006 OR"
+  echo "          Java Powered iButton - Firmware Version 2.00.0006"
+elif [ "$2" = "0007" ]; then
+  JIBDB="jib52.jibdb"
+  JIBAPI="iButton52.jar"
+  echo "Using FVS  Java Powered iButton - Firmware Version 2.2.0007"
+elif [ "$2" = "0008" ]; then
+  JIBDB="jib53.jibdb"
+  JIBAPI="iButton53.jar"
+  echo "Using FVS  Java Powered iButton - Firmware Version 2.21.0008"
+else
+  echo "Unknown Version"
+  echo " Version can be one of:"
+  echo "  0003"
+  echo "  0004"
+  echo "  0005"
+  echo "  0006"
+  echo "  0007"
+  echo "  0008"
+  echo ""
+  exit 3
+fi
+
+#
+# see if a subdirectory exists for requested version
+#
+ls $1/$2 >/dev/null
+retval=$?
+
+#
+# if not, make one
+#
+if [ "$retval" != "0" ]; then
+  mkdir $1/$2
+fi 
+
+#
+# Ugly hack to make javac work. If you use another compiler then
+# comment this section out.
+#
+#
+
+#
+# save current directory and change to specified example directory
+#
+pushd .
+cd $1
+
+#
+# let everyone know this is an ugly hack
+#
+echo "."
+echo "Performing major hack to get around JDK's insistance that"
+echo "java.lang.Error must exist even when we use the bootclasspath"
+echo "switch!!!"
+echo "."
+echo "If you use another Java compiler you can jump over this javac step."
+echo "."
+
+#
+# save the current directory and create a bogus java.lang.Error class
+#
+pushd .
+mkdir java
+cd java
+mkdir lang
+cd lang
+
+echo "package java.lang;">Error.java
+echo "public class Error{">>Error.java
+echo "}">>Error.java
+popd
+# endhack1
+
+echo "Using $JIBAPI $JIBDB"
+rm -f *.class
+
+#
+# compile the applet
+#
+echo "Running javac..."
+javac -bootclasspath ../$JIBAPI *.java
+echo "...javac Done"
+
+# mjrhack2
+#
+# disavow any knowledge of the previous hack
+#
+rm -rf java 
+# endhack2
+
+#
+# back to our original directory
+#
+popd
+
+#
+# remove crusty jiblet
+#
+rm -f $1/$2/$1.jib
+
+#
+# create new jiblet
+#
+java -classpath ../../DevTools/BuildJiBlet/JiB.jar:$CLASSPATH BuildJiBlet -f $1 -o $1/$2/$1.jib -d $JIBDB
+

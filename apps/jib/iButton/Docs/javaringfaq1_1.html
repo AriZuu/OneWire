@@ -1,0 +1,908 @@
+<!DOCTYPE HTML PUBLIC "-//IETF//DTD HTML//EN">
+<html>
+
+<head>
+<meta http-equiv="Content-Type"
+content="text/html; charset=iso-8859-1">
+<meta name="GENERATOR" content="Microsoft FrontPage 2.0">
+<title>Dallas Semiconductor Corp iButton: Java iButton FAQ Sheet, November 2000</title>
+<!-- Title of document is as follows:
+Dallas Semiconductor Corp iButton: JiBKit FAQ Sheet
+NOTE THAT THE <TITLE> AREA IS THE ONLY PLACE IBUTTON IS NOT UNDERLINED! -->
+</head>
+
+<body bgcolor="#FFFFFF">
+
+<h2><img src="ibidehelpicon.jpg" align="right"
+hspace="0" width="200" height="101"></h2>
+
+<hr>
+
+<h2>Java<font size="1"><sup>TM</sup></font>-Powered <u>i</u>Button<font
+size="1"><sup>TM</sup></font> FAQ (November 2000)</h2>
+
+<a name="email"></a><hr>
+
+<p>This document is intended to answer the most common questions
+developers ask about the Dallas Semiconductor's Developer's Kit
+for our Java<font size="1"><sup>TM</sup></font> Powered Crypto <u>i</u>Buttons<font
+size="1"><sup>TM</sup></font> (a.k.a.: <i>iB-IDE</i>). If you
+have a question which is not answered here, please post your question to 
+the Java Powered <u>i</u>Button Forum at java-powered-ibutton@ibutton.com.  If 
+you do not subscribe to this list, you can do so by sending an E-mail to 
+java-powered-ibutton-request@dalsemi.com with <b>subscribe java-powered-ibutton</B>
+in the body of the message.  This list is monitored by interested developers and Dallas 
+Semiconductor engineers.</p>
+
+<hr>
+
+<p><b>Questions from Developers</b> </p>
+
+<ol>
+    <li><a href="#1">What happened to the JiBKit?</a></li>
+    <li><a href="#num2">What is Dallas Semiconductor's Java
+        Powered Crypto <u>i</u>Button?</a> </li>
+    <li><a href="#2">What JDKs are supported by this developer's
+        kit (iB-IDE)?</a> </li>
+    <li><a href="#3">What platforms are supported by the iB-IDE?</a>
+        </li>
+    <li><a href="#4">I get the following error message when
+        running under Windows:&quot;Error 2 opening registry key
+        HARDWARE\DEVICEMAP\SERIALCOMM&quot;. What can I do about
+        this?</a> </li>
+    <li><a href="#6"></a><a href="#6">I'm running Windows NT and
+        I can't seem to install the Win32 drivers. What is
+        required to install drivers under Windows NT?</a> </li>
+    <li><a href="#7">I get the following error when I run the
+        host examples: &quot;access-ibKeyOpen, timeout waiting
+        for port owned&quot;. What is wrong?</a> </li>
+    <li><a href="#8">Why do I keep getting an unsatisfied link
+        error when trying to run the host examples?</a> </li>
+    <li><a href="#9">Where can I purchase the hardware required
+        for the developer's kit?</a> </li>
+    <li><a href="#10">What does the return code of 0x6681 mean?</a>
+        </li>
+    <li><a href="#11">When I try to load an applet I get a return
+        code of 0x6903. What does that indicate?</a> </li>
+    <li><a href="#12">When I try to load an applet I get a return
+        code of 0x6902. What does that indicate?</a> </li>
+    <li><a href="#6A84">When I try to load an applet I get a return
+        code of 0x6A84. What does that indicate?</a> </li>
+    <li><a href="#13">What causes a return code of 0x8453?</a> </li>
+    <li><a href="#6985">When I try to talk to my applet I get a return
+        code of 0x6985.  What does this mean?</a></li>
+    <li><a href="#6F00">When I am talking to my applet it returns a
+        status word 0x6F00.  What happened?</a></li>
+    <li><a href="#6400">I keep getting an Out of Memory Error (status 
+        word 0x6400 or error code 0x62), but I don't think I should 
+        really be out of memory.  What can I do?</a></li>
+    <li><a href="#14">Why do I get the error &quot;cannot load
+        class ...&quot; even when my CLASSPATH is correct?</a> </li>
+    <li><a href="#15">I am writing an applet to store
+        information. I can allocate an array the size I need OK,
+        but I can't seem to send more than 255 bytes to my applet
+        successfully. What's wrong?</a> </li>
+    <li><a href="#16">I need documentation on the classes
+        &quot;commandAPDU&quot; and &quot;responseAPDU&quot;, but
+        I do not see it described anywhere in the online help of
+        the iB-IDE. Where can I get this information?</a> </li>
+    <li><a href="#50">Where can I get additional documentation?</a>
+        </li>
+    <li><a href="#18">When I try to compile my applet, I get an
+        exception thrown which says &quot;NoSuchMethodError:
+        CommPortIdentifier: method open() or openPort() not
+        found&quot;. What's going on here?</a></li>
+    <li><a href="#cryptofunctions">What are the different
+        versions of the <u>i</u>Button, and what cryptographic functions
+        are available on each?</a></li>
+    <li><a href="#commandline">How can I build Java Powered 
+	<u>i</u>Button applets outside of the <u>i</u>B-IDE?</a></li>
+    <li><a href="#hostrun">How can I build and run the host 
+	applications that talk to the Java Powered <u>i</u>Button 
+	from outside of the <u>i</u>B-IDE?</a></li>
+    <li><a href="#opencard">What does &quot;Exception 
+	opencard.core.util.OpenCardPropertyLoadingException: 
+	property file not found&quot; mean?</a></li>
+    <li><a href="#generate">How can I generate RSA keys in the
+	Java Powered <u>i</u>Button?</a></li>
+    <li><a href="#20">Does Sun's new HotSpot work with the 
+	<u>i</u>B-IDE?</a></li>
+    <li><a href="#21">What does a &quot;java.io.IOException: 
+	CreateProcess: javac ...&quot; error mean when I try to 
+	compile?</a></li>
+    <li><a href="#22">Why doesn't my JDK 1.2 VM appear in the 
+	list of available VM's when I try to install 
+	<u>i</u>B-IDE?</a></li>
+    <li><a href="#23">What do all of the many exceptions mean 
+	that appear in the Messages window when I'm using 
+	the online help system?</a></li>
+    <li><a href="#24">How do I get started programming?</a></li>
+    <li><a href="#25">When I use the Project Wizard to create 
+	a new Project I get the error: 
+	&quot;java.lang.IllegalArgumentException: bad 
+	position: ...&quot; What does this mean?</a></li>
+    <li><a href="#clock">How do I read the Java Powered 
+	<u>i</u>Button's real time clock?</a></li>
+    <li><a href="#card">Is the Java Powered <u>i</u>Button the
+	same thing as a Java Card?  Will my code for the
+	<u>i</u>Button work on a Java Card?</a></li>
+    <li><a href="#classpath">How can I modify my classpath
+        to include more files in my <u>i</u>B-IDE applications?</a></li>
+    <li><a href="#coproc_error">When I use APDU Sender's Get Last Error
+        function, the response is "None or Coprocessor".  What
+        does this mean?</a></li>
+    <li><a href="#jce">My applet uses the <u>i</u>Button's cryptographic
+        features.  Can I debug it using the emulator?</a></li>
+    <li><a href="#linux_bkpt">I've set my breakpoints, but they don't show
+	up beside the code--they show up several lines down.  What is 
+	going on?</a></li>
+
+
+
+
+</ol>
+
+<p><b>Dallas Semiconductor Support Team Answers</b> </p>
+
+
+<ol>
+<a name="1"></a><hr>
+    <li><i>What happened to the JiBKit?<br>
+        <br>
+        </i><strong>Answer:<br>
+        </strong>The iB-IDE is a complete replacement and
+        enhancement of the previous JiBKit releases.  If you
+        would like to work without the tools in the <u>i</u>B-IDE,
+        see the questions on <a href="#commandline">building 
+        applets</a> and <a href="#hostrun">running host programs
+        </a> outside of the <u>i</u>B-IDE.<br>
+        <br>
+    </li>
+<a name="num2"></a><hr>
+    <li><em>What is Dallas Semiconductor's
+        Java-Powered Crypto </em><em><u>i</u></em><em>Button?</em>
+        <p><b>Answer:</b><br>
+        The DS Java-Powered Crypto <u>i</u>Button is a secure
+        Java Virtual Machine encased in a stainless-steel
+        circular container only 16mm wide. It is Java-powered and
+        designed according to Sun's Java Card 2.0 specification.
+        Because it has more RAM than other Java Card-based
+        products, your programs can do more, and since it relies
+        on battery-backed static RAM to store its applets, it can
+        be programmed over and over again as needs change.
+        Perhaps best of all, the <u>i</u>Button's small size
+        means it can be integrated into all sorts of personal
+        accessories for both safe keeping and convenience of
+        use.  Find out more at http://www.ibutton.com/store/index.html.</p>
+        <p>This <u>i</u>Button has a super-fast, 1024-bit modular
+        math coprocessor for cryptographic operations. This is,
+        in fact, the same coprocessor already proven in the DS
+        Crypto <u>i</u>Button with Dallas O/S. Having such a
+        coprocessor makes the Java Powered Crypto <u>i</u>Button
+        ideal as a general-purpose security device, fully capable
+        of performing secure transactions over the internet. </p>
+        <p></a> </p>
+    </li>
+<a name="2"><hr>
+    <li><i>What JDKs are supported by this developer's kit
+        (iB-IDE)?</i> 
+	<p><b>Answer:</b><br>
+        This version was developed and tested for on JDK 1.2
+        and JDK 1.3. This is a <strong>requirement </strong>to
+        install and run iB-IDE, but the underlying <u>i</u>Button
+        code needed to simply run <u>i</u>Button applications
+        will work on JDK 1.1.x.<br>
+        <br>
+	This version fixes the previous problems where no JDK
+	other than 1.2.1 and 1.2 would work with the <u>i</u>B-IDE.
+	Future versions of the JDK <em>should</em> be compatible with
+	<u>i</u>B-IDE, but as long-time users know, problems may arise
+	from future JDK releases. 
+        </p>
+        <p> </p>
+    </li>
+<a name="3"></a><hr>
+    <li><i>What platforms are supported by the iB-IDE? </i>
+        <p><b>Answer:</b><br>
+        The iB-IDE supports Windows 9x<font size="1"><sup>TM</sup></font>,
+        Windows NT<font size="1"><sup>TM</sup></font>, 
+	Solaris<font size="1"><sup>TM</sup></font> versions 2.5.1
+        or greater, and Linux.<br>
+        </p>
+        <p> </p>
+    </li>
+<a name="4"></a><hr>
+    <li><i>I get the following error message when running under
+        Windows:&quot;Error 2 opening registry key
+        HARDWARE\DEVICEMAP\SERIALCOMM&quot;. What can I do about
+        this?</i> <p><b>Answer:</b><br>
+        Try passing a command line parameter to the application
+        that you are running. The command line parameter is the
+        communications port name on your machine. Example:
+        &quot;java BusinessCardDisplay COM1&quot; </p>
+        <p> </p>
+    </li>
+<a name="6"></a><hr>
+    <li><i>I'm running Windows NT and cannot seem to install the
+        Win32 drivers. What is required to install drivers under
+        Windows NT?</i> <p><b>Answer:</b><br>
+        In order to have &quot;permission&quot; from Windows NT
+        to install drivers, you <em>must</em> be using an
+        Administrator account when you install iB-IDE. Also,
+        please note that in order for the NT drivers to work
+        properly, you must also have Service Pack 2 or greater
+        installed on your machine.</p>
+        <p>NOTE: These drivers are only needed if you are using
+        the DS1410E parallel port adapter. They should not be
+        needed for serial port communication, since serial
+        communication can be achieved using pure Java. </p>
+        <p></a> </p>
+    </li>
+<a name="7"><hr>
+    <li><i>I get the following error when I run the host
+        examples: &quot;access-ibKeyOpen, timeout waiting for
+        port owned&quot;. What is wrong?</i> <p><b>Answer:</b><br>
+        What you see are debug and test statements sent to the
+        console screen used during development. This, in itself,
+        is not a cause for worry. If your applet still finds the <u>i</u>Button,
+        then these messages may be ignored. If not, first make
+        sure that there are no other applications running that
+        may be using this port. If all else fails, move your Blue
+        Dot adapter to another port.</p>
+        <p> </p>
+    </li>
+<a name="8"></a><hr>
+    <li><i>Why do I keep getting an unsatisfied link error when
+        trying to run the host examples?</i> <p><b>Answer:</b><br>
+        The most likely cause is that Java cannot find a native
+        library it needs in order to continue executing. If you
+        are on Windows 95 or NT, make sure that both the
+        &quot;iButtonLegacy.dll&quot; and
+        &quot;win32com.dll&quot; are in the
+        &quot;[JDK_ROOT]\jre\bin&quot; directory. If you are
+        running Unix, then make sure the appropriate libraries
+        can be found in the directory pointed to by the
+        environment variable LD_LIBRARY_PATH.</p>
+        <p>This problem is also seen while using early betas of
+        JDK 1.2. We currently recommend using the release version
+        of JDK 1.2 or later.</p>
+        <p>You might also see this sort of problem if you are
+        running a vendor's VM other than the one provided by Sun.
+        While several other vendors VM's have been shown to work
+        well with these libraries, you should check with your
+        vendor to find out whether their VM's are conformant to
+        regular native Java standards, including where the
+        appropriate libraries should reside. </p>
+        <p> </p>
+    </li>
+<a name="9"></a><hr>
+    <li><i>Where can I purchase the hardware required for the
+        developer's kit?</i> <p><b>Answer:</b><br>
+        You can order directly from our <a
+        href="https://store.ibutton.com/volcalc.html">Information
+        Security Store</a> or contact Brian Kraman via e-mail at <a
+        href="mailto:brian.kraman@dalsemi.com">brian.kraman@dalsemi.com</a>
+        for purchasing information. </p>
+        <p> </p>
+    </li>
+<a name="10"></a><hr>
+    <li><i>What does the return code of 0x6681 mean?</i> <p><b>Answer:</b><br>
+        A return code of 0x6681 indicates a security problem
+        while attempting to perform a command function, such as
+        running an applet. All <u>i</u>Buttons for Java have
+        potential to be locked using password protection. The
+        rings from JavaOne 1998 use the PIN &quot;1!J1&quot;. </p>
+        <p> </p>
+    </li>
+<a name="11"></a><hr>
+    <li><i>When I try to load an applet I get a return code of
+        0x6903. What does that mean?</i> <p><b>Answer:</b><br>
+        A return code of 0x6903 is very similar to the above code
+        of 0x6681, except that this code occurs as a result of <i>attempting
+        to load</i> an applet. It also indicates that the master
+        password supplied is incorrect. The only password used on
+        Java Powered <u>i</u>Buttons supplied at Java One 1998 is
+        &quot;1!J1&quot;. </p>
+        <p> </p>
+    </li>
+<a name="12"></a><hr>
+    <li><i>When I try to load an applet I get a return code of
+        0x6902. What does that mean?</i> <p><b>Answer:</b><br>
+        A return code of 0x6902 (Bad API Version) means that you
+        have tried to load an applet on your <u>i</u>Button that
+	was built for a different <u>i</u>Button version.  To fix
+	this, determine the firmware version string of your Java 
+	Powered <u>i</u>Button using 
+	APDUSender.  Then, under COMPILE | OPTIONS, choose the
+	correct Target <u>i</u>Button Version.</p>
+        <p> </p>
+    </li>
+<a name="6A84"></a><hr>
+    <li><i>When I try to load an applet I get a return
+        code of 0x6A84. What does that indicate?</i>
+        <p><b>Answer:</b><br>
+        This error (Class Length Overrun) can occur when
+        you are trying to load a larger applet onto the
+        Java Powered <u>i</u>Button.  The applet must be
+        sent in packets, and transmission errors can cause
+        this failure.  You can increase the packet size to
+        reduce the occurance of this error.  In your code,
+        add the line<br><br>
+        <pre><code>	jibapi.setLoadPacketSize(120);</code></pre>
+        
+        before you load the applet (<code>jibapi</code>
+        is a <code>JiBAPI</code> object--remember that
+        <code>JibMultiFactory</code> extends <code>JiBAPI</code>,
+        as a <code>JibMultiFactory</code> might be easily accessible
+        in your <u>i</u>B-IDE generated code).  The default Load
+        Packet Size is 64.  You should not go above 120.
+        </p>
+    </li>
+<a name="13"></a><hr>
+    <li><i>What causes a return code of 0x8453?</i> <p><b>Answer:</b><br>
+        A return code of 0x8453 is caused by selecting an applet
+        that does not exist on the Java Ring. This almost always
+        occurs when a developer believes an applet has been
+        loaded, but for some reason it has not. </p>
+    </li>
+<a name="6985"></a><hr>
+    <li><i>When I try to talk to my applet I get a return
+        code of 0x6985.  What does this mean?</i>
+        <p><b>Answer:</b><br>
+        This usually happens when the applet has failed to 
+        load or has not been selected before communication,
+        so the Java <u>i</u>Button does not know what to do
+        with your APDU.  Make sure to select the
+        applet before you communicate with it.
+        </p>
+    </li>
+<a name="6F00"></a><hr>
+    <li><i>When I am talking to my applet it returns a
+        status word 0x6F00.  What happened?</i></li>
+        <p><b>Answer:</b><br>
+        A 0x6F00 means &quot;Uncaught Exception&quot;.  Either 
+        an <a href="sw.html#exception">exception</a>
+        was thrown from the <u>i</u>Button and
+        there was no <code>try | catch</code> block around it
+        (like a NullPointerException) or an <a href=
+        "sw.html#error">error</a> was thrown
+        that could not be 'caught' (like an OutOfMemory Error).
+        To determine what happened, you can use APDU Sender
+        and issue the command <b>Get Last Error</b> or in your
+        code you can do something like the following:<br><br>
+        <code><pre>
+            if (statusWord==(short)0x6f00)
+                try
+                {
+                    //jibapi is a JiBAPI object
+                    <b>ResponseAPDU response = jibapi.getLastError();</b>
+                    int err = 0x0ff & response.data()[0];
+                    System.out.print("Last Error reported as 0x");
+                    if (err<16) System.out.print('0');
+                    System.out.println(Integer.toHexString(err));
+                }
+                catch(Exception e)
+                {
+                    System.out.println("Could not getLastError!");
+                }
+        </pre></code><br>
+        You can determine the meaning of the returned code from the
+        <a href="sw.html">Status Word</a> document.  Make sure
+        you know the firmware version of your <u>i</u>Button to determine
+        the meaning of an exception.
+        <br>
+        </p>
+    </li>
+
+<a name="6400"></a><hr>
+    <li><i>I keep getting an Out of Memory Error (status word 0x6400 
+        or error code 0x62), but I don't think I should really be 
+        out of memory.  What can I do?</i>
+        <p><b>Answer:</b><br>
+        Make sure that both types of garbage collection are enabled.
+        You can do this with the APDU 
+        Sender program (press F4 to start it).  There are two types
+        of garbage collection: Applet and Ephemeral.  Under APDU Sender,
+        there are Get and Set commands for both types.  Make sure the
+        Get methods return 1.
+        </p>
+        <p>
+        Note that unlike on a PC or workstation, garbage collection in
+        the <u>i</u>Button will not begin until the <code>process</code>
+        method returns.  Variables may fall out of scope, but they will
+        not be available for collection until the end of the process
+        method.</p>
+    </li>
+
+
+<a name="14"></a><hr>
+    <li><i>Why do I get the error &quot;cannot
+        load class ...&quot; even when my CLASSPATH is correct?</i>
+        <p><b>Answer:</b><br>
+        You probably have environment size problems. You can
+        change this value in Windows 95 by pulling up properties
+        on the DOS shell you are using. Under the Memory tab,
+        change the Initial Environment Size to a larger value.
+        Apply the changes, and try again. </p>
+        <p>A similar error, &quot;NoClassDefFoundError&quot; may
+        occur on the Windows 95 platforms for unknown reasons,
+        and may sometimes be corrected by either (A) using the
+        syntax &quot;java -classpath %classpath%
+        &lt;myApplet&gt;&quot;, or (B) by changing the order of
+        required jar files in the classpath so that the jar file
+        used by the application for itself is last. </p>
+    </li>
+<a name="15"></a><hr>
+    <li>I am writing an applet to store
+        information. I can allocate an array the size I need OK,
+        but I can't seem to send more than 255 bytes to my applet
+        successfully. What's wrong? <p><b>Answer:</b><br>
+        There is a bug in the Java One '98 release of the <u>i</u>Button
+        for Java which prevents the array index parameter to
+        &quot;sendBytesLong()&quot; from completing successfully.
+        This can be worked around by sending arrays which are
+        larger than 255 bytes in pieces. By iteratively sending
+        smaller packets, you can successfully load an array which
+        is larger than 255 bytes. (The code generated by iB-IDE
+        will automatically handle this for you.) This has been
+        fixed in the 1.0 release of the Java-Powered <u>i</u>Button.
+        </p>
+    </li>
+<a name="16"><i><hr>
+    <li>I need documentation on the classes
+        &quot;commandAPDU&quot; and &quot;responseAPDU&quot;, but
+        I do not see it described anywhere in the online help of
+        iB-IDE. Where can I get this information?</i></a> <p>These
+        classes are a product of the <a href="http://www.opencard.org">
+        OpenCard consortium</a> and the latest documentation can be
+        downloaded from the associated web site.</p>
+    </li>
+<a name="50"></a><hr>
+   <li><i>Where can I get additional
+        documentation?</i> <p><b>Answer:</b><br>
+        For information on the latest Java Card specification refer
+        to <a
+        href="http://www.javasoft.com/products/javacard/index.html"> 
+	http://www.javasoft.com/products/javacard/index.html</a>.
+	However, the Java Powered <u>i</u>Button conforms to the 
+	Java Card 2.0 specification.  Documentation is hidden on 
+	Sun's website but can still be found at 
+	<a href="http://www.javasoft.com/products/javacard/javacard20.html#download">
+	http://www.javasoft.com/products/javacard/javacard20.html#download</a>.
+        </p>
+        <p>For the latest in OpenCard technology, visit <a
+        href="http://www.opencard.org">http://www.opencard.org</a>.
+        </p>
+        <p>Check <a href="http://www.ibutton.com/iB-IDE">http://www.ibutton.com/iB-IDE</a>
+        for updated documentation on the iB-IDE.</p>
+    </li>
+ <a name="18"></a><hr>
+   <li><i>When I try to compile my applet, I
+        get an exception thrown which says
+        &quot;NoSuchMethodError: CommPortIdentifier: method
+        open() or openPort() not found&quot;. What's going on
+        here?</i> <p><strong>Answer:</strong><br>
+        This is an easy problem to fix, once you realize what
+        causes it. The &quot;javax.comm&quot; package changed
+        slightly when Sun promoted the code from EA to Beta
+        status. In doing so, two method names have been changed:
+        openPort() &amp; closePort(). The new names for these
+        methods is simply open() &amp; close(). The latest
+        version is included with the installation for iB-IDE.</p>
+        <p>The latest and most current version of our developer's
+        is iB-IDE version 1.0. We strongly encourage all our
+        developers to make the transition to this version if they
+        are currently working with older versions.</p>
+    </li>
+<a name="cryptofunctions"></a><hr>
+   <li><p><em>What are the different versions of the <u>i</u>Button, 
+       and what cryptographic functions are available on each?<br>
+        <br>
+        </em><strong>Answer:<br>
+        </strong>The version 0 <u>i</u>Buttons - a.k.a. 1998 JavaOne <u>i</u>Buttons
+        - (Java <u>i</u>Button Firmware Version 0.03.0003) have no
+        modular exponentiation capabilities. This ring is
+        therefore not export controlled. It does have a SHA-1
+        hash class (javacardx.crypto.Sha1MessageDigest) and a
+        random number generator (javacardx.crypto.Random).<br>
+        <br>
+        The 1.0 <u>i</u>Buttons (Java <u>i</u>Button Firware Versions
+        1.00.0004, 1.01.0004, 1.02.0005, and 1.03.0005) have 
+        a modular exponentiation function in
+        addition to the version 0 <u>i</u>Button functions. This
+        new function can be found in the
+        com.dalsemi.system.Coprocessor class. This allows any
+        modular exponentiation based cryptography schemes (RSA,
+        DSA, etc.) to be implemented on the <u>i</u>Button. (See
+        the RSASign example project in iB-IDE).<br>
+        <br>
+        The 1.1 <u>i</u>Buttons (Java <u>i</u>Button Firmware Versions
+	1.10.0006 and 1.11.0006) have the javacardx.crypto package fully
+        implemented (providing DES, RSA implementations). See the
+        javacardx.crypto specification for the available
+        functions.<br>
+	<br>
+	The 2.2 <u>i</u>Buttons (Java <u>i</u>Button Firmware Versions
+	2.2.0007) have 134K memory and support RSA keyset
+	generation through a Dallas Semiconductor provided class.<br>
+	</p>
+        </li>
+<a name="commandline"></a><hr>
+    <li><p><em>How can I build Java 
+	Powered <u>i</u>Button applets outside of the <u>i</u>B-IDE?<br>
+        <br>
+        </em><strong>Answer:<br>
+        </strong>
+	<p>Building a Java Powered <u>i</u>Button applet outside of the
+	<u>i</u>B-IDE is a two step process.  First you must compile the
+	applet into a class file (or files), then you must build a .jib
+	file from the class file(s).</p>
+	<strong>Compiling:<br></strong>
+
+	Find the file <b>rt.jar</b> on your system.  On a Windows system,
+	it might be located in <em>C:\Program Files\JavaSoft\JRE\1.2\lib\rt.jar</em>.<br><br>
+
+	Also determine the Java Powered <u>i</u>Button version that you will be
+	building for.  You can determine this using 
+	APDUSender.  From the firmware version string, determine the 
+	database file to use from the <a href="database.html"><u>i</u>Button Database</a>
+	page.  This file will be in the form <b>jibXX.jibdb</b>, where XX is a two digit number, unless
+	you are building for a 1998 Java-One version of the Java Powered <u>i</u>Button, in which
+	case you will need the file <b>javaone.jibdb</b>.  You will also need to find the file 
+	<b>iButtonXX.jar</b>, with the same XX as for the database file (you will need <b>iButton32.jar</b>
+	for a 1998 Java-One <u>i</u>Button).<br><br>
+	
+	To compile from a prompt, type:<br>
+	<code>javac -bootclasspath "d:\iBIDE\class\iButtonXX.jar;C:\Program 
+		Files\JavaSoft\JRE\1.2\lib\rt.jar" mysource.java</code><br><br>
+
+	<strong>Building the Applet:<br></strong>
+	Find the file <b>jib.jar</b>.  The <u>i</u>B-IDE places this file in a folder 
+	in your JDK's directory structure (in the <em>jre\lib\ext</em> path).  For instance,
+	it might be in <em>C:\jdk1.2.1\jre\lib\ext</em>.<br><br>
+
+	To build from a prompt, type:<br>
+	<code>java -classpath c:\jdk1.2.1\jre\lib\ext\jib.jar;%classpath% BuildJiBlet -f mysource.class 
+		-o mysource.jib -d jibXX.jibdb</code><br><br>
+
+	<strong>Making an applet from multiple files:<br></strong>
+	To make a Java Powered <u>i</u>Button applet from several class files, only 
+	a slight modification from the above is necessary.<br><br>
+
+	Build your class files normally by adding the extra class files to the end of the 
+	command line shown above:<br>
+	<code>javac -bootclasspath "d:\iBIDE\class\iButtonXX.jar;C:\Program 
+		Files\JavaSoft\JRE\1.2\lib\rt.jar" mysource.java myobject.java</code><br><br>
+	Then move your class files to a new directory.  In this example, assume we've moved the
+	files mysource.class and myobject.class to a directory called <em>build</em>.  No other
+	files exist in that directory.  Now to build the applet:<br>
+	<code>java -classpath c:\jdk1.2.1\jre\lib\ext\jib.jar;%classpath% BuildJiBlet -f build 
+		-o mysource.jib -d jibXX.jibdb</code><br><br>
+        </p></li>
+<a name="hostrun"></a><hr>
+    <li><p><em>How can I build and run the host 
+	applications that talk to the Java Powered <u>i</u>Button 
+	from outside of the <u>i</u>B-IDE?<br>
+        <br>
+        </em><strong>Answer:<br></strong>
+	You will need to include the following files in your classpath:<br>
+	<ol>
+		<li>exportable_ocf.jar</li>
+		<li>comm.jar</li>
+		<li>selector.jar</li>
+		<li>jibapi.jar</li>
+	</ol>
+	These files are placed in your JDK's lib\ext directory by the <u>i</u>B-IDE 
+	installation program, for instance they might be in <em>C:\jdk1.2.1\jre\lib\ext</em>.
+	You can add these to your classpath in several ways.
+	<ol>
+	<li>	You can set the environment variable on your system.  For instance, on Windows
+		machines you can type<br><br>
+		<code>set classpath=.;c:\jdk1.2.1\jre\lib\ext\exportable_ocf.jar;c:\jdk1.2.1\jre\lib\ext\comm.jar;c:\jdk1.2.1\jre\lib\ext\selector.jar;c:\jdk1.2.1\lib\ext\jibapi.jar</code><br><br>
+		This can also be done from a batch file (like autoexec.bat) or a script.<br><br>
+	</li>
+
+	<li>	You can set the classpath if you are building from a development tool.  
+		For instance, in Visual Cafe, under the PROJECTS menu, select OPTIONS, 
+		then select the DIRECTORIES tab.  Add the jar files to your classpath
+		here.<br><br>
+	</li>
+
+	<li>	You can specify the classpath in your command.  For instance, to compile, type:<br><br>
+		<code>javac -classpath .;c:\jdk1.2.1\jre\lib\ext\exportable_ocf.jar;c:\jdk1.2.1\jre\lib\ext\comm.jar;c:\jdk1.2.1\jre\lib\ext\selector.jar;;c:\jdk1.2.1\jre\lib\ext\jibapi.jar myHostSource.java</code><br><br>
+		You can also specify a classpath to run the project.<br><br>
+		<code>java -classpath .;c:\jdk1.2.1\jre\lib\ext\exportable_ocf.jar;c:\jdk1.2.1\jre\lib\ext\comm.jar;c:\jdk1.2.1\jre\lib\ext\selector.jar;;c:\jdk1.2.1\jre\lib\ext\jibapi.jar myHostSource</code><br><br>
+	</li>
+
+	</ol>
+
+	You must also have the file <b>opencard.properties</b> in your <em>[jdk]\jre\lib</em> directory.
+	This file selects which port you are going to use for communication with the <u>i</u>Button.  See
+	<a href="#opencard">the discussion on OpenCardPropertyLoadingException</a> for more details on
+	this file, or visit <a href="http://www.opencard.org">the OpenCard website</a>.
+        </p>
+   </li>
+<a name="opencard"></a><hr>
+   <li><i>What does &quot;Exception opencard.core.util.OpenCardPropertyLoadingException: 
+	property file not found&quot; mean?</i> 
+	<p><strong>Answer:</strong><br>
+	The program is trying to find the file <b>opencard.properties</b> on your system to 
+	determine which port it should use to communicate with the <u>i</u>Buttons.  It should
+	be located in your <em>[jdk]\jre\lib</em> directory.  The contents
+	the file should look something like this (on a Windows machine):<br><br>
+	<code>
+	#Only the last uncommented line will be used to search for iButtons.<br>
+	#Uncomment the next line to search COM1 using native code<br>
+	#OpenCard.terminals=com.ibutton.oc.terminal.jib.iButtonCardTerminalFactory|iButtonAdapter|iBUTTON_PORT_TYPE_LEGACY_SERIAL|COM1<br>
+	<br>
+	#Uncomment the next line to search COM2 using native code<br>
+	<br>
+	#OpenCard.terminals=com.ibutton.oc.terminal.jib.iButtonCardTerminalFactory|iButtonAdapter|iBUTTON_PORT_TYPE_LEGACY_SERIAL|COM2<br>
+	<br>
+	#This line will search the LPT1 for iButtons.<br>
+	OpenCard.terminals=com.ibutton.oc.terminal.jib.iButtonCardTerminalFactory|iButtonAdapter|iBUTTON_PORT_TYPE_LEGACY_PARALLEL|LPT1<br>
+	<br>
+	#Uncomment the next line to search LPT2 using native code<br>
+	<br>
+	#OpenCard.terminals=com.ibutton.oc.terminal.jib.iButtonCardTerminalFactory|iButtonAdapter|iBUTTON_PORT_TYPE_LEGACY_PARALLEL|LPT2<br>
+	<br>
+	<br>
+	</code>
+	In this case, parallel port 1 will be searched for <u>i</u>Buttons.<br>
+	<br>
+	If you continue to have problems with this exception, you might also try 
+	copying the <b>opencard.properties</b> file into your working directory.<br>
+	</p>
+    </li>
+<a name="generate"></a><hr>
+   <li><i>How can I generate RSA keys in the Java Powered <u>i</u>Button?</i> 
+	<p><strong>Answer:</strong><br>
+	Only the most recent version (2.2) of the Java Powered <u>i</u>Button 
+	can generate an RSA keyset.  This functionality is available in the
+	<code>com.dalsemi.security.RSAKeyGenerator</code> class.<br>
+	<br>
+	Previous versions of the <u>i</u>Button that support RSA operations must have
+	their keysets generated outside the <u>i</u>Button, then loaded into 
+	the <u>i</u>Button.  Note that some keyset generation programs (including
+        any code in Java that uses the <code>BigInteger</code> class to create primes)
+        can sometimes create what appears to be a prime of N+1 bytes instead of the
+        requested N bytes (for instance, your prime will be 129 bytes instead of 128).
+        In most cases, this extra byte is a leading zero attached to ensure the prime 
+        is not interpreted as a negative number.  You can usually truncate this leading 
+        byte.
+	</p>
+    </li>
+<a name="20"></a><hr>
+    <li><i>Does Sun's new HotSpot work with the <u>i</u>B-IDE?</i>
+	<p><strong>Answer: </strong><br>
+	If you are using the <u>i</u>B-IDE 
+	native drivers for communication to the <u>i</u>Button 
+	(which is the default), HotSpot will not work.  From the 
+	HotSpot FAQ: &quot;Native methods used with the Java HotSpot 
+	Performance Engine must conform to the Java Native Interface 
+	(JNI) specification. The Java HotSpot Performance Engine 
+	does not and will not support native method conventions 
+	older than the JNI specification.&quot;
+	</p>
+	<p>The <u>i</u>B-IDE native drivers conform to the older 
+	stubs interface and will therefore not work with HotSpot.  
+	If you have HotSpot installed in your system, you need to 
+	either uninstall it, or edit the iB-IDE_1_01.bat (or .sh) 
+	file and add the &quot;-classic&quot; switch to the call 
+	to java.  (Note:  Windows users must also do the same 
+	update to the iB-IDE_1_01.ini file.)
+	</p>
+	<p>However, you can choose instead to use javax.comm as 
+	your primary communication layer.  To do so, edit the 
+	[jdk1.2]\jre\lib\opencard.properties file.  This file 
+	should have all of the ports installed in your system 
+	enumerated on separate lines.  All of the lines should be 
+	commented out with a '#' except for the port you are using.  
+	Find the line you are using and remove the embedded string 
+	&quot;_LEGACY&quot; from the line.  You should now be able 
+	to use HotSpot with <u>i</u>B-IDE.
+	</p>
+	<p></p>
+    </li>
+<a name="21"></a><hr>
+    <li><i>What does a &quot;java.io.IOException: CreateProcess: 
+	javac ...&quot; error mean when I try to compile?</i>
+	<p><strong>Answer: </strong><br>
+	This is caused by [jdk1.2]\bin not being in your PATH 
+	environment variable.  Add this to your PATH (making 
+	sure it is the first Java VM bin directory in your PATH). 
+	Windows systems may need to reboot.
+	</p>
+	<p>You can also go into Compile -&gt; Options and put 
+	the full path to javac.
+	</p>
+	<p></p>
+    </li>
+<a name="22"></a><hr>
+    <li><i>Why doesn't my JDK 1.2 VM appear in the list of 
+	available VM's when I try to install <u>i</u>B-IDE?</i>
+	<p><strong>Answer: </strong><br>
+	Unix users can choose to specify the path to the desired 
+	VM if it doesn't appear in the available list.  Java 
+	InstallShield will search the PATH for available VM's, so 
+	adding the desired VM bin directory to the PATH (as the 
+	first Java VM bin directory) will make that VM appear as 
+	available.
+	</p>
+	<p>On Windows systems, Java InstallShield currently searches 
+	the registry for available VM's.  These are often missing 
+	or altered so that a valid VM might not appear in the 
+	available list.  Make sure these following registry entries 
+	exist.  If they do not, use regedit to add them and try 
+	running setup again.
+	</p>
+	<p>My Computer\HKEY_LOCAL_MACHINE\SOFTWARE\JavaSoft\<BR>JavaDevelopment Kit</p>
+	<p>My Computer\HKEY_LOCAL_MACHINE\SOFTWARE\JavaSoft\<BR>JavaDevelopment Kit\1.2></p>
+	<p>The first key should have one string value (other than 
+	'Default') called &quot;CurrentVersion&quot; with a value 
+	of &quot;1.2&quot;.  The second key should have 2 string 
+	values.  The first is named &quot;JavaHome&quot; with the 
+	value being the full path to your JDK installation directory.  
+	The second should be named &quot;MicroVersion&quot; and have 
+	a value of &quot;0&quot; if using the original JDK 1.2, or 
+	&quot;1&quot; if using 1.2.1, or &quot;2&quot; if using 1.2.2.
+	</p>
+	<p>This solves 98% of problems Windows users have with 
+	Java InstallShield.  If this does not solve your problem, 
+	please post to the developer list.  Details for posting to 
+	this list are <a href="#email">at the top of this document</a>.
+	</p>
+	<p></p>
+    </li>
+<a name="23"></a><hr>
+    <li><i>What do all of the many exceptions mean that appear in 
+	the Messages window when I'm using the online help system?</i>
+	<p><strong>Answer: </strong><br>
+	<u>i</u>B-IDE's online help system is built around the JavaHelp 
+	API.  There are several JavaHelp documented bugs pertaining to 
+	harmless exceptions being thrown when using the API.  If the 
+	help system is responding correctly despite the numerous 
+	exceptions being thrown, you can safely ignore the exceptions.  
+	You can always clear the exceptions from your display by 
+	right clicking in the Message window and choosing to clear 
+	messages.
+	</p>
+	<p></p>
+    </li>
+<a name="24"></a><hr>
+    <li><i>How do I get started programming?</i>
+	<p><strong>Answer: </strong><br>
+	<u>i</u>B-IDE's online help system has several tutorials that 
+	walk you through step-by-step writing your first <u>i</u>Button 
+	project.  The tutorials are located under Project Creation in 
+	the online help and are called Host and Applet Tutorial and 
+	Applet and APDUSender Tutorial.
+	</p>
+	<p></p>
+    </li>
+<a name="25"></a><hr>
+    <li><i>When I use the Project Wizard to create a new Project 
+	I get the error: &quot;java.lang.IllegalArgumentException: 
+	bad position: ...&quot; What does this mean?</i>
+	<p><strong>Answer: </strong><br>
+	This error is caused by running previous versions of
+	<u>i</u>B-IDE under JDK 1.2.2. This JDK release introduced several 
+	incompatibilities making it unusable with 
+	<u>i</u>B-IDE.  This problem has been accounted for in the current
+	release of <u>i</u>B-IDE.  If you experience this problem, please 
+	post to the developer list (<a href="#email">see details at the
+	top of the page</a>).
+	</p>
+	<p></p>
+    </li>
+<a name="clock"></a><hr>
+    <li><i>How do I read the Java Powered <u>i</u>Button's real time clock?</i>
+	<p><strong>Answer: </strong><br>
+	Use <code>com.dalsemi.system.Clock.getClock()</code>.  It is a static
+	method returning an <code>int</code> that contains the current value 
+	of the clock in seconds.
+	</p>
+	<p></p>
+    </li>
+<a name="card"></a><hr>
+    <li><i>Is the Java Powered <u>i</u>Button the same thing as a Java 
+	Card?  Will my code for the <u>i</u>Button work on a Java Card?</i>
+	<p><strong>Answer: </strong><br>
+	The Java Powered <u>i</u>Button conforms to the Java Card 2.0
+	specification.  It communicates through APDUs and implements
+	the javacard.framework package.  Programs written that adhere to the
+	Java Card standard will run on both the <u>i</u>Button and
+	a typical &quot;smart-card-like&quot; Java Card.  However, you 
+	will not be able to take the jib file (the converted applet) 
+	and run it on another Java Card.  Once the source has been compiled,
+	it must be converted to a hardware specific format (this is what
+	the BuildJiBlet tool does).<br>
+	<br>
+	Also, be aware of differences between Java Card implementations.
+	The Java Powered <u>i</u>Button supports the Java Card cryptography
+	extensions, which are optional in the Java Card specification.  There
+	are also a number of <u>i</u>Button specific classes (the <code>
+	com.dalsemi</code> packages) that will not be supported on other Java
+	Cards.  In addition, the Java Powered <u>i</u>Button supports 
+	integers (<code>int</code>), which is not included in the Java Card
+	specification.
+	</p>
+	<p></p>
+    </li>
+<a name="classpath"></a><hr>
+    <li><i>How can I modify my classpath to include more files in my 
+        <u>i</u>B-IDE applications?</i>
+	<p><strong>Answer: </strong><br>
+        The 1.10 Release of <u>i</u>B-IDE now has support for modifying
+	classpaths.  There are two CLASSPATH buttons on the 
+	project window--one for 
+	the applet and one for the host.  See 
+        Changing a Classpath in the iB-IDE online documentation for a discussion of how to change your
+	classpath.
+        </p>
+    </li>
+<a name="coproc_error"></a><hr>
+    <li><i>When I use APDU Sender's Get Last Error function, the 
+        response is "None or Coprocessor".  What does this mean?</i>
+	<p><strong>Answer: </strong><br>
+	Due to an oversight in the Java Powered <u>i</u>Button
+	Firmware Release 2.2.0007 only, the exception code byte for
+	a <code>CoprocessorException</code> is 0x00, which is also
+	the response from an <u>i</u>Button Get Last Error call that
+	means "No Error".  If you perform a Get Last Error immediately
+	after recieving a 0x6F00 (Uncaught Exception), a response of
+	0x00 should mean "CoprocessorException".
+        </p>
+    </li>
+<a name="jce"></a><hr>
+    <li><i>My applet uses the <u>i</u>Button's cryptographic
+        features.  Can I debug it using the emulator?</i>
+	<p><strong>Answer: </strong><br>
+	The 1.10 Release of <u>i</u>B-IDE now has support for 
+	debugging applets that use the <u>i</u>Button's 
+	cryptographic functions.  In order to avoid legal 
+	issues, you must download Sun's Java
+	Cryptography Extension (JCE) from <a href=
+	"http://www.javasoft.com/products/jce/index.html">
+	"http://www.javasoft.com/products/jce/index.html"</a>.
+	The JCE includes a JAR file that you must put in your 
+	classpath, either by including it manually or by putting
+	the file in the same directory <u>i</u>B-IDE puts the files
+	jibapi.jar, exportable_ocf.jar, and others:  
+	[JDK home]/jre/lib/ext.<br>
+	<br>
+	Note that you can still use the emulators without 
+	downloading the JCE, but you will not be able to access 
+	the emulated cryptographic features.<br>
+	<br>
+	This release of <u>i</u>B-IDE was developed using JCE 1.2.
+        </p>
+    </li>
+
+<a name="linux_bkpt"></a><hr>
+    <li><i>I've set my breakpoints, but they don't show
+	up beside the code--they show up several lines 
+	down.  What is going on?</i>
+	<p><strong>Answer: </strong><br>
+	This can occur when the fonts used by <u>i</u>B-IDE 
+	cannot be found.  The program will use default fonts
+	instead, but the breakpoints are positioned based on
+	the size of the requested fonts.  The breakpoints 
+	are really there, they are just being drawn in the 
+	wrong place.
+        </p>
+    </li>
+
+
+</ol>
+
+<p><img src="Image3.gif" width="536" height="5"></p>
+
+<p><font size="2" face="Arial, helvetica"><b><u>i</u></b><b>Button
+Homepage: </b></font><a href="http://www.ibutton.com/"><font
+size="2" face="Arial, helvetica"><b>http://www.ibutton.com/</b></font></a><font
+size="2" face="Arial, helvetica"><b> </b></font></p>
+
+<p><img src="dsc.jpg" width="96" height="39"></p>
+</body>
+</html>

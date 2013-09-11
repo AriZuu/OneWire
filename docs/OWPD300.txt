@@ -1,0 +1,638 @@
+Documentation for the 1-Wire Net Public Domain Kit
+Version 3.00
+Copyright (C) 2004 Dallas Semiconductor
+
+
+Steps to Use the 1-Wire Public Domain Kit
+------------------------------------------
+
+Step 1: Do we support your platform?
+
+There are two sets of portable source files. The first set is general purpose
+and is intended for platforms that already have the primitive link-level 1-Wire
+Net communication functions. This is the lowest level that is hardware
+dependent and is called 'general'.
+
+The 'userial' set of portable source files assumes that the user has a serial
+port (RS232) and wishes to utilize our 'Universal Serial 1-Wire Line Driver
+Master chip' called the DS2480B. This chip receives commands over the serial
+port, performs 1-Wire Net operations and then sends the results back to the
+serial port.
+
+Platforms currently supported:
+OS             Compiler  Library  Name
+Windows 32-bit Visual C  userial  uWin32VC300
+Windows 32-bit GNU       userial  uWin32GNU300
+Windows 32-bit TMEX      <custom> TMEXWrap300
+Windows 32-bit Visual C  <custom> multiwvc
+Windows 32-bit Visual C  general  gpW32VC300
+Windows 32-bit Vicual C  general  usbw32VC300
+Linux          GNU       userial  uLinuxGNU300
+WinCE/PocketPC Visual C  userial  uWinCEVC300
+DS550          Keil      general  gds550keil300
+DS550          Keil      userial  uds550keil300
+DOS            Visual C  userial  udosvc300
+Windows 16-bit Visual C  userial  uwin16vc300
+
+
+Yes:
+Use the existing link files. You may also want to download example builds from
+the Public Domain kit at http://www.ibutton.com/software/1wire/wirekit.html
+
+No:
+Look at other links as examples. We recommend looking at 'lib\general\Link' or
+'lib\userial\Link' section in the Public Domain Kit. Please refer this document
+for General and Userial Application Interface Code.
+Serial port? 'userial'
+else use 'general'
+
+Step 2: How do you build applications?
+
+You will need files from each of these directories:
+Application(s)         Library Files            Link File
+'\apps'                (general or userial)     '\lib\general\Link'
+Common Module(s)   +   '\lib\general' or     +  or
+'\common'              '\lib\userial'           '\lib\userial\Link'
+
+Example: '\apps\temp'
+Application            Library Files            Link File
+temp.c                 (Userial)                win32lnk.c
+                       ds2480.h
+Common Modules         ds2480ut.c
+temp10.c               owllu.c
+findtype.c         +   ownetu.c              +
+owerr.c                owsesu.c
+ownet.h                owtrnu.c
+crcutil.c
+
+
+
+Device Listing
+---------------
+
+Example applications and 'C' modules for specific 1-Wire devices are listed
+below by Dallas Semiconductor part number.
+This section is provided to quickly find code resources specific to a 1-Wire
+device type.
+
+   DS1820/DS18S20/DS1920
+   Example Code for the DS1820/DS18S20/DS1920 can be found in:
+   '\common\'
+   temp10.c
+   An example application can be found in:
+   '\apps\temp'
+   '\apps\mweather'
+   temp.c
+   mweather.c
+
+   DS1921
+   Example Code for the DS1921 can be found in:
+   '\common\'
+   thermo21.c
+   thermo21.h
+   An example application can be found in:
+   '\apps\thermodl'
+   '\apps\thermoms'
+   thermodl.c
+   thermoms.c
+
+   DS1963S
+   Example Code for the DS1963S can be found in:
+   '\common\'
+   sha18.c
+   shadebit.c
+   shaibutton.c
+   An example application can be found in:
+   '\apps\shadebit'
+   '\apps\sha_init'
+   '\apps\sha_chck'
+   shainitcopr.c
+   shainitrov.c
+   shadebitdemo.c
+   isbhaut.c
+   sha_init.c
+   sha_chck.c
+
+   DS1991
+   Example Code for the DS1991 can be found in:
+   '\common\'
+   ps02.c
+   ps02.h
+   An example application can be found in:
+   '\apps\ps_check'
+   '\apps\ps_init'
+   ps_check.c
+   ps_init.c
+
+   DS1994/DS1427/DS2404
+   Example Code for the DS1994/DS1427/DS2404 can be found in:
+   '\common\'
+   time04.c
+   time04.h
+   An example application can be found in:
+   '\apps\tm_init'
+   '\apps\tm_check'
+   tm_init.c
+   tm_check.c
+
+   DS2405
+   Example Code for the DS2405 can be found in:
+   '\common\'
+   swt05.c
+   An example application can be found in:
+   '\apps\swtsngl'
+   swtsngl.c
+
+   DS2406/DS2407
+   Example Code for the DS2406/DS2407 can be found in:
+   '\common\'
+   swt12.c
+   An example application can be found in:
+   '\apps\swtlpop'
+   '\apps\mweather'
+   swtoper.c
+   swtloop.c
+   mweather.c
+
+   DS2409
+   Example Code for the DS2409 can be found in:
+   '\common\'
+   swt1f.c
+   An example application can be found in:
+   '\apps\coupler'
+   coupler.c
+
+   DS2423
+   Example Code for the DS2423 can be found in:
+   '\common\'
+   cnt1d.c
+   An example application can be found in:
+   '\apps\counter'
+   '\apps\mweather'
+   counter.c
+   mweather.c
+
+   DS2450
+   Example Code for the DS2450 can be found in:
+   '\common\'
+   atod20.c
+   An example application can be found in:
+   '\apps\atodtst'
+   '\apps\mweather'
+   atodtst.c
+   mweather.c
+
+   DS2438
+   Example Code for the DS2438 can be found in:
+   '\common'
+   ad26.c
+   An example application can be found in:
+   '\apps\gethumd'
+   gethumd.c
+
+   DS1977
+   Example Code for the Ds1977 can be found in:
+   '\common'
+   mbee77.c
+   mbee77.h
+   mbscrx77.c
+   mbscrx77.h
+   pw77.c
+   pw77.h
+   An example application can be found in:
+   '\apps\memutil'
+   memutil.c
+
+   DS1923/DS1922L/DS1922T/DS2422
+   Example Code for the DS1923 can be found in:
+   '\common'
+   humutil.c
+   humutil.h
+   mbee77.c
+   mbee77.h
+   mbscrx77.c
+   mbscrx77.h
+   pw77.c
+   pw77.h
+   An example application can be found in:
+   '\apps\humalog'
+   humalog.c
+
+
+1-Wire Application Interface
+
+This section provides a brief description of the API functions contained in
+the 'general' and 'userial' 1-Wire libraries.
+
+Link-Level 1-Wire Net functions:
+--------------------------------
+
+   owTouchReset - Reset all devices on the 1-Wire Net. Result of function
+      indicates if any devices were detected
+
+   owTouchBit - Send and receive 1 bit from the 1-Wire Net
+
+   owTouchByte - Send and receive 8 bits from the 1-Wire Net
+
+   owWriteByte - Send 8 bits to the 1-Wire Net and verify the echo received
+      matches. (constructed from owTouchByte)
+
+   owReadByte - Receive 8 bits from the 1-Wire Net by sending all 1's (0xFF)
+      and letting the slave change the echo.(constructed from owTouchByte)
+
+   owSpeed - Set the communication speed of the 1-Wire Net to Normal (16K bits)
+      or Overdrive (142K bits).  All 1-Wire devices at least support the
+      Normal communication rate.
+
+   owLevel - Set the 1-Wire Net line level to Normal (5V weak pull-up), Power
+      Delivery (5V strong pull-up), or Program Level (12V EPROM programming
+      level).  Power delivery only required by some 1-Wire devices.
+      Programming level only required to write EPROM based memory 1-Wire
+      devices.
+
+   owProgramPulse - Timed programming pulse for EPROM 1-Wire device writing.
+      Can be constructed from owLevel.  Only required to write EPROM based
+      memory 1-Wire devices.
+
+   owWriteBytePower - Send 8 bits of communication to the 1-Wire Net and
+      verify that the 8 bits read from the 1-Wire Net is the same (write
+      operation).  The parameter 'sendbyte' least significant 8 bits are used.
+      After the 8 bits are sent change the level of the 1-Wire net.
+
+   owReadBytePower - Reads 8 bits of communication to the 1-Wire Net and after
+      the 8 bits are read the level of the 1-Wire changes.
+
+   owReadBitPower - After 1 bit is read and matches the
+      applyPowerResponse the power level changes for power delivery.
+
+   owHasPowerDelivery - This function indicates whether the adapter can deliver
+      power.  It is just set to be true but may need to be changed for
+      different adapters.
+
+   owHasOverDrive - This function indicates whether the adapter has overdrive
+      capability.  It has been set and may need to be changed for different
+      adapters.
+
+   owHasProgramPulse - This function indicates whether or not voltage is
+      available.
+
+
+Network-level 1-Wire Net functions:
+-----------------------------------
+
+   owFirst - Search to find the 'first' 1-Wire device on the 1-Wire Net.
+      All 1-Wire Net devices have a unique 64-bit serial number.
+      The order the devices are found is serial number dependent.
+      The serial number found can be retrieved after this function using
+      owSerialNum.
+
+   owNext - Search to find the 'next' 1-Wire device on the 1-Wire Net based
+      on the last search done. The serial number found can be retrieved after
+      this function using owSerialNum. If owNext returns FALSE then the end
+      of the search has been found. Calling owNext again will reset the search
+      and find the 'first' device again.
+
+   owSerialNum - Retrieve or set the currently selected device serial number.
+
+   owFamilySearchSetup - Setup the following search (owNext) to find a
+      specific family type.  The first 8 bits of the unique serial number
+      indicate the 'family' that the device belongs to. The 'family' lets the
+      application know what type of commands the device requires. The
+      owSerialNum function must be called after the search has been performed
+      to verify the correct family type was found. If it is not the correct
+      family type then there are no devices of that type on the 1-Wire Net.
+
+   owSkipFamily - Skip all of the family type that was found in the last
+      search. The next search (owNext) will find a new type or come to the end
+      of the search.
+
+   owAccess - Select the current device by Serial Number. The selection is
+      done by resetting the 1-Wire Net, sending the 'MATCH ROM' command
+      followed by the current serial number. At the end of this operation
+      only the current device is listening on the 1-Wire Net for a device
+      specific command.
+
+   owVerify - Selects and verifies that the current device by Serial Number
+      is on the 1-Wire Net. This function uses the 'search' command to select
+      and verify the device is in contact with the Net.
+
+   owOverdriveAccess - Select the current device by Serial Number and place it
+      and the 1-Wire Net into Overdrive communication speed.
+
+
+Transport-level 1-Wire Net functions:
+-------------------------------------
+
+   owBlock - Send and receive blocks of data to the 1-Wire Net. A reset is
+      optionally done on the 1-Wire before the data is sent. This API is more
+      efficient than sending data with multiple 'owTouchByte' calls.
+
+   owRead  - Generic read of memory from the device with no CRC checking or
+      added information passed.
+
+   owWrite - Generic write to memory with no CRC writing.
+
+   owReadPage - Reads a page in memory with no CRC checking.
+
+   owReadPageExtra - Reads a page in memory with extra information and no CRC
+      checking.
+
+   owReadPageExtraCRC - Reads a complete memory page with CRC verification
+      provided by the device with extra information.
+
+   owReadPageCRC - Reads a complete memory page with CRC verification
+      provided by the device.
+
+   owReadPagePacket - Reads a Universal Data Packet from memory.
+
+   owReadPagePacketExtra - Reads a Universal Data Packet from memory with
+      extra information.
+
+   owWritePagePacket - Writes a Universal Data Packet to memory.
+
+   owGetNumberBanks - Gets the number of banks for a certain iButton
+      given it's family code.
+
+   owGetNumberPages - Gets the number of pages in the given memory bank
+      for a certain part.
+
+   owGetSize - Gets the size of a memory bank in bytes.
+
+   owGetPageLength - Gets the raw page length in bytes for a given
+      memory bank.
+
+   owGetStartingAddress - Gets the physical starting address of the
+      given memory bank.
+
+   owGetBankDescription - Gets a string description of the memory
+      bank.
+
+   owGetName - Retrieves the Dallas Semiconductor/Maxim part number
+      of the 1-Wire device as a string.
+
+   owGetAlternateName - Retrieves the alternate Dallas Semiconductor/
+      Maxim part numbers or names.
+
+   owGetDescription - Retrieves a short description of the function
+      of the 1-Wire device type.
+
+   owIsGeneralPurposeMemory - Checks to see if the memory bank is
+      general purpose user memory.
+
+   owIsReadWrite - Checks to see if this memory bank is read/write.
+
+   owIsWriteOnce - Checks to see if this memory bank is write once
+      such as with EPROM technology.
+
+   owIsReadOnly - Query to see if current memory bank is read only.
+
+   owIsNonvolatile - Query to see if current memory bank non-volatile.
+      Memory is non-volatile if it retains its contents even when
+      removed from the 1-Wire network.
+
+   owNeedsProgramPulse - Checks to see if this memory bank requires a
+      'ProgramPulse' in order to write.
+
+   owNeedsPowerDelivery - Checks to see if this memory bank requires
+      'PowerDelivery' in order to write.
+
+   owHasExtraInfo - Checks to see if this memory bank's pages deliver
+      extra information outside of the normal data space, when read.
+
+   owGetExtraInfoLength - Gets the length in bytes of extra information
+      that is read when reading a page in this memory bank.
+
+   owGetExtraInfoDesc - Gets a string description of what is contained
+      in the extra information returned when reading pages in the
+      given memory bank.
+
+   owGetMaxPacketDataLength - Gets maximum data page length in bytes
+      for a packet read or written in the given memory bank.
+
+   owHasPageAutoCRC - Checks to see if the given memory bank's pages
+      can be read with the contents being verified by a device
+      generated CRC.
+
+   owRedirectPage - Checks to see if the given memory bank has pages
+      that can be redirected to a new page.  This is used in
+      Write-Once memory to provide a means to update.
+
+   owCanLockPage - Checks to see if the given memory bank has pages
+      that can be locked.  A locked page would prevent any changes
+      to it's contents.
+
+   owCanLockRedirectPage - Checks to see if the given memory bank
+      has pages that can be locked from being redirected.  This
+      would prevent a Write-Once memory from being updated.
+
+   owProgramByte - Program a byte to an EPROM based 1-Wire device memory.
+      (function options may change on future versions of this code)
+
+
+File-level 1-Wire Net functions:
+--------------------------------
+
+   owFormat     - Formats a touch memory device.
+
+   owCreateFile - Creating a file given that it doesn't already exist and
+      assigns a handle for access.
+
+   owCloseFile  - Close a file and free up the handle.
+
+   owWriteFile  - Writes data to a file that is all ready been created.
+
+   owCreateDir  - Creates a directory or subdirectory in the 1-Wire file
+      structure.
+
+   owRemoveDir  - Removes a directory from the 1-Wire file structure.
+
+   owDeleteFile - Removes a file from the 1-Wire file structure.
+
+   owAttribute  - Changes the attributes of a file.
+
+   owReNameFile - Changes the name of a given file.
+
+   owReadFile   - Read the data of a file.
+
+   owOpenFile   - Finds and returns a handle for accessing a file.
+
+   owFirstFile  - Finds the first file in the 1-Wire file structure.
+
+   owNextFile   - Finds the next file in the 1-Wire file structure.
+
+   owGetCurrentDir - Gets the current directory that the application is in.
+
+   owChangeDirectory - Changes from the current directory to the one specified
+      as long as it exists.
+
+   Note:  Not all 1-Wire devices are supported with the above functions.  See
+          'Dallas Semiconductor Application Note 114' for a description of
+          the 1-Wire file structure.  (function options may change on future
+          versions of this code)
+
+
+Session-Level 1-Wire Net functions:
+-----------------------------------
+
+   owAcquire   - Attempts to acquire a 1-Wire net
+
+   owAcquireEx - Attempts to acquire a 1-Wire net while return port number.
+
+   owRelease   - Releases the previously acquired a 1-Wire net
+
+
+General API Code
+----------------
+
+The 'general' code set sends commands that rely on the following 1-Wire Net
+link-level functions.
+
+The following is a description of the API needed to port this code set to any
+platform.  See the 'TODO.C' and 'TODOSES.C' files in the directory
+'\lib\general'.  Required API that must be implemented for the
+'general' code set to function:
+
+   owTouchReset - Reset all devices on the 1-Wire Net. Result of function
+      indicates if any devices were detected.
+
+   owTouchBit - Send and receive 1 bit from the 1-Wire Net
+
+
+API that can be generated from the required API:
+------------------------------------------------
+
+   owTouchByte - Send and receive 8 bits from the 1-Wire Net. This can be
+      constructed from 8 calls to owTouchBit but it may be for efficient to
+      create this API.
+
+   owWriteByte - Send 8 bits to the 1-Wire Net and verify the echo received
+      matches.(constructed from owTouchByte)
+
+   owReadByte - Receive 8 bits from the 1-Wire Net by sending all 1's (0xFF)
+      and letting the slave change the echo. (constructed from owTouchByte)
+
+
+Optional API that may be needed for the platform or for a specific application:
+-------------------------------------------------------------------------------
+
+   owSpeed - Set the communication speed for the 1-Wire Net to Normal
+      (16K bits) or Overdrive (142K bits). All 1-Wire devices at least support
+      the Normal communication rate. This API need only be implemented if
+      Overdrive communication rate is desired.
+
+   owLevel - Set the 1-Wire Net line level to Normal (5V weak pull-up),
+      Power Delivery (5V strong pull-up), or Program Level (12V EPROM
+      programming level). Power delivery only required by some 1-Wire devices
+      such as the DS1820, DS2450, and DS1954. Programming level only required
+      to write EPROM based memory 1-Wire devices.
+
+   owProgramPulse - Timed programming pulse for EPROM 1-Wire device writing.
+      Can be constructed from owLevel. Only required to write EPROM based
+      memory 1-Wire devices.
+
+   msGettick - Return an increment millisecond counter. This is used in
+      several of the sample applications.
+
+   msDelay - Delay at least the specified number of milliseconds. This is
+      used in several of the sample applications.
+
+   owAcquire - Attempts to acquire a 1-Wire net
+
+   owRelease - Releases the previously acquired a 1-Wire net
+
+
+   owWriteBytePower - Send 8 bits of communication to the 1-Wire Net and
+      verify that the 8 bits read from the 1-Wire Net is the same (write
+      operation).  The parameter 'sendbyte' least significant 8 bits are used.
+      After the 8 bits are sent change the level of the 1-Wire net.
+
+   owHasPowerDelivery - This function indicates whether the adapter can deliver
+      power.  It is just set to be true but may need to be changed for
+      different adapters.
+
+   owHasOverDrive - This function indicates whether the adapter has overdrive
+      capability.  It has been set and may need to be changed for different
+      adapters.
+
+   owHasProgramPulse - This function indicates whether or not voltage is
+      available.
+
+
+Userial API Code
+----------------
+
+The 'userial' code set sends commands designed for the DS2480B 'Universal
+Serial 1-Wire Line Driver Master chip'. It can be made to work on any serial
+port that can do 9600, N, 8, 1.
+
+The following is a description of the API needed to port this code set to any
+platform. See the 'TODO.C' file in the directory '\lib\userial'.
+
+Required API that must be implemented for the 'userial' code
+set to function:
+--------------------------------------------------------------
+
+   ReadCOM - Read a specified number of bytes from the serial COM port.
+      This API must timeout if the specified number of bytes have not
+      arrived. The timeout is dependent on the 1-Wire operations the platform
+      but a good rule of thumb is 10 - 20ms per byte.
+
+   WriteCOM - Write a specified number of bytes to the serial COM port.
+
+   FlushCOM - Allow any pending write operations to complete. Clear any bytes
+      read.
+
+   BreakCOM - Send a 'BREAK' on the serial COM port last at least 2
+      milliseconds.
+
+   msDelay - Delay at least the specified number of milliseconds.
+      This is used in the DS2480B detect sequence.
+
+
+Optional API that may be needed for the platform or for a specific
+application:
+------------------------------------------------------------------
+
+   OpenCOM - Open the specified serial COM port for communication.
+      Most High-level OS's will need this. If not needed then just
+      return success. Start the COM port out at 9600, N, 8, 1.
+
+   OpenCOMEx - Open the specified serial COM port for communication.
+      Returns the port number or -1 if port not open.
+
+   CloseCOM - Close the previously opened (OpenCOM) serial COM port.
+      Most High-level OS's will need this.
+
+   SetCOMBaud - Change the serial BAUD rate to the rate specified.
+      This need only be supported if Overdrive communication speeds
+      are desired.
+
+   msGettick - Return an increment millisecond counter. This is
+      used in several of the sample applications.
+
+
+Helpful Hits:
+-------------
+
+For the 'userial' builds, the communication is between a UART
+and the DS2480B chip.  A large portion of the packets sent
+to and from the chip are only a few bytes long.  Thus is not
+desirable to have a large FIFO on the UART because it will
+introduct a delay in getting the packet.  If the OS being used
+supports changing the FIFO settings then it is recommended
+to disable or reduce the depth of the FIFO to the smallest
+settings.
+
+In Windows, the modification is made in the 'Control Panel' under
+'System'. Select the 'Device Manager' tab and choose the
+'properties' for the desired port. Click on the 'Port Settings'
+tab and go to 'Advanced settings'.  Slide the FIFOs to the
+minimum settings.  Alternately there is a Windows 95/98
+test program that can automatically adjust these settings
+to be optimal here:
+  ftp://ftp.dalsemi.com/pub/auto_id/licensed/TESTCOM.ZIP
+
+More information on the 1-Wire Public Domain Kit can be found
+from this document:
+http://pdfserv.maxim-ic.com/en/an/wp2.pdf
+

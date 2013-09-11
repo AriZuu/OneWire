@@ -1,0 +1,1449 @@
+This file gives a description of all the
+API calls for the 1-Wire Public Domain Kit
+along with the oparameters for each function.
+
+Link-Level 1-Wire Public Domain functions:
+-------------------------------------------
+
+owTouchReset:
+-------------
+ Reset all of the devices on the 1-Wire Net and return the result.
+
+ 'portnum'     - number 0 to MAX_PORTNUM-1.  This number is provided to
+                 indicate the symbolic port number.
+
+ Returns: TRUE(1):  presense pulse(s) detected, device(s) reset
+          FALSE(0): no presense pulses detected
+
+ Syntax:
+  SMALLINT owTouchReset(int portnum)
+
+
+owTouchBit:
+-----------
+ Send 1 bit of communication to the 1-Wire Net and return the
+ result 1 bit read from the 1-Wire Net.  The parameter 'sendbit'
+ least significant bit is used and the least significant bit
+ of the result is the return bit.
+
+ 'portnum'     - number 0 to MAX_PORTNUM-1.  This number is provided to
+                 indicate the symbolic port number.
+ 'sendbit'     - the least significant bit is the bit to send
+
+ Returns: 0:   0 bit read from sendbit
+          1:   1 bit read from sendbit
+
+ Syntax:
+  SMALLINT owTouchBit(int portnum, SMALLINT sendbit)
+
+
+owTouchByte:
+------------
+ Send 8 bits of communication to the 1-Wire Net and verify that the
+ 8 bits read from the 1-Wire Net is the same (write operation).
+ The parameter 'sendbyte' least significant 8 bits are used.
+
+ 'portnum'    - number 0 to MAX_PORTNUM-1.  This number is provided to
+                indicate the symbolic port number.
+ 'sendbyte'   - 8 bits to send (least significant byte)
+
+ Returns:  TRUE: bytes written and echo was the same
+           FALSE: echo was not the same
+
+ Syntax:
+  SMALLINT owTouchByte(int portnum, SMALLINT sendbyte)
+
+
+owWriteByte:
+------------
+ Send 8 bits of communication to the MicroLAN and verify that the
+ 8 bits read from the MicroLAN is the same (write operation).
+ The parameter 'sendbyte' least significant 8 bits are used.
+
+ 'portnum'    - number 0 to MAX_PORTNUM-1.  This number is provided to
+                indicate the symbolic port number.
+ 'sendbyte'   - 8 bits to send (least significant byte)
+
+ Returns:  TRUE: bytes written and echo was the same
+           FALSE: echo was not the same
+
+ Syntax:
+  SMALLINT owWriteByte(int portnum, SMALLINT sendbyte)
+
+
+owReadByte:
+-----------
+ Send 8 bits of read communication to the 1-Wire Net and and return the
+ result 8 bits read from the 1-Wire Net.
+
+ 'portnum'     - number 0 to MAX_PORTNUM-1.  This number is provided to
+                 indicate the symbolic port number.
+
+ Returns:  TRUE:  8 bytes read from 1-Wire Net
+           FALSE: the 8 bytes were not read
+
+ Syntax:
+  SMALLINT owReadByte(int portnum)
+
+
+owSpeed:
+--------
+ Set the 1-Wire Net communucation speed.
+
+ 'portnum'    - number 0 to MAX_PORTNUM-1.  This number is provided to
+                indicate the symbolic port number.
+ 'new_speed'  - new speed defined as
+                MODE_NORMAL     0x00
+                MODE_OVERDRIVE  0x01
+
+ Returns:  current 1-Wire Net speed
+
+ Syntax:
+  SMALLINT owSpeed(int portnum, SMALLINT new_speed)
+
+
+owLevel:
+--------
+ Set the 1-Wire Net line level.  The values for new_level are
+ as follows:
+
+ 'portnum'   - number 0 to MAX_PORTNUM-1.  This number is provided to
+               indicate the symbolic port number.
+ 'new_level' - new level defined as
+                MODE_NORMAL     0x00
+                MODE_STRONG5    0x02
+                MODE_PROGRAM    0x04
+                MODE_BREAK      0x08
+
+ Returns:  current 1-Wire Net level
+
+ Syntax:
+  SMALLINT owLevel(int portnum, SMALLINT new_level)
+
+
+owProgramPulse:
+---------------
+ This procedure creates a fixed 480 microseconds 12 volt pulse
+ on the 1-Wire Net for programming EPROM iButtons.
+
+ 'portnum'     - number 0 to MAX_PORTNUM-1.  This number is provided to
+                 indicate the symbolic port number.
+
+ Returns:  TRUE  successful
+           FALSE program voltage not available
+
+ Syntax:
+  SMALLINT owProgramPulse(int portnum)
+
+
+owWriteBytePower:
+-----------------
+ Send 8 bits of communication to the 1-Wire Net and verify that the
+ 8 bits read from the 1-Wire Net is the same (write operation).
+ The parameter 'sendbyte' least significant 8 bits are used.  After the
+ 8 bits are sent change the level of the 1-Wire net.
+
+ 'portnum'  - number 0 to MAX_PORTNUM-1.  This number was provided to
+              OpenCOM to indicate the port number.
+ 'sendbyte' - 8 bits to send (least significant byte)
+
+ Returns:  TRUE: bytes written and echo was the same
+           FALSE: echo was not the same
+
+ Syntax:
+  SMALLINT owWriteBytePower(int portnum, SMALLINT sendbyte)
+
+
+owReadBytePower:
+----------------
+ Read 8 bits of communication to the 1-Wire Net and verify that the 
+ 8 bits were read from the 1-Wire Net.  After the 8 bits are read
+ the level of the 1-Wire net will change.
+
+ 'portnum'  - number 0 to MAX_PORTNUM-1.  This number was provided to
+              OpenCOM to indicate the port number.
+
+ Returns:  The 8 bits read from the 1-Wire Net.
+
+
+owReadBitPower:
+---------------
+ Send 1 bit of communication to the 1-Wire Net and verify that the
+ response matches the 'applyPowerResponse' bit and apply power delivery
+ to the 1-Wire net.  Note that some implementations may apply the power
+ first and then turn it off if the response is incorrect.
+
+ 'portnum'  - number 0 to MAX_PORTNUM-1.  This number was provided to
+              OpenCOM to indicate the port number.
+ 'applyPowerResponse' - 1 bit response to check, if correct then start
+                        power delivery
+
+ Returns:  TRUE: bit written and response correct, strong pullup now on
+           FALSE: response incorrect
+
+ Syntax:
+  SMALLINT owReadBitPower(int portnum, SMALLINT applyPowerResponse)
+
+
+owHasPowerDelivery:
+-------------------
+ This procedure indicates wether the adapter can deliver power.
+
+ 'portnum'  - number 0 to MAX_PORTNUM-1.  This number was provided to
+              OpenCOM to indicate the port number.
+
+ Returns:  TRUE  because all userial adapters have over drive.
+
+ Syntax:
+  SMALLINT owHasPowerDelivery(int portnum)
+
+
+owHasOverDrive:
+---------------
+ This procedure indicates wether the adapter can deliver power.
+
+ 'portnum'  - number 0 to MAX_PORTNUM-1.  This number was provided to
+              OpenCOM to indicate the port number.
+
+ Returns:  TRUE  because all userial adapters have over drive.
+
+ Syntax:
+  SMALLINT owHasOverDrive(int portnum)
+
+
+owHasProgramPulse:
+------------------
+ This procedure creates a fixed 480 microseconds 12 volt pulse
+ on the 1-Wire Net for programming EPROM iButtons.
+
+ 'portnum'  - number 0 to MAX_PORTNUM-1.  This number was provided to
+              OpenCOM to indicate the port number.
+
+ Returns:  TRUE  program volatage available
+           FALSE program voltage not available
+
+ Syntax:
+  SMALLINT owHasProgramPulse(int portnum)
+
+
+Network-level 1-Wire Net functions:
+-----------------------------------
+
+owFirst:
+--------
+ The 'owFirst' finds the first device on the 1-Wire Net.  This function
+ contains one parameter 'alarm_only'.  When 'alarm_only' is TRUE (1)
+ the find alarm command 0xEC is sent instead of the normal search
+ command 0xF0.  Using the find alarm command 0xEC will limit the search
+ to only 1-Wire devices that are in an 'alarm' state.
+
+ 'portnum'    - number 0 to MAX_PORTNUM-1.  This number is provided to
+                indicate the symbolic port number.
+ 'do_reset'   - TRUE (1) perform reset before search, FALSE (0) do not
+                perform reset before search.
+ 'alarm_only' - TRUE (1) the find alarm command 0xEC is
+                sent instead of the normal search command 0xF0
+
+ Returns:   TRUE (1) : when a 1-Wire device was found and it's
+                        Serial Number placed in the global SerialNum[portnum]
+            FALSE (0): There are no devices on the 1-Wire Net.
+
+ Syntax:
+  SMALLINT owFirst(int portnum, SMALLINT do_reset, SMALLINT alarm_only)
+
+
+owNext:
+-------
+ The 'owNext' function does a general search.  This function continues
+ from the previos search state. The search state can be reset by using
+ the 'owFirst' function.  This function contains one parameter 'alarm_only'.
+ When 'alarm_only' is TRUE (1) the find alarm command 0xEC is sent instead
+ of the normal search command 0xF0.  Using the find alarm command 0xEC will
+ limit the search to only 1-Wire devices that are in an 'alarm' state.
+
+ 'portnum'    - number 0 to MAX_PORTNUM-1.  This number is provided to
+                indicate the symbolic port number.
+ 'do_reset'   - TRUE (1) perform reset before search, FALSE (0) do not
+                perform reset before search.
+ 'alarm_only' - TRUE (1) the find alarm command 0xEC is
+                sent instead of the normal search command 0xF0
+
+ Returns:   TRUE (1) : when a 1-Wire device was found and it's
+                       Serial Number placed in the global SerialNum[portnum]
+            FALSE (0): when no new device was found.  Either the
+                       last search was the last device or there
+                       are no devices on the 1-Wire Net.
+ Syntax:
+  SMALLINT owNext(int portnum, SMALLINT do_reset, SMALLINT alarm_only)
+
+
+owSerialNum:
+------------
+ The 'owSerialNum' function either reads or sets the SerialNum buffer
+ that is used in the search functions 'owFirst' and 'owNext'.
+ This function contains two parameters, 'serialnum_buf' is a pointer
+ to a buffer provided by the caller.  'serialnum_buf' should point to
+ an array of 8 unsigned chars.  The second parameter is a flag called
+ 'do_read' that is TRUE (1) if the operation is to read and FALSE
+ (0) if the operation is to set the internal SerialNum buffer from
+ the data in the provided buffer.
+
+ 'portnum'       - number 0 to MAX_PORTNUM-1.  This number is provided to
+                   indicate the symbolic port number.
+ 'serialnum_buf' - buffer to that contains the serial number to set
+                   when do_read = FALSE (0) and buffer to get the serial
+                   number when do_read = TRUE (1).
+ 'do_read'       - flag to indicate reading (1) or setting (0) the current
+                   serial number.
+
+ Syntax:
+  void owSerialNum(int portnum, uchar *serialnum_buf, SMALLINT do_read)
+
+
+owFamilySearchSetup:
+--------------------
+ Setup the search algorithm to find a certain family of devices
+ the next time a search function is called 'owNext'.
+
+ 'portnum'       - number 0 to MAX_PORTNUM-1.  This number was provided to
+                   OpenCOM to indicate the port number.
+ 'search_family' - family code type to set the search algorithm to find
+                   next.
+
+ Syntax:
+  void owFamilySearchSetup(int portnum, SMALLINT search_family)
+
+
+owSkipFamily:
+-------------
+ Set the current search state to skip the current family code.
+
+ 'portnum'     - number 0 to MAX_PORTNUM-1.  This number is provided to
+                 indicate the symbolic port number.
+
+ Syntax:
+  void owSkipFamily(int portnum)
+
+
+owAccess:
+---------
+ The 'owAccess' function resets the 1-Wire and sends a MATCH Serial
+ Number command followed by the current SerialNum code. After this
+ function is complete the 1-Wire device is ready to accept device-specific
+ commands.
+
+ 'portnum'     - number 0 to MAX_PORTNUM-1.  This number is provided to
+                 indicate the symbolic port number.
+
+ Returns:   TRUE (1) : reset indicates present and device is ready
+                       for commands.
+            FALSE (0): reset does not indicate presence or echos 'writes'
+                       are not correct.
+
+ Syntax:
+  SMALLINT owAccess(int portnum)
+
+
+owVerify:
+---------
+ The function 'owVerify' verifies that the current device
+ is in contact with the 1-Wire Net.
+ Using the find alarm command 0xEC will verify that the device
+ is in contact with the 1-Wire Net and is in an 'alarm' state.
+
+ 'portnum'     - number 0 to MAX_PORTNUM-1.  This number is provided to
+                 indicate the symbolic port number.
+ 'alarm_only'  - TRUE (1) the find alarm command 0xEC
+                 is sent instead of the normal search
+                 command 0xF0.
+
+ Returns:   TRUE (1) : when the 1-Wire device was verified
+                       to be on the 1-Wire Net
+                       with alarm_only == FALSE
+                       or verified to be on the 1-Wire Net
+                       AND in an alarm state when
+                       alarm_only == TRUE.
+            FALSE (0): the 1-Wire device was not on the
+                       1-Wire Net or if alarm_only
+                       == TRUE, the device may be on the
+                       1-Wire Net but in a non-alarm state.
+
+ Syntax:
+  SMALLINT owVerify(int portnum, SMALLINT alarm_only)
+
+
+owOverdriveAccess:
+------------------
+ Perform a overdrive MATCH command to select the 1-Wire device with
+ the address in the ID data register.
+
+ 'portnum'     - number 0 to MAX_PORTNUM-1.  This number is provided to
+                 indicate the symbolic port number.
+
+ Returns:  TRUE: If the device is present on the 1-Wire Net and
+                 can do overdrive then the device is selected.
+           FALSE: Device is not present or not capable of overdrive.
+
+ *Note: This function could be converted to send DS2480
+        commands in one packet.
+
+ Syntax:
+  SMALLINT owOverdriveAccess(int portnum)
+
+
+Transport-level 1-Wire Net functions:
+-------------------------------------
+
+owBlock:
+--------
+ The 'owBlock' transfers a block of data to and from the
+ 1-Wire Net with an optional reset at the begining of communication.
+ The result is returned in the same buffer.
+
+ 'do_reset' - cause a owTouchReset to occure at the begining of
+              communication TRUE(1) or not FALSE(0)
+ 'tran_buf' - pointer to a block of unsigned
+              chars of length 'TranferLength' that will be sent
+              to the 1-Wire Net
+ 'tran_len' - length in bytes to transfer with the maximum len 64.
+ Supported devices: all
+
+ Returns:   TRUE (1) : The optional reset returned a valid
+                       presence (do_reset == TRUE) or there
+                       was no reset required.
+            FALSE (0): The reset did not return a valid prsence
+                       (do_reset == TRUE).
+
+ Syntax:
+  SMALLINT owBlock(int portnum, SMALLINT do_reset, uchar *tran_buf,
+                   SMALLINT tran_len)
+
+
+owProgramByte:
+--------------
+ Write a byte to an EPROM 1-Wire device.
+
+ Supported devices: crc_type=0(CRC8)
+                        DS1982
+                    crc_type=1(CRC16)
+                        DS1985, DS1986, DS2407
+
+ 'portnum'    - number 0 to MAX_PORTNUM-1.  This number is provided to
+                indicate the symbolic port number.
+ 'write_byte' - byte to program
+ 'addr'       - address of byte to program
+ 'write_cmd'  - command used to write (0x0F reg mem, 0x55 status)
+ 'crc_type'   - CRC used (0 CRC8, 1 CRC16)
+ 'do_access'  - Flag to access device for each byte
+                (0 skip access, 1 do the access)
+                WARNING, only use do_access=0 if programing the NEXT
+                byte immediatly after the previous byte.
+
+ Returns: >=0   success, this is the resulting byte from the program
+                effort
+          -1    error, device not connected or program pulse voltage
+                not available
+
+ Syntax:
+  SMALLINT owProgramByte(int portnum, SMALLINT write_byte, int addr,
+                         SMALLINT write_cmd, SMALLINT crc_type,
+                         SMALLINT do_access)
+
+owRead:
+-------
+ Reads memory in this bank with no CRC checking (device or
+ data). The resulting data from this API may or may not be what is on
+ the 1-Wire device.  It is recommended that the data contain some kind
+ of checking (CRC) like in the owReadPagePacket method.
+ Some 1-Wire devices provide thier own CRC as in owReadPageCRC
+ The owReadPageCRC method is not supported on all memory types, see
+ hasPageAutoCRC in the same interface.  If neither is an option then this
+ method could be called more then once to at least verify that the same data
+ is read consistently.  The readContinue parameter is used to eliminate the
+ overhead in re-accessing a part already being read from. For example, if
+ pages 0 - 4 are to be read, readContinue would be set to false for page 0
+ and would be set to true for the next four calls.
+
+ Note: Using readContinue = true  can only be used if the new
+       read continuous where the last one led off
+       and it is inside a 'beginExclusive/endExclusive'
+       block.
+
+ 'bank'    - to tell what memory bank of the ibutton to use.
+ 'portnum' - the port number of the port being used for the
+             1-Wire Network.
+ 'SNum'    - the serial number for the part that the operation is
+             to be done on.
+ 'str_add' - starting address
+ 'rd_cont' - true then device read is
+             continued without re-selecting
+ 'buff'    - location for data read
+ 'len'     - length in bytes to read
+
+ Returns:  TRUE (1) : If the read was complete.
+           FALSE (0): If the read was not successful.
+
+ Syntax:
+  SMALLINT owRead(SMALLINT bank, int portnum, uchar *SNum, int str_add,
+                  SMALLINT rd_cont, uchar *buff, int len)
+
+
+owWrite:
+--------
+ Writes memory in this bank. It is recommended that a structure with some
+ built in error checking is used to provide data integrity on read.
+ The method owWritePagePacket, which automatically wraps the data in a length
+ and CRC, could be used for this purpose.
+
+ When using on Write-Once devices care must be taken to write into
+ into empty space.  If owWrite is used to write over an unlocked
+ page on a Write-Once device it will fail.
+
+ 'bank'    - to tell what memory bank of the ibutton to use.
+ 'portnum' - the port number of the port being used for the
+             1-Wire Network.
+ 'SNum'    - the serial number for the part that the operation is
+             to be done on.
+ 'str_add' - starting address
+ 'buff'    - data to write
+ 'len'     - length in bytes to write
+
+ Returns:  TRUE (1) : If the write was complete.
+           FALSE (0): If the write was not successful.
+
+ Syntax:
+  SMALLINT owWrite(SMALLINT bank, int portnum, uchar *SNum, int str_add,
+                   uchar *buff, int len)
+
+
+owReadPage:
+-----------
+ Reads a page in this memory bank with no CRC checking (device or data).
+ The resulting data from this API may or may not be what is on the 1-Wire
+ device.  It is recommends that the data contain some kind of checking (CRC)
+ like in the owReadPagePacket function or have the 1-Wire device provide the
+ CRC as in owReadPageCRC.  However device CRC generation is not supported on
+ all memory types, see owHasPageAutoCRC}.  If neither is an option then this
+ method could be called more then once to at least verify that the same data
+ is read consistently.
+
+ The readContinue parameter is used to eliminate the overhead in re-accessing
+ a part already being read from. For example, if pages 0 - 4 are to
+ be read, readContinue would be set to false for page 0 and would be set
+ to true for the next four calls.
+ Note: Using readContinue = true  can only be used if the new
+       read continues where the last one left off
+       and it is inside a 'beginExclusive/endExclusive'
+       block.
+
+ 'bank'    - to tell what memory bank of the ibutton to use.
+ 'portnum' - the port number of the port being used for the
+             1-Wire Network.
+ 'SNum'    - the serial number for the part that the operation is
+             to be done on.
+ 'page'    - page number to read packet from
+ 'rd_cont' - true, then device read
+             is continued without re-selecting
+ 'buff'    - location for data read
+
+ Returns:  TRUE (1) : If the read was complete.
+           FALSE (0): If the read was not successful.
+
+ Syntax:
+  SMALLINT owReadPage(SMALLINT bank, int portnum, uchar *SNum, int page,
+                      SMALLINT rd_cont, uchar *buff)
+
+
+owReadPageExtra:
+----------------
+ Reads a page in this memory bank with extra information with no
+ CRC checking (device or data). The resulting data from this API
+ may or may not be what is on the 1-Wire device.  It is recommends
+ that the data contain some kind of checking (CRC) like in the
+ owReadPagePacket function or have the 1-Wire device provide the
+ CRC as in owReadPageCRC}.
+ However device CRC generation is not supported on all memory types,
+ see owHasPageAutoCRC}.  If neither is an option then this method could
+ be called more then once to at least verify that the same data is read
+ consistently.  The readContinue parameter is used to eliminate the
+ overhead in re-accessing a part already being read from. For example,
+ if pages 0 - 4 are to be read, readContinue would be set to false for
+ page 0 and would be set to true for the next four calls.
+
+ Note: Using readContinue = true  can only be used if the new
+       read continues where the last one left off
+       and it is inside a 'beginExclusive/endExclusive'
+       block.
+
+ 'bank'    - to tell what memory bank of the ibutton to use.
+ 'portnum' - the port number of the port being used for the
+             1-Wire Network.
+ 'SNum'    - the serial number for the part that the operation is
+             to be done on.
+ 'page'    - page number to read packet from
+ 'rd_cont' - true  then device read
+             is continued without re-selecting
+ 'buff'    - location for data read
+ 'extra'   - location for extra info read
+
+ Returns:  TRUE (1) : If the read was complete.
+           FALSE (0): If the read was not successful.
+
+ Syntax:
+  SMALLINT owReadPageExtra(SMALLINT bank, int portnum, uchar *SNum, int page,
+                           SMALLINT rd_cont, uchar *buff, uchar *extra)
+
+
+owReadPageExtraCRC:
+-------------------
+ Reads a complete memory page with CRC verification provided by the
+ device with extra information.  Not supported by all devices. The
+ rd_Continue parameter is used to eliminate the overhead in re-accessing
+ a part already being read from. For example, if pages 0 - 4 are to
+ be read, readContinue would be set to false for page 0 and would be set
+ to true for the next four calls.
+
+ 'bank'      - to tell what memory bank of the ibutton to use.
+ 'portnum'   - the port number of the port being used for the
+               1-Wire Network.
+ 'SNum'      - the serial number for the part that the operation is
+               to be done on.
+ 'page'      - page number to read
+ 'read_buff' - location for data read
+ 'extra'     - location for extra info read
+
+ Returns:  TRUE (1) : If the read page with extra crc verification completed.
+           FALSE (0): If the read page was not successful.
+
+ Syntax:
+  SMALLINT owReadPageExtraCRC(SMALLINT bank, int portnum, uchar *SNum,
+                              int page, uchar *read_buff, uchar *extra)
+
+
+owReadPageCRC:
+--------------
+ Reads a complete memory page with CRC verification provided by the
+ device.  Not supported by all devices.  The
+ readContinue parameter is used to eliminate the overhead in re-accessing
+ a part already being read from. For example, if pages 0 - 4 are to
+ be read, readContinue would be set to false for page 0 and would be set
+ to true for the next four calls.
+
+ 'bank'    - to tell what memory bank of the ibutton to use.
+ 'portnum' - the port number of the port being used for the
+             1-Wire Network.
+ 'SNum'    - the serial number for the part that the operation is
+             to be done on.
+ 'page'    - page number to read
+ 'buff'    - location for data read
+
+ Returns:  TRUE (1) : If the read page with CRC verification completed.
+           FALSE (0): If the read page was not successful.
+
+ Syntax:
+  SMALLINT owReadPageCRC(SMALLINT bank, int portnum, uchar *SNum, int page,
+                         uchar *buff)
+
+
+owReadPagePacket:
+-----------------
+ Reads a Universal Data Packet.
+
+ The Universal Data Packet always starts on page boundaries but
+ can end anywhere in the page.  The structure specifies the length of
+ data bytes not including the length byte and the CRC16 bytes.
+ There is one length byte. The CRC16 is first initialized to
+ the page number.  This provides a check to verify the page that
+ was intended is being read.  The CRC16 is then calculated over
+ the length and data bytes.  The CRC16 is then inverted and stored
+ low byte first followed by the high byte.  The structure is
+ used by this method to verify the data but only
+ the data payload is returned. The
+ readContinue parameter is used to eliminate the overhead in re-accessing
+ a part already being read from. For example, if pages 0 - 4 are to
+ be read, readContinue would be set to false for page 0 and would be set
+ to true for the next four calls.
+
+ See Dallas Semiconductor Application Note 114
+ for details: http://www.dalsemi.com/datasheets/pdfs/app114.pdf
+ http://www.dalsemi.com/datasheets/pdfs/app114.pdf
+
+ <P> Note: Using rd_cont = true  can only be used if the new
+           read continues where the last one left off
+           and it is inside a 'beginExclusive/endExclusive'
+           block.
+
+ 'bank'    - to tell what memory bank of the ibutton to use.
+ 'portnum' - the port number of the port being used for the
+             1-Wire Network.
+ 'SNum'    - the serial number for the part that the operation is
+             to be done on.
+ 'page'    - page number to read packet from
+ 'rd_cont' - true then device read
+             is continued without re-selecting
+ 'buff'    - location for data read
+ 'len'     - the length of the data
+
+ Returns:  TRUE (1) : If the read page packet was complete.
+           FALSE (0): If the read page packet was not successful.
+
+ Syntax:
+  SMALLINT owReadPagePacket(SMALLINT bank, int portnum, uchar *SNum, int page,
+                            SMALLINT rd_cont, uchar *buff, int *len)
+
+
+owReadPagePacketExtra:
+----------------------
+ Reads a Universal Data Packet and extra information.  See the
+ function owReadPagePacket}
+ for a description of the packet structure.  The
+ rd_cont parameter is used to eliminate the overhead in re-accessing
+ a part already being read from. For example, if pages 0 - 4 are to
+ be read, readContinue would be set to false for page 0 and would be set
+ to true for the next four calls.
+
+ Note: Using readContinue = true  can only be used if the new
+       read continues where the last one left off
+       and it is inside a 'beginExclusive/endExclusive'
+       block.
+
+ 'bank'    - to tell what memory bank of the ibutton to use.
+ 'portnum' - the port number of the port being used for the
+             1-Wire Network.
+ 'SNum'    - the serial number for the part that the operation is
+             to be done on.
+ 'page'    - page number to read packet from
+ 'rd_cont' - true then device read
+             is continued without re-selecting
+ 'buff'    - location for data read
+ 'len'     - the length of the data
+ 'extra'   - location for extra info read
+
+ Returns:  TRUE (1) : If the read page packet was complete.
+           FALSE (0): If the read page packet was not successful.
+
+ Syntax:
+  SMALLINT owReadPagePacketExtra(SMALLINT bank, int portnum, uchar *SNum,
+                                 int page, SMALLINT rd_cont, uchar *buff,
+                                 int *len, uchar *extra)
+
+
+owWritePagePacket:
+------------------
+ Writes a Universal Data Packet.  See the funtion owReadPagePacket
+ for a description of the packet structure.
+
+ 'bank'    - to tell what memory bank of the ibutton to use.
+ 'portnum' - the port number of the port being used for the
+             1-Wire Network.
+ 'SNum'    - the serial number for the part that the operation is
+             to be done on.
+ 'page'    - page number to write packet to
+ 'buff'    - data to write
+ 'len'     - number of bytes to write with a max of owGetMaxPacketDataLength
+             elements
+
+ Returns:  TRUE (1) : If the write page packet was complete.
+           FALSE (0): If the write page packet was not successful.
+
+ Syntax:
+  SMALLINT owWritePagePacket(SMALLINT bank, int portnum, uchar *SNum, int page,
+                             uchar *buff, int len)
+
+
+owGetNumberBanks:
+-----------------
+ Gets the number of banks for a certain button given it's family code.
+
+ 'family' - the family code
+
+ Returns: The number of memory banks.
+
+ Syntax:
+  SMALLINT owGetNumberBanks(uchar family)
+
+
+owGetNumberPages:
+-----------------
+ Gets the number of pages in this memory bank.
+ The page numbers are then always 0 to (owGetNumberPages() - 1).
+
+ 'bank' - to tell what memory bank of the ibutton to use.
+ 'SNum' - the serial number for the part that the operation is
+          to be done on.
+
+ Returns: The number of pages in this memory bank
+
+ Syntax:
+  SMALLINT owGetNumberPages(SMALLINT bank, uchar *SNum)
+
+
+owGetSize:
+----------
+ Gets the size of this memory bank in bytes.
+
+ 'bank' - to tell what memory bank of the ibutton to use.
+ 'SNum' - the serial number for the part that the operation is
+          to be done on.
+
+ Returns: The number of bytes in the current memory bank
+
+ Syntax:
+  int owGetSize(SMALLINT bank, uchar *SNum)
+
+owGetPageLength:
+----------------
+ Gets raw page length in bytes in this memory bank.
+
+ 'bank' - to tell what memory bank of the ibutton to use.
+ 'SNum' - the serial number for the part that the operation is
+          to be done on.
+
+ Returns: The page length in bytes in this memory bank
+
+ Syntax:
+  SMALLINT owGetPageLength(SMALLINT bank, uchar *SNum)
+
+
+owGetStartingAddress:
+---------------------
+ Gets the starting physical address of this bank.  Physical
+ banks are sometimes sub-divided into logical banks due to changes
+ in attributes.  Note that this method is for information only.  The
+ read and write methods will automatically calculate the physical address
+ when writing to a logical memory bank.
+
+ 'bank' - to tell what memory bank of the ibutton to use.
+ 'SNum' - the serial number for the part that the operation is
+          to be done on.
+
+ Returns: The physical starting address of this logical bank
+
+ Syntax:
+  int owGetStartingAddress(SMALLINT bank, uchar *SNum)
+
+
+owGetBankDescription:
+---------------------
+ Gets a string description of this memory bank.
+
+ 'bank' - to tell what memory bank of the ibutton to use.
+ 'SNum' - the serial number for the part that the operation is
+          to be done on.
+
+ Returns: The memory bank description
+
+ Syntax:
+  char *owGetBankDescription(SMALLINT bank, uchar *SNum)
+
+
+owGetName:
+----------
+ Retrieves the Dallas Semiconductor part number of the 1-Wire device
+ as a String.  For example 'Crypto iButton' or 'DS1992'.
+
+ 'SNum' - the serial number for the part that the operation is
+          to be done on.
+
+ Returns: The 1-Wire device name.
+
+ Syntax:
+  char *owGetName(uchar *SNum)
+
+
+owGetAlternateName:
+-------------------
+ Retrieves the alternate Dallas Semiconductor part numbers or names.
+ A 'family' of 1-Wire Network devices may have more than one part number
+ depending on packaging.  There can also be nicknames such as
+ 'Crypto iButton'.
+
+ 'SNum' - the serial number for the part that the operation is
+          to be done on.
+
+ Returns: The 1-Wire device alternate name.
+
+ Syntax:
+  char *owGetAlternateName(uchar *SNum)
+
+
+owGetDescription:
+-----------------
+ Retrieves a short description of the function of the 1-Wire device type.
+
+ 'SNum' - the serial number for the part that the operation is
+          to be done on.
+
+ Returns: The device functional description
+
+ Syntax:
+  char *owGetDescription(uchar *SNum)
+
+
+owIsGeneralPurposeMemory:
+----------------------------------------------------------------------------
+ Checks to see if this memory bank is general purpose
+ user memory.  If it is NOT then it may be Memory-Mapped and writing
+ values to this memory may affect the behavior of the 1-Wire
+ device.
+
+ 'bank' - to tell what memory bank of the ibutton to use.
+ 'SNum' - the serial number for the part that the operation is
+          to be done on.
+
+ Returns:  TRUE (1) : If the memory bank is general purpose.
+           FALSE (0): If the memory bank is not general purpose.
+
+ Syntax:
+  SMALLINT owIsGeneralPurposeMemory(SMALLINT bank, uchar *SNum)
+
+
+owIsReadWrite:
+----------------------------------------------------------------------------
+ Checks to see if this memory bank is read/write.
+
+ 'bank' - to tell what memory bank of the ibutton to use.
+ 'SNum' - the serial number for the part that the operation is
+          to be done on.
+
+ Returns:  TRUE (1) : If this memory bank is read/write.
+           FALSE (0): If this memory bank is not read/write.
+
+ Syntax:
+  SMALLINT owIsReadWrite(SMALLINT bank, int portnum, uchar *SNum)
+
+
+owIsWriteOnce:
+--------------
+ Checks to see if this memory bank is write once such
+ as with EPROM technology.
+
+ 'bank' - to tell what memory bank of the ibutton to use.
+ 'SNum' - the serial number for the part that the operation is
+          to be done on.
+
+ Returns:  TRUE (1) : If this memory bank can only be written once.
+           FALSE (0): If this memory bank can be written more than once.
+
+ Syntax:
+  SMALLINT owIsWriteOnce(SMALLINT bank, int portnum, uchar *SNum)
+
+
+owIsReadOnly:
+-------------
+ Query to see if current memory bank is read only.
+
+ 'bank' - to tell what memory bank of the ibutton to use.
+ 'SNum' - the serial number for the part that the operation is
+          to be done on.
+
+ Returns:  TRUE (1) : If the current memory bank can only be read.
+           FALSE (0): If the current memory bank is not read only.
+
+ Syntax:
+  SMALLINT owIsReadOnly(SMALLINT bank, int portnum, uchar *SNum)
+
+
+owIsNonvolatile:
+----------------
+ Query to see if current memory bank non-volatile.  Memory is
+ non-volatile if it retains its contents even when removed from
+ the 1-Wire network.
+
+ 'bank' - to tell what memory bank of the ibutton to use.
+ 'SNum' - the serial number for the part that the operation is
+          to be done on.
+
+ Returns:  TRUE (1) : If the current memory bank is nonvolatile.
+           FALSE (0): If the current memory bank is volatile.
+
+ Syntax:
+  SMALLINT owIsNonVolatile(SMALLINT bank, uchar *SNum)
+
+
+owNeedsProgramPulse:
+--------------------
+ Checks to see if this  memory bank requires a
+ 'ProgramPulse' in order to write.
+
+ 'bank' - to tell what memory bank of the ibutton to use.
+ 'SNum' - the serial number for the part that the operation is
+          to be done on.
+
+ Returns:  TRUE (1) : If the writing to this memory bank requires
+                      a 'ProgramPulse' from the 1-Wire Adapter.
+           FALSE (0): If a 'ProgramPulse' is not required.
+
+ Syntax:
+  SMALLINT owNeedsProgramPulse(SMALLINT bank, uchar *SNum)
+
+
+owNeedsPowerDelivery:
+---------------------
+ Checks to see if this memory bank requires 'PowerDelivery'
+ in order to write.
+
+ 'bank' - to tell what memory bank of the ibutton to use.
+ 'SNum' - the serial number for the part that the operation is
+          to be done on.
+
+ Returns:  TRUE (1) : If the writing to this memory bank requires
+                      'PowerDelivery' from the 1-Wire Adapter.
+           FALSE (0): If the 'PowerDelivery' is not required.
+
+ Syntax:
+  SMALLINT owNeedsPowerDelivery(SMALLINT bank, uchar *SNum)
+
+
+owHasExtraInfo:
+---------------
+ Checks to see if this memory bank's pages deliver extra
+ information outside of the normal data space,  when read.  Examples
+ of this may be a redirection byte, counter, tamper protection
+ bytes, or SHA-1 result.  If this method returns true then the
+ methods with an 'extraInfo' parameter can be used:
+ owReadPageExtra,
+ owReadPageExtraCRC, and
+ owReadPagePacketExtra.
+
+ 'bank' - to tell what memory bank of the ibutton to use.
+ 'SNum' - the serial number for the part that the operation is
+          to be done on.
+
+ Returns:  TRUE (1) : If reading this memory bank's pages provides
+                      extra information.
+           FALSE (0): If reading this memory bank doesn't provide
+                      extra information.
+
+ Syntax:
+  SMALLINT owHasExtraInfo(SMALLINT bank, uchar *SNum)
+
+
+owGetExtraInfoLength:
+---------------------
+ Gets the length in bytes of extra information that
+ is read when reading a page in this memory bank.
+
+ bank       to tell what memory bank of the ibutton to use.
+ SNum       the serial number for the part that the operation is
+            to be done on.
+
+ Returns:  The number of bytes in extra information read when
+           reading pages from this memory bank.
+
+ Syntax:
+  SMALLINT owGetExtraInfoLength(SMALLINT bank, uchar *SNum)
+
+
+owGetExtraInfoDesc:
+-------------------
+ Gets a string description of what is contained in
+ the Extra Information returned when reading pages in this
+ memory bank.
+
+ 'bank' - to tell what memory bank of the ibutton to use.
+ 'SNum' - the serial number for the part that the operation is
+          to be done on.
+
+ Returns: The extra information description.
+
+ Syntax:
+  char *owGetExtraInfoDesc(SMALLINT bank, uchar *SNum)
+
+
+owGetMaxPacketDataLenth:
+------------------------
+ Gets Maximum data page length in bytes for a packet
+ read or written in this memory bank.  See the
+ owReadPagePacket and owWritePagePacket
+ function.  This function is only usefull
+ if this memory bank is general purpose memory.
+
+ 'bank' - to tell what memory bank of the ibutton to use.
+ 'SNum' - the serial number for the part that the operation is
+          to be done on.
+
+ Returns: The maximum page length in bytes in this memory bank
+
+ Syntax:
+  SMALLINT owGetMaxPacketDataLength(SMALLINT bank, uchar *SNum)
+
+
+owHasPageAutoCRC:
+-----------------
+ Checks to see if this memory bank's pages can be read with
+ the contents being verified by a device generated CRC.
+ This is used to see if the owReadPageCRC function can be used.
+
+ 'bank' - to tell what memory bank of the ibutton to use.
+ 'SNum' - the serial number for the part that the operation is
+          to be done on.
+
+ @return  true if this memory bank can be
+          read with self generated CRC
+
+ Syntax:
+  SMALLINT owHasPageAutoCRC(SMALLINT bank, uchar *SNum)
+
+
+owRedriectPage:
+---------------
+ Checks to see if this memory bank has pages that can be redirected
+ to a new page.  This is used in Write-Once memory
+ to provide a means to update.
+
+ 'bank' - to tell what memory bank of the ibutton to use.
+ 'SNum' - the serial number for the part that the operation is
+          to be done on.
+
+ Returns:  TRUE (1) : If the memory bank pages can be redirected.
+           FALSE (0): If the memory bank pages cannot be redirected.
+
+ Syntax:
+  SMALLINT owCanRedirectPage(SMALLINT bank, uchar *SNum)
+
+
+owCanLockPage:
+--------------
+ Checks to see if this memory bank has pages that can be locked.  A
+ locked page would prevent any changes to it's contents.
+
+ 'bank' - to tell what memory bank of the ibutton to use.
+ 'SNum' - the serial number for the part that the operation is
+          to be done on.
+
+ Returns:  TRUE (1) : If this memory bank has pages that can be locked.
+           FALSE (0): If this memory bank has pages that cannot be locked.
+
+ Syntax:
+  SMALLINT owCanLockPage(SMALLINT bank, uchar *SNum)
+
+
+owCanLockRedirectPage:
+----------------------
+ Checks to see if this memory bank has pages that can be locked from
+ being redirected.  This would prevent a Write-Once memory from
+ being updated.
+
+ 'bank' - to tell what memory bank of the ibutton to use.
+ 'SNum' - the serial number for the part that the operation is
+          to be done on.
+
+ @return  true if this memory bank has pages that can
+          be locked from being redirected to a new page
+
+ Syntax:
+  SMALLINT owCanLockRedirectPage(SMALLINT bank, uchar *SNum)
+
+
+Session-Level 1-Wire Net functions:
+-----------------------------------
+
+owAcquire:
+----------
+ Attempt to acquire a 1-Wire net port adapter.
+
+ 'portnum'    - number 0 to MAX_PORTNUM-1.  This number is provided to
+                indicate the symbolic port number.
+ 'port_zstr'  - zero terminated port name.  For this platform
+                use format COMX where X is the port number.
+
+ Returns: TRUE - success, port opened
+
+ Syntax:
+  SMALLINT owAcquire(int portnum, char *port_zstr)
+
+
+owAcquireEx:
+----------
+ Attempt to acquire a 1-Wire net port adapter.
+
+ 'port_zstr'  - zero terminated port name.  For this platform
+                use format COMX where X is the port number.
+
+ Returns: Port number if the port is opened otherwies -1
+
+ Syntax:
+  int owAcquireEx(char *port_zstr)
+
+
+owRelease:
+----------
+ Release the previously acquired a 1-Wire net.
+
+ 'portnum'    - number 0 to MAX_PORTNUM-1.  This number is provided to
+                indicate the symbolic port number.
+
+ Syntax:
+  void owRelease(int portnum)
+
+
+File-level 1-Wire Net functions:
+--------------------------------
+
+owReadFile:
+-----------
+ Read a file by reference to a handle.  Buffer and
+ max length are provided.
+
+ 'portnum' - the port number of the port being used for the
+             1-Wire Network.
+ 'SNum'    - the serial number for the part that the read is
+             to be done on.
+ 'hnd'     - the handle of the file
+ 'buf'     - the information to that was read
+ 'maxlen'  - the max length of the buffer that stores the
+             read data
+ 'fl_len'  - the len of the data read
+
+ Returns:  TRUE (1) : If the file was read.
+           FALSE (0): If the file was not read correctly.
+
+ Syntax:
+  SMALLINT owReadFile(int portnum, uchar *SNum, short hnd,
+                      uchar *buf, int maxlen, int *fl_len)
+
+
+owFormat:
+---------
+ Formats a touch memory.  Supports local and remote bitmap.
+
+ portnum    the port number of the port being used for the
+            1-Wire Network.
+ SNum       the serial number for the part that the read is
+            to be done on.
+
+ Returns:  TRUE (1) : Touch memory formatted.
+           FALSE (0): Error
+
+ Syntax:
+  SMALLINT owFormat(int portnum, uchar *SNum)
+
+owCreatFile:
+--------------------------------------------------------------------------
+ Create a file by first verifying that the file does not exist on the
+ device and to assign a handle to it for writing.
+
+ Find first file and copy it into string DirEnt.
+
+ 'portnum'  - the port number of the port being used for the
+              1-Wire Network.
+ 'SNum'     - the serial number for the part that the read is
+              to be done on.
+ 'maxwrite' - the max that can be written
+ 'hnd'      - the handle of the file created
+ 'flname'   - the name and information for the file
+
+ Returns:  TRUE (1) : The file was created.
+           FALSE (0): Error creating the file.
+
+ Syntax:
+  SMALLINT owCreateFile(int portnum, uchar *SNum, int *maxwrite, short *hnd,
+                        FileEntry *flname)
+
+
+owCloseFile:
+------------
+ Close a file by freeing up its handle.
+
+ Find first file and copy it into string DirEnt.
+
+ 'portnum' - the port number of the port being used for the
+             1-Wire Network.
+ 'SNum'    - the serial number for the part that the read is
+             to be done on.
+ 'hnd'     - the handle of the file to close
+
+ Returns:  TRUE (1) : If the file was closed.
+           FALSE (0): Error closing the file.
+
+ Syntax:
+  SMALLINT owCloseFile(int portnum, uchar *SNum, short hnd)
+
+
+owWriteFile:
+--------------------------------------------------------------------------
+ Write a file by reference to a hnd.  Buffer and
+ length are provided.
+
+ 'portnum' - the port number of the port being used for the
+             1-Wire Network.
+ 'SNum'    - the serial number for the part that the read is
+             to be done on.
+ 'hnd'     - the handle of the file
+ 'buf'     - the information to write to the file
+ 'len'     - the len of the information to be written
+
+ Returns:  TRUE (1) : If the file was written to correctly.
+           FALSE (0): Error writing to the file.
+
+ Syntax:
+  SMALLINT owWriteFile(int portnum, uchar *SNum, short hnd,
+                       uchar *buf, int len)
+
+
+owCreateDir:
+------------
+ Create a sub-directory.  Note that a sub-directory is created empty
+ and only an empty sub-directory can be removed.
+
+ 'portnum' - the port number of the port being used for the
+             1-Wire Network.
+ 'SNum'    - the serial number for the part that the read is
+             to be done on.
+ 'DirName' - the file information that is to be created.
+
+ Returns:  TRUE (1) : If the directory was created.
+           FALSE (0): Error creating the directory.
+
+ Syntax:
+  SMALLINT owCreateDir(int portnum, uchar *SNum, FileEntry *DirName)
+
+
+owRemoveDir:
+------------
+ Remove a sub-directory.  Note that a sub-directory is created empty
+ and only an empty sub-directory can be removed.
+
+ 'portnum' - the port number of the port being used for the
+             1-Wire Network.
+ 'SNum'    - the serial number for the part that the read is
+             to be done on.
+ 'DirName' - the file information that is to be removed.
+
+ Returns:  TRUE (1) : If the directory was removed.
+           FALSE (0): Error removing the directory.
+
+ Syntax:
+  SMALLINT owRemoveDir(int portnum, uchar *SNum, FileEntry *DirName)
+
+
+owDeleteFile:
+-------------
+ Deletes an indicated file.
+
+ 'portnum' - the port number of the port being used for the
+             1-Wire Network.
+ 'SNum'    - the serial number for the part that the read is
+             to be done on.
+ 'flname'  - the name and information of the file to delete
+
+  return:  TRUE (1) : If the file was deleted.
+           FALSE (0): Error deleting the file.
+
+ Syntax:
+  SMALLINT owDeleteFile(int portnum, uchar *SNum, FileEntry *flname)
+
+
+owAttribute:
+------------
+ Changes the attributes of a file.
+
+ 'portnum' - the port number of the port being used for the
+             1-Wire Network.
+ 'SNum'    - the serial number for the part that the read is
+             to be done on.
+ 'attr'    - the attribute to change
+ 'flname'  - the file name on which the attribute is to be changed
+
+  return:  TRUE  : file attribute changed
+           FALSE : error
+
+ Syntax:
+  SMALLINT owAttribute(int portnum, uchar *SNum, short attr,
+                       FileEntry *flname)
+
+
+owReNameFile:
+-------------
+ Change the name of a file that has been opened with the file handle
+ 'hnd'.  The new name in 'flname'.
+
+ 'portnum' - the port number of the port being used for the
+             1-Wire Network.
+ 'SNum'    - the serial number for the part that the read is
+             to be done on.
+ 'hnd'     - the handle of the file to rename
+ 'flname'  - the renamed file name
+
+ Returns:  TRUE (1) : If the file name was changed.
+           FALSE (0): Error changing the file name.
+
+ Syntax:
+  SMALLINT owReNameFile(int portnum, uchar *SNum, short hnd,
+                        FileEntry *flname)
+
+
+owOpenFile:
+--------------------------------------------------------------------------
+ Opens a file by first verifying that the file exists on the device and
+ to assign a handle.
+
+ 'portnum' - the port number of the port being used for the
+             1-Wire Network.
+ 'SNum'    - the serial number for the part that the read is
+             to be done on.
+ 'flname'  - the name of the file and info. to open
+ 'hnd'     - the assigned handle
+
+ Returns:  TRUE (1) : If the file was found.
+           FALSE (0): Error finding the file
+
+ Syntax:
+  SMALLINT owOpenFile(int portnum, uchar *SNum, FileEntry *flname, short *hnd)
+
+
+owFirstFile:
+------------
+ Find first file and copy it into string DirEnt.
+
+ 'portnum' - the port number of the port being used for the
+             1-Wire Network.
+ 'SNum'    - the serial number for the part that the read is
+             to be done on.
+ 'FE'      - the infomation of the first file/dir found
+
+ Returns:  TRUE (1) : If the first file was found.
+           FALSE (0): Error or no files found.
+
+ Syntax:
+  SMALLINT owFirstFile(int portnum, uchar *SNum, FileEntry *FE)
+
+
+owNextFile:
+-----------
+ Find next file and put it shorto the string DirEnt.
+
+ 'portnum' - the port number of the port being used for the
+             1-Wire Network.
+ 'SNum'    - the serial number for the part that the read is
+             to be done on.
+ 'FE'      - the infomation of the first file/dir found
+
+ Returns:  TRUE (1) : If the next file was found.
+           FALSE (0): Error, no file found.
+
+ Syntax:
+  SMALLINT owNextFile(int portnum, uchar *SNum, FileEntry *FE)
+
+
+owGetCurrentDir:
+--------------------------------------------------------------------------
+ Get the current directory path
+
+ 'portnum' - the port number of the port being used for the
+             1-Wire Network.
+ 'SNum'    - the serial number for the part that the read is
+             to be done on.
+
+ Returns: The current directory path
+
+ Syntax:
+  DirectoryPath owGetCurrentDir(int portnum, uchar *SNum)
+
+
+
+
+
+
+

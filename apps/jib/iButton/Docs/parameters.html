@@ -1,0 +1,677 @@
+<!DOCTYPE HTML PUBLIC "-//IETF//DTD HTML//EN">
+<html>
+
+<head>
+<meta http-equiv="Content-Type"
+content="text/html; charset=iso-8859-1">
+<meta name="GENERATOR" content="Microsoft FrontPage 2.0">
+<title>Dallas Semiconductor Corp: iButton with Java Command Processor Parameters</title>
+</head>
+
+<body bgcolor="#FFFFFF">
+
+<h2><u><img src="iBidehelpicon.JPG" align="right"
+hspace="0" width="200" height="101"></u></h2>
+
+<hr>
+
+<h2><u>i</u>Button with Java Command Processor</h2>
+
+<hr>
+
+<p><font size="2" face="NewCenturySchlbk">The &quot;<u>i</u>Button
+with Java&quot; (JiB) Command processor allows you to get and set
+the <u>i</u>Button&#146;s configuration parameters, delete
+applets, get the current value of the real-time clock, get random
+data, list the applets that are currently loaded, set the commit
+buffer size and to master erase the <u>i</u>Button. The Command
+Processor commands do not use the JavaCard Virtual Machine.</font></p>
+
+<p><font size="2" face="NewCenturySchlbk">The JiB communicates
+using Application Protocol Data Units (APDUs) as described in ISO
+7816 and the JavaCard 2.0 specification. Command APDUs are sent
+to the <u>i</u>Button and Response APDUs are received from the <u>i</u>Button.
+A Status Word (SW) always follows Response APDUs. The SW 0x9000
+is returned if the command was executed with no error. The
+Command APDU header contains the following parameters
+(All parameters are one-byte except for Data[Lc], which is a byte
+array of length Lc):</font></p>
+
+
+    <dir>
+            <li><p><font size="2" face="NewCenturySchlbk">
+                    <b>CLA</b>: Class
+                </font></p></li>
+            <li><p><font size="2" face="NewCenturySchlbk">
+                    <b>INS</b>: Instruction
+                </font></p></li>
+            <li><p><font size="2" face="NewCenturySchlbk">
+                    <b>P1</b>: Parameter 1
+                </font></p></li>
+            <li><p><font size="2" face="NewCenturySchlbk">
+                    <b>P2</b>: Parameter 2
+                </font></p></li>
+            <li><p><font size="2" face="NewCenturySchlbk">
+                    <b>Lc</b>: Length of command data
+                </font></p></li>
+            <li><p><font size="2" face="NewCenturySchlbk">
+                    <b>Data[Lc]</b>: Lc bytes of command data
+                </font></p></li>
+            <li><p><font size="2" face="NewCenturySchlbk">
+                    <b>Le</b>: Expected response length
+                </font></p></li>
+        </dir>
+    
+
+
+<p><font size="2" face="NewCenturySchlbk">The following list of
+JiB commands list the header values and data required for each
+command. Command categories that are &quot;Master Pin
+Protected&quot; require a Master PIN in the first bytes of the
+Data field. The format of the Master PIN is [PIN length byte
+&#150; Len][Len bytes of PIN data]. The maximum PIN length is
+eight bytes, therefore every Master PIN protected command will
+have one to nine bytes of PIN information pre-pended to the data
+field. A null PIN is represented by a length byte of zero and no
+PIN data.</font></p>
+<hr>
+<h2 align="center"><font face="NewCenturySchlbk">Command
+Processor Parameters </font></h2>
+
+
+
+<p><font color="#008740" size="2" face="NewCenturySchlbk"><b>CLA:
+D0h</b></font></p>
+
+<p><font color="#008740" size="2" face="NewCenturySchlbk"><b>INS:
+95h</b></font></p>
+
+<p><a name="admin"></a><font
+size="2" face="NewCenturySchlbk"><font size="2" face="NewCenturySchlbk"><b><u></u></b></font><b><h3>Administrative commands
+(Master PIN Protected)</h3></b></font></p>
+
+<p><font color="#008740" size="2" face="NewCenturySchlbk"><b>P1:
+00h</b></font></p>
+
+<ul>
+    <li><a name="mastererase">
+        <font size="2" face="NewCenturySchlbk"><b>Master Erase</b></font>
+        </a>
+	<br>
+        <font color="#008740" size="2" face="NewCenturySchlbk"><b>P2:
+        00h</b></font><p><font size="2" face="NewCenturySchlbk">Description:
+        Erase all of the applets installed on the iButton, free
+        all memory created by these applets, and reset all
+        configuration options back to default values. (i.e. set
+        AppletGC to off, etc.)</font></p>
+        <p><font size="2" face="NewCenturySchlbk">Input data:
+        None.</font></p>
+    </li>
+</ul>
+
+<ul>
+    <li><font size="2" face="NewCenturySchlbk"><b>Set Master PIN</b></font></li>
+	<br>
+        <font color="#008740" size="2" face="NewCenturySchlbk"><b>P2:
+        01h</b></font><p><font size="2" face="NewCenturySchlbk">Description:
+        Set the Master PIN for this iButton.</font></p>
+        <p><font size="2" face="NewCenturySchlbk">Input data: Old
+        PIN followed by new PIN.</font></p>
+        <dir>
+            <li><font size="2" face="NewCenturySchlbk">Default
+                value: 1</font></li>
+        </dir>
+    </li>
+</ul>
+
+<ul>
+    <li><a name="setephemeral">
+        <font size="2" face="NewCenturySchlbk"><b>Set Ephemeral GC Mode</b></font>
+        </a>
+	<br>
+
+	<font color="#008740" size="2" face="NewCenturySchlbk"><b>P2:
+        02h</b></font><p><font size="2" face="NewCenturySchlbk">Description:
+        The ephemeral collector recovers data that was referenced
+        for a short period of time and then went out of scope
+        (local variables, objects whose references were never
+        stored in reference fields, etc).</font></p>
+        <p><font size="2" face="NewCenturySchlbk">Input data:
+        byte &#150; 0 to disable 1 to enable.</font></p>
+        <dir>
+            <li><font size="2" face="NewCenturySchlbk">Default
+                value: 1</font></li>
+        </dir>
+    </li>
+</ul>
+
+<ul>
+    <li><a name="setgc">
+        <font size="2" face="NewCenturySchlbk"><b>Set Applet GC Mode</b></font>
+        </a>
+        <br>
+	<font color="#008740" size="2" face="NewCenturySchlbk"><b>P2:
+        03h</b></font><p><font size="2" face="NewCenturySchlbk">Description:
+        The applet collector recovers data that was referenced by
+        the fields of an applet. These references were
+        instanciated and then the references were lost either by
+        setting the field to null or by instantiating another
+        block of data.</font></p>
+        <p><font size="2" face="NewCenturySchlbk">Input data:
+        byte &#150; 0 to disable 1 to enable.</font></p>
+        <dir>
+            <li><font size="2" face="NewCenturySchlbk">Default
+                value: 0</font></li>
+        </dir>
+    </li>
+</ul>
+
+<ul>
+    <li><a name="setcommand">
+        <font size="2" face="NewCenturySchlbk"><b>Set Command PIN Mode</b></font>
+        </a>
+	<br>
+        <font color="#008740" size="2" face="NewCenturySchlbk"><b>P2:
+        04h</b></font><p><font size="2" face="NewCenturySchlbk">Description:
+        When Command PIN Mode is enabled, all </font><a
+        href="#admin"><font size="2" face="NewCenturySchlbk">administrative</font></a><font
+        size="2" face="NewCenturySchlbk"> and </font><a
+        href="#aid"><font size="2" face="NewCenturySchlbk">AID</font></a><font
+        size="2" face="NewCenturySchlbk"> commands require a
+        Master PIN match before the command is executed. When
+        disabled, the PIN match is skipped. To pass the PIN in
+        the input data for the administrative command, first pass
+        a byte indicating the length of the PIN, then 'length'
+        bytes of PIN data followed by any other data the
+        administrative command requires.</font></p>
+        <p><font size="2" face="NewCenturySchlbk">Input data:
+        byte &#150; 0 to disable 1 to enable.</font></p>
+        <dir>
+            <li><font size="2" face="NewCenturySchlbk">Default
+                value: 1</font></li>
+        </dir>
+    </li>
+</ul>
+
+<ul>
+    <li><a name="setload">
+        <font size="2" face="NewCenturySchlbk"><b>Set Load PIN Mode</b></font>
+        </a>
+	<br>
+        <font color="#008740" size="2" face="NewCenturySchlbk"><b>P2:
+        05h</b></font><p><font size="2" face="NewCenturySchlbk">Description:
+        When Load PIN Mode is enabled, nine bytes of PIN data,
+        pre-pended to the applet data (JiB file data), must match
+        the Master PIN in order for the applet load to succeed.
+        The first byte is the length of the PIN being passed (max
+        size of 8 bytes), followed by the PIN data, followed by
+        (8 - PIN length) bytes of '0'. When disabled, the applet
+        must be signed (<b>Applet signing is disabled in 32
+        firmware</b>).</font></p>
+        <p><font size="2" face="NewCenturySchlbk">Input data:
+        byte &#150; 0 to disable 1 to enable.</font></p>
+        <dir>
+            <li><font size="2" face="NewCenturySchlbk">Default
+                value: 1</font></li>
+        </dir>
+    </li>
+</ul>
+
+<ul>
+    <li><a name="setrestore">
+        <font size="2" face="NewCenturySchlbk"><b>Set Restore Mode</b></font>
+        </a>
+
+	<br>
+        <font color="#008740" size="2" face="NewCenturySchlbk"><b>P2:
+        06h</b></font><p><font size="2" face="NewCenturySchlbk">Description:
+        When Restore Mode is enabled, all field updates and
+        javacard.framework.System transactions are considered
+        atomic. If a tear occurs in the middle of these updates,
+        the values just prior to the update are restored.</font></p>
+        <p><font size="2" face="NewCenturySchlbk">Input data:
+        byte &#150; 0 to disable 1 to enable.</font></p>
+        <dir>
+            <li><font size="2" face="NewCenturySchlbk">Default
+                value: 1</font></li>
+        </dir>
+    </li>
+</ul>
+
+<ul>
+    <li><a name="setexception">
+        <font size="2" face="NewCenturySchlbk"><b>Set Exception Mode</b></font>
+        </a>
+        <font color="#008740" size="2" face="NewCenturySchlbk"><b>(set:
+        Allow exceptions)</b></font>
+	<br>
+        <font color="#008740" size="2" face="NewCenturySchlbk"><b>P2:
+        07h</b></font><p><font size="2" face="NewCenturySchlbk">Description:
+        When Exception Mode is enabled, Java API exceptions are
+        thrown and can be caught. All uncaught exceptions return
+        0x6f00 in the SW. When disabled, any exception that is
+        encountered will immediately terminate the process, and a
+        0x6f00 will be returned in the SW. Any catch blocks will
+        be ignored in this disabled mode.</font></p>
+        <p><font size="2" face="NewCenturySchlbk">Input data:
+        byte &#150; 0 to disable 1 to enable.</font></p>
+        <dir>
+            <li><font size="2" face="NewCenturySchlbk">Default
+                value: 1</font></li>
+        </dir>
+    </li>
+</ul>
+
+<ul>
+    <li><font size="2" face="NewCenturySchlbk"><b>Reserved</b></font></li>
+	<br>
+        <font color="#008740" size="2" face="NewCenturySchlbk"><b>P2:
+        08h</b></font>
+    </li>
+</ul>
+
+
+
+<ul>
+    <li><a name="seterror">
+        <font size="2" face="NewCenturySchlbk"><b>Set Error Reporting Mode</b></font>
+        </a>
+	<br>
+        <font color="#008740" size="2" face="NewCenturySchlbk"><b>P2:
+        09h</b></font><p>
+	<font size="2" face="NewCenturySchlbk">Description:
+	This method is only available on <u>i</u>Buttons revision 1.00 and later.
+	If the error reporting mode is set, the iButton stores the last exception 
+	value code.  This code can be retreived by performing a <a href="#getlast">
+	getLastError</a>.	
+
+	</font>
+        <dir>
+            <li><font size="2" face="NewCenturySchlbk">Default
+                value: 1</font></li>
+        </dir>
+    </li>
+</ul>
+
+
+
+
+<ul>
+    <li><a name="setcommit">
+        <font size="2" face="NewCenturySchlbk"><b>Set Commit Buffer Size</b></font>
+        </a>
+	<br>
+        <font color="#008740" size="2" face="NewCenturySchlbk"><b>P2:
+        0Ah</b></font><p><font size="2" face="NewCenturySchlbk">Description:
+        Sets the size of the buffer where transactions are
+        stored. Committing one field to the buffer requires 9
+        bytes. Therefore the default size of 72 bytes allows 8
+        field updates. The minimum size allowed is 72 bytes and
+        the maximum is restricted by the amount of free RAM. All
+        values will be rounded up to the next multiple of 9.</font></p>
+        <p><font size="2" face="NewCenturySchlbk">Input data:
+        short (LSB first) &#150; commit buffer size in bytes.</font></p>
+        <dir>
+            <li><font size="2" face="NewCenturySchlbk">Default
+                value: 72</font></li>
+        </dir>
+    </li>
+</ul>
+
+<p><font size="2" face="NewCenturySchlbk"><b><h3>Information
+commands (Free Access)</h3></b></font></p>
+
+<p><font color="#008740" size="2" face="NewCenturySchlbk"><b>P1:
+01h</b></font></p>
+
+<ul>
+    <li><a name="readfirmware">
+        <font size="2" face="NewCenturySchlbk"><b>Get Firmware
+        Version String</b></font>
+        </a>
+	<br>
+        <font color="#008740" size="2" face="NewCenturySchlbk"><b>P2:
+        00h</b></font><p><font size="2" face="NewCenturySchlbk">Description:
+        Returns the Firmware Version String (FVS) in the
+        following format: [length byte - Len][Len bytes of FVS
+        data].</font></p>
+        <p><font size="2" face="NewCenturySchlbk">Input data:
+        None.</font></p>
+
+	<p><font size="2" face="NewCenturySchlbk">The fields of the
+	firmware version are &quot;Firmware Version (FV)
+	Major&quot;.&quot;FV Minor&quot;.&quot;API Build Number&quot;</font></p>
+
+    </li>
+</ul>
+
+<ul>
+    <li><a name="readfree">
+        <font size="2" face="NewCenturySchlbk"><b>Get Free RAM</b></font>
+        </a>
+	<br>
+        <font color="#008740" size="2" face="NewCenturySchlbk"><b>P2:
+        01h</b></font><p><font size="2" face="NewCenturySchlbk">Description:
+        Returns a short (LSB first) in hexadecimal format
+        representing the amount of free RAM remaining in the <u>i</u>Button.</font></p>
+        <p><font size="2" face="NewCenturySchlbk">Input data:
+        None.</font></p>
+    </li>
+</ul>
+
+<ul>
+    <li><a name="getephemeral">
+        <font size="2" face="NewCenturySchlbk"><b>Get Ephemeral
+        GC Mode</b></font>
+        </a>
+	<br>
+        <font color="#008740" size="2" face="NewCenturySchlbk"><b>P2:
+        02h</b></font><p><font size="2" face="NewCenturySchlbk">Description:
+        Returns a byte representing the mode &#150; 0 for
+        disabled, 1 for enabled. See </font><a
+        href="#set ephemeral"><font size="2"
+        face="NewCenturySchlbk">Set Ephemeral GC Mode</font></a><font
+        size="2" face="NewCenturySchlbk"> for details on the
+        Ephemeral garbage collector.</font></p>
+        <p><font size="2" face="NewCenturySchlbk">Input data:
+        None.</font></p>
+    </li>
+</ul>
+
+<ul>
+    <li><a name="getgc">
+        <font size="2" face="NewCenturySchlbk"><b>Get Applet GC
+        Mode</b></font>
+        </a>
+	<br>
+        <font color="#008740" size="2" face="NewCenturySchlbk"><b>P2:
+        03h</b></font><p><font size="2" face="NewCenturySchlbk">Description:
+        Returns a byte representing the mode &#150; 0 for
+        disabled, 1 for enabled. See </font><a
+        href="#set applet gc"><font size="2"
+        face="NewCenturySchlbk">Set Applet GC Mode</font></a><font
+        size="2" face="NewCenturySchlbk"> for details on the
+        Applet garbage collector.</font></p>
+        <p><font size="2" face="NewCenturySchlbk">Input data:
+        None.</font></p>
+    </li>
+</ul>
+
+<ul>
+    <li><a name="getcommand">
+        <font size="2" face="NewCenturySchlbk"><b>Get Command PIN
+        Mode</b></font>
+        </a>
+	<br>
+        <font color="#008740" size="2" face="NewCenturySchlbk"><b>P2:
+        04h</b></font><p><font size="2" face="NewCenturySchlbk">Description:
+        Returns a byte representing the mode &#150; 0 for
+        disabled, 1 for enabled. See </font><a
+        href="#set command PIN"><font size="2"
+        face="NewCenturySchlbk">Set Command PIN mode</font></a><font
+        size="2" face="NewCenturySchlbk"> for more details.</font></p>
+        <p><font size="2" face="NewCenturySchlbk">Input data:
+        None.</font></p>
+    </li>
+</ul>
+
+<ul>
+    <li><a name="getload">
+        <font size="2" face="NewCenturySchlbk"><b>Get Load PIN
+        Mode</b></font>
+        </a>
+	<br>
+        <font color="#008740" size="2" face="NewCenturySchlbk"><b>P2:
+        05h</b></font><p><font size="2" face="NewCenturySchlbk">Description:
+        Returns a byte representing the mode &#150; 0 for
+        disabled, 1 for enabled. See </font><a
+        href="#set load PIN"><font size="2"
+        face="NewCenturySchlbk">Set Load PIN Mode</font></a><font
+        size="2" face="NewCenturySchlbk"> for more details.</font></p>
+        <p><font size="2" face="NewCenturySchlbk">Input data:
+        None.</font></p>
+    </li>
+</ul>
+
+<ul>
+    <li><a name="getrestore">
+        <font size="2" face="NewCenturySchlbk"><b>Get Restore
+        Mode</b></font>
+        </a>
+	<br>
+        <font color="#008740" size="2" face="NewCenturySchlbk"><b>P2:
+        06h</b></font><p><font size="2" face="NewCenturySchlbk">Description:
+        Returns a byte representing the mode &#150; 0 for
+        disabled, 1 for enabled. See </font><a
+        href="#set restore"><font size="2"
+        face="NewCenturySchlbk">Set Restore Mode</font></a><font
+        size="2" face="NewCenturySchlbk"> for more details.</font></p>
+        <p><font size="2" face="NewCenturySchlbk">Input data:
+        None.</font></p>
+    </li>
+</ul>
+
+<ul>
+    <li><a name="getexception">
+        <font size="2" face="NewCenturySchlbk"><b>Get Exception Mode</b></font>
+        </a>
+        <font color="#008740" size="2" face="NewCenturySchlbk">
+        <b>(set: Allow exceptions)</b></font>
+	<br>
+        <font color="#008740" size="2" face="NewCenturySchlbk"><b>P2:
+        07h</b></font><p><font size="2" face="NewCenturySchlbk">Description:
+        Returns a byte representing the mode &#150; 0 for
+        disabled, 1 for enabled. See </font><a
+        href="#set exception"><font size="2"
+        face="NewCenturySchlbk">Set Exception Mode</font></a><font
+        size="2" face="NewCenturySchlbk"> for more details.</font></p>
+        <p><font size="2" face="NewCenturySchlbk">Input data:
+        None.</font></p>
+    </li>
+</ul>
+
+<ul>
+    <li><font size="2" face="NewCenturySchlbk"><b>Reserved</b></font>
+	<br>
+        <font color="#008740" size="2" face="NewCenturySchlbk"><b>P2:
+        08h</b></font></li>
+</ul>
+
+<ul>
+    <li><a name="geterror">
+        <font size="2" face="NewCenturySchlbk"><b>Get Error Reporting Mode</b></font>
+        </a>
+	<br>
+        <font color="#008740" size="2" face="NewCenturySchlbk"><b>P2:
+        09h</b></font><p>
+	<font size="2" face="NewCenturySchlbk">Description:
+	This method is only available on <u>i</u>Buttons revision 1.00 and later.
+	If the error reporting mode is set, the iButton stores the last exception 
+	value code.  This code can be retreived by performing a <a href="#getlast">
+	getLastError</a>.	
+
+    </li>
+</ul>
+
+<ul>
+    <li><a name="getcommit">
+        <font size="2" face="NewCenturySchlbk"><b>Get Commit
+        Buffer Size</b></font>
+        </a>
+	<br>
+        <font color="#008740" size="2" face="NewCenturySchlbk"><b>P2:
+        0Ah</b></font><p><font size="2" face="NewCenturySchlbk">Description:
+        Returns a short (LSB first) representing the size, in
+        bytes, of the Commit Buffer. See </font><a
+        href="#set commit buffer"><font size="2"
+        face="NewCenturySchlbk">Set Commit Buffer Size</font></a><font
+        size="2" face="NewCenturySchlbk"> for more details.</font></p>
+        <p><font size="2" face="NewCenturySchlbk">Input data:
+        None.</font></p>
+    </li>
+</ul>
+
+<ul>
+    <li><a name="getatr">
+        <font size="2" face="NewCenturySchlbk"><b>Get ATR</b></font>
+        </a>
+	<br>
+        <font color="#008740" size="2" face="NewCenturySchlbk"><b>P2:
+        0Bh</b></font><p><font size="2" face="NewCenturySchlbk">Description:
+        Return the Answer to Reset string.</font></p>
+        <p><font size="2" face="NewCenturySchlbk">Input data:
+        None.</font></p>
+    </li>
+</ul>
+
+<ul>
+    <li><a name="getreal">
+        <font size="2" face="NewCenturySchlbk"><b>Get Real Time
+        Clock</b></font>
+        </a>
+	<br>
+        <font color="#008740" size="2" face="NewCenturySchlbk"><b>P2:
+        0Ch</b></font><p><font size="2" face="NewCenturySchlbk">Description:
+        Returns a 4 byte number (LSB first) representing the
+        current value of the real-time clock in seconds. This
+        value counts up from zero and represents the amount of
+        time since the battery was attached.</font></p>
+        <p><font size="2" face="NewCenturySchlbk">Input data:
+        None.</font></p>
+    </li>
+</ul>
+
+<ul>
+    <li><a name="getrandom">
+        <font size="2" face="NewCenturySchlbk"><b>Get Random
+        Bytes</b></font>
+        </a>
+	<br>
+        <font color="#008740" size="2" face="NewCenturySchlbk"><b>P2:
+        0Dh</b></font><p><font size="2" face="NewCenturySchlbk">Description:
+        Returns the specified number of randomly generated bytes.</font></p>
+        <p><font size="2" face="NewCenturySchlbk">Input data:
+        Short value (LSB first) representing the number of random
+        bytes to retrieve.</font></p>
+    </li>
+</ul>
+
+<ul>
+    <li><a name="getaid">
+        <font size="2" face="NewCenturySchlbk"><b>List Applet by
+        Number</b></font>
+        </a>
+	<br>
+        <font color="#008740" size="2" face="NewCenturySchlbk"><b>P2:
+        0Eh</b></font><p><font size="2" face="NewCenturySchlbk">Description:
+        Returns the AID (applet name) in the format [AID length -
+        Len][Len bytes of AID data].</font></p>
+        <p><font size="2" face="NewCenturySchlbk">Input data:
+        Byte (0-15) representing applet number.</font></p>
+    </li>
+</ul>
+
+
+<ul>
+    <li><a name="getlast">
+        <font size="2" face="NewCenturySchlbk"><b>Get Last Error</b></font>
+        </a>
+	<br>
+        <font color="#008740" size="2" face="NewCenturySchlbk"><b>P2:
+        0Fh</b></font><p>
+	<font size="2" face="NewCenturySchlbk">Description:
+	Gets the last error value.  If the <a href="#seterror">Error 
+        Reporting mode</a> is set, then this method will return the 
+	value of the last exception.
+
+    </li>
+</ul>
+
+
+<p><font size="2" face="NewCenturySchlbk"><b><h3>Statistical
+commands (Free Access)</h3></b></font></p>
+
+<p><font color="#008740" size="2" face="NewCenturySchlbk"><b>P1:
+02h</b></font></p>
+
+<ul>
+    <li><a name="getpor">
+        <font size="2" face="NewCenturySchlbk"><b>Get POR Count</b></font>
+        </a>
+	<br>
+        <font color="#008740" size="2" face="NewCenturySchlbk"><b>P2:
+        00h</b></font><p><font size="2" face="NewCenturySchlbk">Description:
+        Returns a short (LSB first) representing the number of
+        Power On Resets that have occurred since the last Master
+        Erase. A Power On Reset occurs every time an <u>i</u>Button
+        is inserted into a Blue Dot Reader.</font></p>
+        <p><font size="2" face="NewCenturySchlbk">Input data:
+        None.</font></p>
+    </li>
+</ul>
+
+<p><a name="aid"><font size="2" face="NewCenturySchlbk"><b><u></u></b></font></a><font
+size="2" face="NewCenturySchlbk"><b><h3>AID commands (Master PIN
+Protected)</h3></b></font></p>
+
+<p><font color="#008740" size="2" face="NewCenturySchlbk"><b>P1:
+03h</b></font></p>
+
+<ul>
+    <li><a name="deleteselcted">
+        <font size="2" face="NewCenturySchlbk"><b>Delete
+        Currently Selected Applet </b></font>
+        </a>
+	<br>
+        <font color="#008740" size="2" face="NewCenturySchlbk"><b>P2:
+        00h</b></font><p><font size="2" face="NewCenturySchlbk">Description:
+        Deletes the currently selected applet and frees any
+        memory owned by that applet.</font></p>
+        <p><font size="2" face="NewCenturySchlbk">Input data:
+        None.</font></p>
+    </li>
+</ul>
+
+<ul>
+    <li><a name="deletenumber">
+        <font size="2" face="NewCenturySchlbk"><b>Delete Applet
+        Number i</b></font>
+        </a>
+	<br>
+        <font color="#008740" size="2" face="NewCenturySchlbk"><b>P2:
+        01h</b></font><p><font size="2" face="NewCenturySchlbk">Description:
+        Deletes the specified applet and frees any memory owned
+        by that applet.</font></p>
+        <p><font size="2" face="NewCenturySchlbk">Input data:
+        Byte (0-15) representing the applet number of the applet
+        to be deleted.</font></p>
+    </li>
+</ul>
+
+<ul>
+    <li><a name="deleteaid">
+        <font size="2" face="NewCenturySchlbk"><b>Delete Applet
+        Using AID</b></font>
+        </a>
+	<br>
+        <font color="#008740" size="2" face="NewCenturySchlbk"><b>P2:
+        02h</b></font><p><font size="2" face="NewCenturySchlbk">Description:
+        Deletes the specified applet and frees any memory owned
+        by that applet. If more than one applets have the same
+        AID, the applet with the lowest applet number will be
+        deleted.</font></p>
+        <p><font size="2" face="NewCenturySchlbk">Input data: AID
+        corresponding to the applet to be deleted.</font></p>
+    </li>
+</ul>
+
+<p><img src="Image3.gif" width="536" height="5"></p>
+
+<p><font size="2" face="Arial, helvetica"><b><u>i</u></b><b>Button
+Homepage: </b></font><a href="http://www.ibutton.com/"><font
+size="2" face="Arial, helvetica"><b>http://www.ibutton.com/</b></font></a><font
+size="2" face="Arial, helvetica"><b> </b></font></p>
+
+<p><img src="dsc.jpg" width="96" height="39"></p>
+</body>
+</html>

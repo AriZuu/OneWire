@@ -1,0 +1,742 @@
+<HTML>
+<HEAD>
+  <TITLE>iButton: JiBAPI - C API for the Java-Powered iButton</TITLE>
+</HEAD>
+
+<BODY BGCOLOR="#FFFFFF">
+<h2><img src="ibidehelpicon.jpg" align="right"
+hspace="0" width="200" height="101"></h2>
+<HR>
+<h2>JiBAPI - C API for the Java Powered <U>i</U>Button</h2>
+<HR>
+
+<A NAME="GetJiBAPIVersion()"><!-- --></A><H3>
+GetJiBAPIVersion</H3>
+<PRE>
+DWORD <B>GetJiBAPIVersion</B>()</PRE>
+<DL>
+<DD>Returns the API version. Version major in LS WORD and minor in MS WORD.<DD><DL>
+<DT><B>Returns:</B><DD>The version of this API.</DL>
+</DD>
+</DL>
+<HR>
+
+<A NAME="SetDefaultExecTime(WORD)"><!-- --></A><H3>
+SetDefaultExecTime</H3>
+<PRE>
+void <B>SetDefaultExecTime</B>(WORD&nbsp;p_ExecTimeMS)</PRE>
+<DL>
+<DD>Sets the default execution time.<DD><DL>
+<DT><B>Parameters:</B><DD><CODE>p_ExecTimeMS</CODE> - default runtime.</DL>
+</DD>
+</DL>
+<HR>
+<A NAME="SendAPDU(LPCOMMANDAPDU, WORD)"><!-- --></A><H3>
+SendAPDU</H3>
+<PRE>
+LPRESPONSEAPDU <B>SendAPDU</B>(LPCOMMANDAPDU&nbsp;p_lpCommandAPDU,
+                        WORD&nbsp;p_ExecTimeMS)</PRE>
+<DL>
+<DD>Sends a generic command APDU to the iButton.<DD><DL>
+<DT><B>Parameters:</B><DD><CODE>p_lpCommandAPDU</CODE> - is configured by the caller.<DD><CODE>p_ExecTimeMS</CODE> - is the estimated runtime in  milliseconds. Valid
+ runtimes range from 64 milliseconds to just under 4 seconds (4000 ms).
+ Invalid runtimes will be automatically adjusted up or down as necessary.<DT><B>Returns:</B><DD>The ResponseAPDU containing the Status Word of the response.
+          <BR>SW = 0x9000 indicates success.</DL>
+</DD>
+</DL>
+<HR>
+
+<A NAME="SetPIN(LPJIBMASTERPIN)"><!-- --></A><H3>
+SetPIN</H3>
+<PRE>
+void <B>SetPIN</B>(LPJIBMASTERPIN&nbsp;p_lpMasterPIN)</PRE>
+<DL>
+<DD>Sets the Local PIN variable that is sent to the iButton as the Master PIN,
+ in the command data, for commands that require a PIN.
+ <BR><B>NOTE:</B>This command does not set the iButton's Master PIN.<DD><DL>
+<DT><B>Parameters:</B><DD><CODE>p_MasterPIN</CODE> - PIN sent with APDUs that require a Master PIN.</DL>
+</DD>
+</DL>
+<HR>
+
+<A NAME="Process(BYTE, BYTE, BYTE, BYTE, BYTE, LPBYTE, WORD)"><!-- --></A><H3>
+Process</H3>
+<PRE>
+LPRESPONSEAPDU <B>Process</B>(BYTE&nbsp;p_CLA,
+                       BYTE&nbsp;p_INS,
+                       BYTE&nbsp;p_P1,
+                       BYTE&nbsp;p_P2,
+                       BYTE&nbsp;p_Lc,
+                       LPBYTE&nbsp;p_lpData,
+                       WORD&nbsp;p_RunTimeMS)</PRE>
+<DL>
+<DD>Runs the process method on the selected applet. Valid CLA, INS, P1 and P2
+ values are chosen by the applet writer. CLA, INS, P1 and P2 values used
+ by the API and/or the iButton Command Processor are reserved.<DD><DL>
+<DT><B>Parameters:</B><DD><CODE>p_CLA</CODE> - Class byte.<DD><CODE>p_INS</CODE> - Instruction byte.<DD><CODE>p_P1</CODE> - Parameter byte 1.<DD><CODE>p_P2</CODE> - Parameter byte 2.<DD><CODE>p_Lc</CODE> - Command data length.<DD><CODE>p_lpData</CODE> - Pointer to command data..<DD><CODE>p_RunTimeMS</CODE> - Suggested runtime in milliseconds.<DT><B>Returns:</B><DD>The ResponseAPDU containing the Status Word of the response.
+          <BR>SW = 0x9000 indicates success.</DL>
+</DD>
+</DL>
+<HR>
+
+<A NAME="Select(LPAID)"><!-- --></A><H3>
+Select</H3>
+<PRE>
+LPRESPONSEAPDU <B>Select</B>(LPAID&nbsp;p_lpAID)</PRE>
+<DL>
+<DD>Selects an applet to be active on the iButton.<DD><DL>
+<DT><B>Returns:</B><DD>The ResponseAPDU containing the Status Word of the response.
+          <BR>SW = 0x9000 indicates success.
+ <BR><B>NOTE:</B> The iButton will return an error if the string is not in the
+       range 5 to 16 bytes (inclusive).</DL>
+</DD>
+</DL>
+<HR>
+
+<A NAME="MasterErase()"><!-- --></A><H3>
+MasterErase</H3>
+<PRE>
+LPRESPONSEAPDU <B>MasterErase</B>()</PRE>
+<DL>
+<DD>Issues a master erase of the iButton<DD><DL>
+<DT><B>Returns:</B><DD>A ResponseAPDU object containing the response apdu sent by the
+          iButton.
+          <BR>SW = 0x9000 indicates success.</DL>
+</DD>
+</DL>
+<HR>
+
+<A NAME="GetFreeRam()"><!-- --></A><H3>
+GetFreeRam</H3>
+<PRE>
+LPRESPONSEAPDU <B>GetFreeRam</B>()</PRE>
+<DL>
+<DD><DL>
+<DT><B>Returns:</B><DD>A ResponseAPDU that contains the amount of free RAM.
+          <BR>SW = 0x9000 indicates success.</DL>
+</DD>
+</DL>
+<HR>
+
+<A NAME="ReadFreeRam()"><!-- --></A><H3>
+ReadFreeRam</H3>
+<PRE>
+LPRESPONSEAPDU <B>ReadFreeRam</B>()</PRE>
+<DL>
+<DD><DL>
+<DT><B>Returns:</B><DD>A ResponseAPDU that contains the amount of free RAM.
+          <BR>SW = 0x9000 indicates success.
+ <BR><B>NOTE:</B> Deprecated.</DL>
+</DD>
+</DL>
+<HR>
+
+<A NAME="GetFirmwareVersionString()"><!-- --></A><H3>
+GetFirmwareVersionString</H3>
+<PRE>
+LPRESPONSEAPDU <B>GetFirmwareVersionString</B>()</PRE>
+<DL>
+<DD><DL>
+<DT><B>Returns:</B><DD>A ResponseAPDU containing the Firmware Version String.
+          <BR>SW = 0x9000 indicates success.</DL>
+</DD>
+</DL>
+<HR>
+
+<A NAME="ReadFirmwareVersionID()"><!-- --></A><H3>
+ReadFirmwareVersionID</H3>
+<PRE>
+LPRESPONSEAPDU <B>ReadFirmwareVersionID</B>()</PRE>
+<DL>
+<DD><DL>
+<DT><B>Returns:</B><DD>A ResponseAPDU containing the Firmware Version ID.
+          <BR>SW = 0x9000 indicates success.
+ <BR><B>NOTE:</B> Deprecated.</DL>
+</DD>
+</DL>
+<HR>
+
+<A NAME="GetEphemeralGCMode()"><!-- --></A><H3>
+GetEphemeralGCMode</H3>
+<PRE>
+LPRESPONSEAPDU <B>GetEphemeralGCMode</B>()</PRE>
+<DL>
+<DD>Reads the ephemeral garbage collection mode.<DD><DL>
+<DT><B>Returns:</B><DD>The ResponseAPDU containing the value of the ephemeral garbage
+          Collector. A value of 1 indicates the garbage collector is
+          turned on.
+          <BR>SW = 0x9000 indicates success.</DL>
+</DD>
+</DL>
+<HR>
+
+<A NAME="SetEphemeralGCMode(BYTE)"><!-- --></A><H3>
+SetEphemeralGCMode</H3>
+<PRE>
+LPRESPONSEAPDU <B>SetEphemeralGCMode</B>(BYTE&nbsp;p_Mode)</PRE>
+<DL>
+<DD>Sets the mode of the ephemeral garbage collector.  Setting the mode to
+ 1 turns the collector on, setting it to 0 turns the collector off.
+ If the iButton is password protected, setPIN() should be called before
+ invoking this method.<DD><DL>
+<DT><B>Parameters:</B><DD><CODE>p_Mode</CODE> - 1  - turn the collector on,
+             0  - turn the collector off.<DT><B>Returns:</B><DD>The ResponseAPDU containing the Status Word of the response.
+          <BR>SW = 0x9000 indicates success.</DL>
+</DD>
+</DL>
+<HR>
+
+<A NAME="GetAppletGCMode()"><!-- --></A><H3>
+GetAppletGCMode</H3>
+<PRE>
+LPRESPONSEAPDU <B>GetAppletGCMode</B>()</PRE>
+<DL>
+<DD>Reads the applet garbage collection mode.<DD><DL>
+<DT><B>Returns:</B><DD>The ResponseAPDU containing the mode of the applet garbage
+          Collector. A value of 1 indicates the garbage collector is
+          turned on.
+          <BR>SW = 0x9000 indicates success.</DL>
+</DD>
+</DL>
+<HR>
+
+<A NAME="SetAppletGCMode(BYTE)"><!-- --></A><H3>
+SetAppletGCMode</H3>
+<PRE>
+LPRESPONSEAPDU <B>SetAppletGCMode</B>(BYTE&nbsp;p_Mode)</PRE>
+<DL>
+<DD>Sets the mode of the applet garbage collector.  Setting the mode to 1
+ turns the collector on, setting it to 0 turns the collector off.
+ If the iButton is password protected, setPIN() should be called before
+ invoking this method.<DD><DL>
+<DT><B>Parameters:</B><DD><CODE>p_Mode</CODE> - 1  - turn the collector on,
+0  - turn the collector off.<DT><B>Returns:</B><DD>The ResponseAPDU containing the Status Word of the response.
+          <BR>SW = 0x9000 indicates success.</DL>
+</DD>
+</DL>
+<HR>
+
+<A NAME="GetCommandPINMode()"><!-- --></A><H3>
+GetCommandPINMode</H3>
+<PRE>
+LPRESPONSEAPDU <B>GetCommandPINMode</B>()</PRE>
+<DL>
+<DD>Returns the mode of the CommandPIN.  If a value of 1 is returned by
+ the iButton, PINs are required to perform all Admistrative commands.<DD><DL>
+<DT><B>Returns:</B><DD>The ResponseAPDU containing the mode of the CommandPIN.
+          A value of 1 indicates a PIN is required for all Administrative
+          commands.
+          <BR>SW = 0x9000 indicates success.</DL>
+</DD>
+</DL>
+<HR>
+
+<A NAME="SetCommandPINMode(BYTE)"><!-- --></A><H3>
+SetCommandPINMode</H3>
+<PRE>
+LPRESPONSEAPDU <B>SetCommandPINMode</B>(BYTE&nbsp;p_Mode)</PRE>
+<DL>
+<DD>Sets the mode of the CommandPIN.  Setting the mode to 1 indicates the
+ the iButton should require a PIN for all Administrative commands.<DD><DL>
+<DT><B>Parameters:</B><DD><CODE>p_Mode</CODE> - 1  - set the CommandPIN mode to require a PIN for
+                            all Administrative commands.
+             0  - set the CommandPIN mode to not require a PIN
+                            for Administrative commands.<DT><B>Returns:</B><DD>The ResponseAPDU containing the Status Word of the response.
+          <BR>SW = 0x9000 indicates success.</DL>
+</DD>
+</DL>
+<HR>
+
+<A NAME="GetLoadPINMode()"><!-- --></A><H3>
+GetLoadPINMode</H3>
+<PRE>
+LPRESPONSEAPDU <B>GetLoadPINMode</B>()</PRE>
+<DL>
+<DD>Returns the mode of the LoadPIN.  If a value of 1 is returned by the
+ iButton, PINs are required to load applets.<DD><DL>
+<DT><B>Returns:</B><DD>The ResponseAPDU containing the mode of the LoadPIN.
+          A value of 1 indicates a PIN is required for loading applets
+          into the iButton.
+          <BR>SW = 0x9000 indicates success.</DL>
+</DD>
+</DL>
+<HR>
+
+<A NAME="SetLoadPINMode(BYTE)"><!-- --></A><H3>
+SetLoadPINMode</H3>
+<PRE>
+LPRESPONSEAPDU <B>SetLoadPINMode</B>(BYTE&nbsp;p_Mode)</PRE>
+<DL>
+<DD>Sets the mode of the LoadPIN.  Setting the mode to 1 indicates the
+ iButton should require a PIN for all applets loads.<DD><DL>
+<DT><B>Parameters:</B><DD><CODE>p_Mode</CODE> - 1 - set the LoadPIN mode to require a PIN for applet
+                       load.
+             0 - set the LoadPIN mode to not require a PIN for
+                       applet load.<DT><B>Returns:</B><DD>The ResponseAPDU containing the Status Word of the response.
+          <BR>SW = 0x9000 indicates success.</DL>
+</DD>
+</DL>
+<HR>
+
+<A NAME="GetRestoreMode()"><!-- --></A><H3>
+GetRestoreMode</H3>
+<PRE>
+LPRESPONSEAPDU <B>GetRestoreMode</B>()</PRE>
+<DL>
+<DD><DL>
+<DT><B>Returns:</B><DD>The ResponseAPDU containing the restore mode.
+          <BR>SW = 0x9000 indicates success.</DL>
+</DD>
+</DL>
+<HR>
+
+<A NAME="SetRestoreMode(BYTE)"><!-- --></A><H3>
+SetRestoreMode</H3>
+<PRE>
+LPRESPONSEAPDU <B>SetRestoreMode</B>(BYTE&nbsp;p_Mode)</PRE>
+<DL>
+<DD>Setting the mode to 1 enables restoration of fields to previous values
+ if a transaction was interrupted.<DD><DL>
+<DT><B>Parameters:</B><DD><CODE>p_Mode</CODE> - 1 - Allow restoration.
+             0 - Do not allow restoration.<DT><B>Returns:</B><DD>The ResponseAPDU containing the Status Word of the response.
+          <BR>SW = 0x9000 indicates success.</DL>
+</DD>
+</DL>
+<HR>
+
+<A NAME="GetExceptionMode()"><!-- --></A><H3>
+GetExceptionMode</H3>
+<PRE>
+LPRESPONSEAPDU <B>GetExceptionMode</B>()</PRE>
+<DL>
+<DD>Gets the Exception mode of the iButton.  If the mode is 1, then VM
+ exceptions are thrown. If the mode is 0, then VM exceptions are not
+ thrown.<DD><DL>
+<DT><B>Returns:</B><DD>The ResponseAPDU containing the Exception mode.
+          <BR>SW = 0x9000 indicates success.</DL>
+</DD>
+</DL>
+<HR>
+
+<A NAME="SetExceptionMode(BYTE)"><!-- --></A><H3>
+SetExceptionMode</H3>
+<PRE>
+LPRESPONSEAPDU <B>SetExceptionMode</B>(BYTE&nbsp;p_Mode)</PRE>
+<DL>
+<DD>Sets the Exception mode of the iButton.  If the mode is 1, then VM
+ exceptions are thrown. If the mode is 0, then VM exceptions are not
+ thrown.<DD><DL>
+<DT><B>Parameters:</B><DD><CODE>p_Mode</CODE> - 1 - set the Exception mode to allow VM thrown
+                       exceptions.
+             0 - set the Exception mode to not allow the VM to
+                       throw exceptions.<DT><B>Returns:</B><DD>The ResponseAPDU containing the Status Word of the response.
+          <BR>SW = 0x9000 indicates success.</DL>
+</DD>
+</DL>
+<HR>
+
+<A NAME="GetISOExceptionMode()"><!-- --></A><H3>
+GetISOExceptionMode</H3>
+<PRE>
+LPRESPONSEAPDU <B>GetISOExceptionMode</B>()</PRE>
+<DL>
+<DD>Gets the ISOException mode of the iButton.  If the mode is 1,
+ ISOExceptions are handled differently from all other exceptions.
+ Instead of returning 0x6f00 for an uncaught ISOException, the reason is
+ returned in the SW. If the mode is 0, ISOExceptions are handled like
+ all other exceptions.<DD><DL>
+<DT><B>Returns:</B><DD>The ResponseAPDU containing the ISOException mode.
+          <BR>SW = 0x9000 indicates success.
+ <BR><B>NOTE:</B> Requires Firmware Revision 1.00 or greater.</DL>
+</DD>
+</DL>
+<HR>
+
+<A NAME="SetISOExceptionMode(BYTE)"><!-- --></A><H3>
+SetISOExceptionMode</H3>
+<PRE>
+LPRESPONSEAPDU <B>SetISOExceptionMode</B>(BYTE&nbsp;p_Mode)</PRE>
+<DL>
+<DD>Sets the ISOException mode of the iButton.  If the mode is 1,
+ ISOExceptions are handled differently from all other exceptions.
+ Instead of returning 0x6f00 for an uncaught ISOException, the reason is
+ returned in the SW. If the mode is 0, ISOExceptions are handled like
+ all other exceptions.<DD><DL>
+<DT><B>Parameters:</B><DD><CODE>p_Mode</CODE> - 1 - set the ISOException mode.
+             0 - clear the ISOException mode.<DT><B>Returns:</B><DD>The ResponseAPDU containing the Status Word of the response.
+          <BR>SW = 0x9000 indicates success.
+ <BR><B>NOTE:</B> Requires Firmware Revision 1.00 or greater.</DL>
+</DD>
+</DL>
+<HR>
+
+<A NAME="GetErrorReportMode()"><!-- --></A><H3>
+GetErrorReportMode</H3>
+<PRE>
+LPRESPONSEAPDU <B>GetErrorReportMode</B>()</PRE>
+<DL>
+<DD>Gets the Error Reporting mode of the iButton. If the mode is 1,
+ GetLastJCREError will return the error byte indicating the reason for
+ the last &quot;Java Card Runtime Environment&quot; thrown error.<DD><DL>
+<DT><B>Returns:</B><DD>The ResponseAPDU containing the Error Reporting mode.
+          <BR>SW = 0x9000 indicates success.
+ <BR><B>NOTE:</B> Requires Firmware Revision 1.00 or greater.</DL>
+</DD>
+</DL>
+<HR>
+
+<A NAME="SetErrorReportMode(BYTE)"><!-- --></A><H3>
+SetErrorReportMode</H3>
+<PRE>
+LPRESPONSEAPDU <B>SetErrorReportMode</B>(BYTE&nbsp;p_Mode)</PRE>
+<DL>
+<DD>Sets the Error Report mode of the iButton. If the mode is 1,
+ GetLastJCREError will return the error byte indicating the reason for
+ the last &quot;Java Card Runtime Environment&quot; thrown error.<DD><DL>
+<DT><B>Parameters:</B><DD><CODE>p_Mode</CODE> - 1 - set the Error Report mode to.
+             0 - set the Error Report mode to.<DT><B>Returns:</B><DD>The ResponseAPDU containing the Status Word of the response.
+          <BR>SW = 0x9000 indicates success.
+ <BR><B>NOTE:</B> Requires Firmware Revision 1.00 or greater.</DL>
+</DD>
+</DL>
+<HR>
+
+<A NAME="GetCommitBufferSize()"><!-- --></A><H3>
+GetCommitBufferSize</H3>
+<PRE>
+LPRESPONSEAPDU <B>GetCommitBufferSize</B>()</PRE>
+<DL>
+<DD>Gets the size of the iButton's Commit Buffer.<DD><DL>
+<DT><B>Returns:</B><DD>The ResponseAPDU containing the size of the iButton's commit
+          buffer in bytes. The ResponseAPDU's data field will contain two
+          bytes representing the size (short).
+          <BR>SW = 0x9000 indicates success.</DL>
+</DD>
+</DL>
+<HR>
+
+<A NAME="GetCommitBufferFields()"><!-- --></A><H3>
+GetCommitBufferFields</H3>
+<PRE>
+LPRESPONSEAPDU <B>GetCommitBufferFields</B>()</PRE>
+<DL>
+<DD>Gets the number of fields in the iButton's Commit Buffer.<DD><DL>
+<DT><B>Returns:</B><DD>The ResponseAPDU containing the size of the iButton's commit
+          buffer in number of fields. The ResponseAPDU's data field will
+          contain two bytes representing the size (short).
+          <BR>SW = 0x9000 indicates success.</DL>
+</DD>
+</DL>
+<HR>
+
+<A NAME="SetCommitBufferSize(short)"><!-- --></A><H3>
+SetCommitBufferSize</H3>
+<PRE>
+LPRESPONSEAPDU <B>SetCommitBufferSize</B>(short&nbsp;p_SizeInBytes)</PRE>
+<DL>
+<DD>Sets the iButtons CommitBufferSize.  The value passed in is rounded up
+ by the iButton to the nearest multiple of COMMIT_BUFFER_BYTES_PER_FIELD.<DD><DL>
+<DT><B>Parameters:</B><DD><CODE>p_SizeInBytes</CODE> - the new size of the commit buffer in bytes.<DT><B>Returns:</B><DD>The ResponseAPDU containing the Status Word of the response.
+          <BR>SW = 0x9000 indicates success.</DL>
+</DD>
+</DL>
+<HR>
+
+<A NAME="SetCommitBufferFields(short)"><!-- --></A><H3>
+SetCommitBufferFields</H3>
+<PRE>
+LPRESPONSEAPDU <B>SetCommitBufferFields</B>(short&nbsp;p_NumberOfFields)</PRE>
+<DL>
+<DD>Calculates the number of bytes that is needed to store p_NumberOfFields
+ fields in the commit buffer and resizes the buffer accordingly.<DD><DL>
+<DT><B>Parameters:</B><DD><CODE>p_NumberOfFields</CODE> - the new size of the commit buffer using
+                               number of fields.<DT><B>Returns:</B><DD>The ResponseAPDU containing the Status Word of the response.
+          <BR>SW = 0x9000 indicates success.</DL>
+</DD>
+</DL>
+<HR>
+
+<A NAME="GetATR()"><!-- --></A><H3>
+GetATR</H3>
+<PRE>
+LPRESPONSEAPDU <B>GetATR</B>()</PRE>
+<DL>
+<DD>Reads the Answer to Reset from the iButton, as defined in ISO7816-5<DD><DL>
+<DT><B>Returns:</B><DD>Response APDU that contains the iButton's ATR.
+          <BR>SW = 0x9000 indicates success.</DL>
+</DD>
+</DL>
+<HR>
+
+<A NAME="GetRealTimeClock()"><!-- --></A><H3>
+GetRealTimeClock</H3>
+<PRE>
+LPRESPONSEAPDU <B>GetRealTimeClock</B>()</PRE>
+<DL>
+<DD>Reads the Real Time Clock of the iButton.<DD><DL>
+<DT><B>Returns:</B><DD>The ResponseAPDU containing the value of the Real Time Clock.
+          <BR>SW = 0x9000 indicates success.</DL>
+</DD>
+</DL>
+<HR>
+
+<A NAME="GetRandomBytes(short)"><!-- --></A><H3>
+GetRandomBytes</H3>
+<PRE>
+LPRESPONSEAPDU <B>GetRandomBytes</B>(short&nbsp;p_NumBytes)</PRE>
+<DL>
+<DD>Reads random bytes from the iButton.  The maximum number of bytes that
+ can be reads is MAX_RECEIVE - APDU overhead.<DD><DL>
+<DT><B>Parameters:</B><DD><CODE>p_NumBytes</CODE> - the number of random bytes to read from the
+                         iButton.<DT><B>Returns:</B><DD>Response APDU that contains the requested number of random
+          bytes.
+          <BR>SW = 0x9000 indicates success.</DL>
+</DD>
+</DL>
+<HR>
+
+<A NAME="GetAIDByNumber(BYTE)"><!-- --></A><H3>
+GetAIDByNumber</H3>
+<PRE>
+LPRESPONSEAPDU <B>GetAIDByNumber</B>(BYTE&nbsp;p_AIDNum)</PRE>
+<DL>
+<DD>Returns the AID of the applet with the given number.  Each applet stored
+ on the iButton is assigned a number(0 - 15).  A directory structure of
+ applets on an iButton can be built by calling this method iteratively
+ with parameter values from 0 to 15.
+ <BR><B>NOTE:</B>  - AIDs are not guaranteed to be stored in contiguous locations.
+          Therefore an exaustive search through all numbers 0 - 15 is
+          required to enumerate all applets on the iButton.
+        - Revision 0.03 and below used 2 bytes for the AID length. Later
+          versions use 1 byte.<DD><DL>
+<DT><B>Parameters:</B><DD><CODE>p_AIDNum</CODE> - the number of the applet to retrieve the AID.<DT><B>Returns:</B><DD>Response APDU containing the AID of the applet requested.
+          <BR>SW = 0x9000 indicates success.</DL>
+</DD>
+</DL>
+<HR>
+
+<A NAME="GetLastJCREError()"><!-- --></A><H3>
+GetLastJCREError</H3>
+<PRE>
+LPRESPONSEAPDU <B>GetLastJCREError</B>()</PRE>
+<DL>
+<DD>If Error Reporting Mode is enabled, the error byte indicating the reason
+ for the last JCRE thrown error is returned. Otherwise an error is
+ returned in the SW (see: GetErrorReportMode,SetErrorReportMode).<DD><DL>
+<DT><B>Returns:</B><DD>The ResponseAPDU containing the Error Reporting mode.
+          <BR>SW = 0x9000 indicates success.
+ <BR><B>NOTE:</B> Requires Firmware Revision 1.00 or greater.</DL>
+</DD>
+</DL>
+<HR>
+
+<A NAME="GetAllAIDs()"><!-- --></A><H3>
+GetAllAIDs</H3>
+<PRE>
+LPRESPONSEAPDU <B>GetAllAIDs</B>()</PRE>
+<DL>
+<DD>Gets the list of all installed applets on the iButton.<DD><DL>
+<DT><B>Returns:</B><DD>the list of all applets installed on the iButton.
+          <BR>SW = 0x9000 indicates success.
+ <BR><B>NOTE:</B> Requires Firmware Revision 1.10 or greater.</DL>
+</DD>
+</DL>
+<HR>
+
+<A NAME="GetActivationTimeRemaining()"><!-- --></A><H3>
+GetActivationTimeRemaining</H3>
+<PRE>
+LPRESPONSEAPDU <B>GetActivationTimeRemaining</B>()</PRE>
+<DL>
+<DD>Gets the amount of time remaining before the iButton will become
+ inactive.<DD><DL>
+<DT><B>Returns:</B><DD>the amount of time remaining in the iButton's activation period.
+          <BR>SW = 0x9000 indicates success.
+ <BR><B>NOTE:</B> Requires Firmware Revision 1.10 or greater.</DL>
+</DD>
+</DL>
+<HR>
+
+<A NAME="GetVerifyLoadWithIdMode()"><!-- --></A><H3>
+GetVerifyLoadWithIdMode</H3>
+<PRE>
+LPRESPONSEAPDU <B>GetVerifyLoadWithIdMode</B>()</PRE>
+<DL>
+<DD>Gets the &quot;Verify Applet Load With Id&quot; mode of the iButton.
+ If the mode is 1, only applets that were signed with the
+ iButton's unique 64 bit Id will be allowed to load.<DD><DL>
+<DT><B>Returns:</B><DD>The ResponseAPDU containing the &quot;Verify Applet Load With Id&quot;
+ mode.
+          <BR>SW = 0x9000 indicates success.
+ <BR><B>NOTE:</B> Requires Firmware Revision 1.10 or greater.</DL>
+</DD>
+</DL>
+<HR>
+
+<A NAME="SetVerifyLoadWithIdMode(BYTE)"><!-- --></A><H3>
+SetVerifyLoadWithIdMode</H3>
+<PRE>
+LPRESPONSEAPDU <B>SetVerifyLoadWithIdMode</B>(BYTE&nbsp;p_Mode)</PRE>
+<DL>
+<DD>Sets the &quot;Verify Applet Load With Id&quot; mode of the iButton.
+ If the mode is 1, only applets that were signed with the
+ iButton's unique 64 bit Id will be allowed to load.<DD><DL>
+<DT><B>Parameters:</B><DD><CODE>p_Mode</CODE> - 1 - set the &quot;Verify Applet Load With Id&quot; mode.
+             0 - clear the &quot;Verify Applet Load With Id&quot; mode.<DT><B>Returns:</B><DD>The ResponseAPDU containing the Status Word of the response.
+          <BR>SW = 0x9000 indicates success.
+ <BR><B>NOTE:</B> Requires Firmware Revision 1.10 or greater.</DL>
+</DD>
+</DL>
+<HR>
+
+<A NAME="GetPORCount()"><!-- --></A><H3>
+GetPORCount</H3>
+<PRE>
+LPRESPONSEAPDU <B>GetPORCount</B>()</PRE>
+<DL>
+<DD>Gets the number of Power On Resets the device has experienced since the
+ last master erase.<DD><DL>
+<DT><B>Returns:</B><DD>Response APDU containing the number of POR since the last
+          master erase.
+          <BR>SW = 0x9000 indicates success.</DL>
+</DD>
+</DL>
+<HR>
+
+<A NAME="SetMasterPIN(LPJIBMASTERPIN)"><!-- --></A><H3>
+SetMasterPIN</H3>
+<PRE>
+LPRESPONSEAPDU <B>SetMasterPIN</B>(LPJIBMASTERPIN&nbsp;p_lpNewMasterPin)</PRE>
+<DL>
+<DD>Sets the master PIN of the iButton. A call to SetPIN with the old PIN
+ is required before this method can be called. The PIN to be set is
+ passed in.<DD><DL>
+<DT><B>Parameters:</B><DD><CODE>p_lpNewMasterPin</CODE> - the new PIN for the iButton<DT><B>Returns:</B><DD>The ResponseAPDU containing the Status Word of the response.
+          <BR>SW = 0x9000 indicates success.</DL>
+</DD>
+</DL>
+<HR>
+
+<A NAME="DeleteSelectedApplet()"><!-- --></A><H3>
+DeleteSelectedApplet</H3>
+<PRE>
+LPRESPONSEAPDU <B>DeleteSelectedApplet</B>()</PRE>
+<DL>
+<DD>Deletes the currently selected Applet.<DD><DL>
+<DT><B>Returns:</B><DD>The ResponseAPDU containing the Status Word of the response.
+          <BR>SW = 0x9000 indicates success.</DL>
+</DD>
+</DL>
+<HR>
+
+<A NAME="DeleteAppletByNumber(BYTE)"><!-- --></A><H3>
+DeleteAppletByNumber</H3>
+<PRE>
+LPRESPONSEAPDU <B>DeleteAppletByNumber</B>(BYTE&nbsp;p_AppletNumber)</PRE>
+<DL>
+<DD>Deletes Applet number p_AppletNumber.<DD><DL>
+<DT><B>Parameters:</B><DD><CODE>p_AppletNumber</CODE> - number of the applet to be deleted.<DT><B>Returns:</B><DD>The ResponseAPDU containing the Status Word of the response.
+          <BR>SW = 0x9000 indicates success.</DL>
+</DD>
+</DL>
+<HR>
+
+<A NAME="DeleteAppletByAID(LPAID)"><!-- --></A><H3>
+DeleteAppletByAID</H3>
+<PRE>
+LPRESPONSEAPDU <B>DeleteAppletByAID</B>(LPAID&nbsp;p_lpAID)</PRE>
+<DL>
+<DD>Deletes the Applet with AID p_lpAID.<DD><DL>
+<DT><B>Parameters:</B><DD><CODE>p_lpAID</CODE> - AID of the applet to be deleted.<DT><B>Returns:</B><DD>The ResponseAPDU containing the Status Word of the response.
+          <BR>SW = 0x9000 indicates success.</DL>
+</DD>
+</DL>
+<HR>
+
+<A NAME="LoadApplet(LPBYTE, DWORD, LPAID)"><!-- --></A><H3>
+LoadApplet</H3>
+<PRE>
+LPRESPONSEAPDU <B>LoadApplet</B>(LPBYTE&nbsp;p_lpAppletBuffer,
+                          DWORD&nbsp;p_AppletLen,
+                          LPAID&nbsp;p_lpAID)</PRE>
+<DL>
+<DD>Loads the applet stored in p_lpAppletBuffer.<DD><DL>
+<DT><B>Parameters:</B><DD><CODE>p_lpAppletBuffer</CODE> - Buffer containing the applet (ASSUMPTION:
+                                Buffer was previously loaded with the
+                                contents of a .JiB &quot;dot JiB&quot; file).<DD><CODE>p_AppletLen</CODE> - Length of the applet in the buffer.<DD><CODE>p_lpAID</CODE> - Pointer the the applet's AID.<DT><B>Returns:</B><DD>The ResponseAPDU containing the Status Word of the response.
+          <BR>SW = 0x9000 indicates success.</DL>
+</DD>
+</DL>
+<HR>
+
+<A NAME="ReleaseJiBSearchList()"><!-- --></A><H3>
+ReleaseJiBSearchList</H3>
+<PRE>
+static void <B>ReleaseJiBSearchList</B>()</PRE>
+<DL>
+<DD>Releases search list memory.</DL>
+<HR>
+
+<A NAME="SetJiBSearchParams(BYTE, LPBYTE[])"><!-- --></A><H3>
+SetJiBSearchParams</H3>
+<PRE>
+void <B>SetJiBSearchParams</B>(BYTE&nbsp;p_SPNum,
+                        LPBYTE[]&nbsp;p_lpDevName)</PRE>
+<DL>
+<DD>Set parameters for JiB search.<DD><DL>
+<DT><B>Parameters:</B><DD><CODE>p_SPNum</CODE> - number of serial ports in the search list.<DD><CODE>p_lpDevName</CODE> - pointer to a list of serial port device names.</DL>
+</DD>
+</DL>
+<HR>
+
+<A NAME="ReleaseJiBAPIResources()"><!-- --></A><H3>
+ReleaseJiBAPIResources</H3>
+<PRE>
+void <B>ReleaseJiBAPIResources</B>()</PRE>
+<DL>
+<DD>Releases API resources -
+       Should be called just before an application terminates.</DL>
+<HR>
+
+<A NAME="FindJiBs(LPBYTE)"><!-- --></A><H3>
+FindJiBs</H3>
+<PRE>
+LPBYTE <B>FindJiBs</B>(LPBYTE&nbsp;p_lpJiBNum)</PRE>
+<DL>
+<DD>Find all JiBs on all parallel ports and those serial ports indicated in
+ the call to SetJiBSearchParams.<DD><DL>
+<DT><B>Parameters:</B><DD><CODE>p_lpJiBNum</CODE> - pointer to the number of buttons found.<DT><B>Returns:</B><DD>pointer to an array containing contiguous 8 byte iButton Ids.</DL>
+</DD>
+</DL>
+<HR>
+
+<A NAME="SelectJiB(LPBYTE)"><!-- --></A><H3>
+SelectJiB</H3>
+<PRE>
+BOOL <B>SelectJiB</B>(LPBYTE&nbsp;lpJiBRomPtr)</PRE>
+<DL>
+<DD>Selects the JiB whose ROM matches the data pointed to by
+ lpJiBRomPtr.<DD><DL>
+<DT><B>Parameters:</B><DD><CODE>lpJiBRomPtr</CODE> - pointer to the iButton Id that is to be selected.<DT><B>Returns:</B><DD>TRUE if the iButton is selected.</DL>
+</DD>
+</DL>
+<HR>
+
+<A NAME="GetJiBError()"><!-- --></A><H3>
+GetJiBError</H3>
+<PRE>
+WORD <B>GetJiBError</B>()</PRE>
+<DL>
+<DD>Gets last error code.<DD><DL>
+<DT><B>Returns:</B><DD>returns the last error reported.</DL>
+</DD>
+</DL>
+<!-- ========= END OF CLASS DATA ========= -->
+<HR>
+Notes:
+<UL>
+<LI>CTestJiBAPIDlg.OnSelendokCommandCombo() in [JIBKIT_ROOT]/C-API/Win32/jibapi/TestJiBAPI/TestJiBAPIDlg.cpp makes use of most of these functions and may be used as a reference. 
+<LI>Structures are defined in jibapi.h.
+</UL>
+</BODY>
+</HTML>

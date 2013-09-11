@@ -1,0 +1,210 @@
+<!DOCTYPE HTML PUBLIC "-//IETF//DTD HTML//EN">
+<html>
+
+<head>
+<meta http-equiv="Content-Type"
+content="text/html; charset=iso-8859-1">
+<meta name="GENERATOR" content="Microsoft FrontPage 2.0">
+<title>Dallas Semiconductor Corp iButton: New 1-Wire API for Java Information</title>
+<!-- Title of document is as follows:
+Dallas Semiconductor Corp iButton: JiBKit FAQ Sheet
+NOTE THAT THE <TITLE> AREA IS THE ONLY PLACE IBUTTON IS NOT UNDERLINED! -->
+</head>
+
+<body bgcolor="#FFFFFF">
+
+<h2><img src="ibidehelpicon.jpg" align="right"
+hspace="0" width="200" height="101"></h2>
+
+<hr>
+
+<h2>The New 1-Wire API for Java<font size="1"><sup>TM</sup></font></h2>
+
+<hr>
+
+<!-- ---------------------beginning of the document -->
+
+<p>
+With the 2.0 release of <u>i</u>B-IDE, the API for communicating with 
+Java Powered <u>i</u>Buttons has changed.  Dallas Semiconductor has released the 
+<a href="OWAPI.html">1-Wire API</a> for communicating with all 1-Wire devices,
+including not only the Java Powered <u>i</u>Button but also other devices such as
+the DS1996 Memory <u>i</u>Button and the DS2890 Digital Potentiometer.  See
+<a href="OWAPI.html">the 1-Wire API information page</a> for more 
+information about this API.
+</p>
+
+<ul>
+  <li><a href="#removed">    Classes removed from the API</a>
+  <li><a href="#deprecated"> Classes deprecated in the API</a>
+  <li><a href="#properties"> Changes to the OpenCard Properties file</a>
+</ul>
+
+
+<hr>
+<a name="removed"></a>
+<h2>Classes removed from the API</h2>
+
+<p>
+Several classes from the old API no longer exist.  Most applications are probably not using these classes.  These classes are:
+<ul>
+  <li>com.ibutton.Access
+  <li>com.ibutton.iBGenericProducer
+  <li>com.ibutton.iButton
+  <li>com.ibutton.iButtonFactory
+  <li>com.ibutton.iButtonProducer
+  <li>com.ibutton.iBx16JiBProducer
+  <li>com.ibutton.iBx16Producer
+  <li>com.ibutton.LegacyAdapter
+  <li>com.ibutton.PortAdapter
+  <li>com.ibutton.SerialAdapter
+  <li>com.ibutton.cib.CibButton
+  <li>com.ibutton.cib.CibCommandInterpreterException
+  <li>com.ibutton.cib.CibCommandPacket
+  <li>com.ibutton.cib.CibCommandTypeException
+  <li>com.ibutton.cib.CibCommunicationException
+  <li>com.ibutton.cib.CibGroup
+  <li>com.ibutton.cib.CibKeySet
+  <li>com.ibutton.cib.CibMessage
+  <li>com.ibutton.cib.CibObject
+  <li>com.ibutton.cib.CibPIN
+  <li>com.ibutton.cib.CibReturnPacket
+  <li>com.ibutton.cib.CibScriptException
+  <li>com.ibutton.cib.CibScriptInterpreterException
+  <li>com.ibutton.ifd.JibAPI
+  <li>com.ibutton.ifd.JibEvent
+  <li>com.ibutton.ifd.JibListener
+  <li>com.ibutton.ifd.JibUtil
+  <li>com.ibutton.ifd.dallasifd.DallasChannel
+  <li>com.ibutton.ifd.dallasifd.DallasIFDDriver
+  <li>com.ibutton.ifd.dallasifd.DallasIFDDriverBeanInfo
+  <li>com.ibutton.ifd.dallasifd.PortPropertyEditor
+  <li>com.ibutton.jib.CommandAPDU
+  <li>com.ibutton.jib.JibButton
+  <li>com.ibutton.jib.JibCommandInterpreterException
+  <li>com.ibutton.jib.JibCommandPacket
+  <li>com.ibutton.jib.JibMasterPIN
+  <li>com.ibutton.jib.JibPIN
+  <li>com.ibutton.jib.JibReturnPacket
+  <li>com.ibutton.jib.ResponseAPDU
+  <li>com.ibutton.jib.utils.ExceptionReason
+  <li>com.ibutton.jib.utils.ListAID
+  <li>com.ibutton.jib.utils.ListAIDTester
+  <li>com.ibutton.oc.terminal.jib.iButtonCardTerminalTester
+  <li>com.ibutton.oc.terminal.jib.iButtonDriver
+  <li>com.ibutton.oc.terminal.jib.iButtonDriverException
+  <li>com.ibutton.oc.terminal.jib.EventTester
+</ul>
+
+<hr>
+<a name="deprecated"></a>
+<h2>Deprecated classes in the API</h2>
+
+The following classes are likely to be used in legacy 
+applications built by <u>i</u>B-IDE versions 1.10 and prior.  
+These classes are now deprecated, and can be found in the 
+jar file <b>deprecated_jibapi.jar</b>.  Applications built by
+older versions of <u>i</u>B-IDE will probably function with the
+new drivers with little or no change, though it is recommended that 
+host programs be updated to use either the new 1-Wire API code
+or pure OpenCard code.  The old file <b>jibapi.jar</b> should 
+be removed from your classpath in favor of the <b>OneWire.jar</b>
+and <b>deprecated_jibapi.jar</b>.
+<ul>
+  <li>com.ibutton.iButtonAdapterInUseException
+  <li>com.ibutton.oc.CommandAPDU
+  <li>com.ibutton.oc.JibAPI
+  <li>com.ibutton.oc.JibEvent
+  <li>com.ibutton.oc.JibListener
+  <li>com.ibutton.oc.JibMultiEvent
+  <li>com.ibutton.oc.JibMultiFactory
+  <li>com.ibutton.oc.JibMultiListener
+  <li>com.ibutton.oc.JibUtil
+  <li>com.ibutton.oc.emulator.AbstractIBVM
+  <li>com.ibutton.oc.emulator.AbstractStatus
+  <li>com.ibutton.oc.emulator.InterruptedExecution
+  <li>com.ibutton.oc.emulator.States
+  <li>com.ibutton.oc.terminal.jib.iButtonCardTerminal
+  <li>com.ibutton.oc.terminal.jib.iButtonCardTerminalFactory
+</ul>
+
+<hr>
+<a name="properties"></a>
+<h2>Changes to the opencard.properties file</h2>
+
+The <b>opencard.properties</b> file is used by the OpenCard API to select 
+a port for communication with <u>i</u>Buttons.  <u>i</u>B-IDE 1.10 and previous
+versions created this file with entries that looked like the following:
+<code><pre>
+#Only the last uncommented line will be used to search for iButtons.
+#  Uncomment the next line to search COM1 using pure java code
+#OpenCard.terminals=com.ibutton.oc.terminal.jib.iButtonCardTerminalFactory|iButtonAdapter|iBUTTON_PORT_TYPE_SERIAL|COM1
+#  Uncomment the next line to search COM2 using pure java code
+#OpenCard.terminals=com.ibutton.oc.terminal.jib.iButtonCardTerminalFactory|iButtonAdapter|iBUTTON_PORT_TYPE_SERIAL|COM2
+#  Uncomment the next line to search COM1 using native code
+#OpenCard.terminals=com.ibutton.oc.terminal.jib.iButtonCardTerminalFactory|iButtonAdapter|iBUTTON_PORT_TYPE_LEGACY_SERIAL|COM1
+#  This line will search the COM2 for iButtons.
+OpenCard.terminals=com.ibutton.oc.terminal.jib.iButtonCardTerminalFactory|iButtonAdapter|iBUTTON_PORT_TYPE_LEGACY_SERIAL|COM2
+#  Uncomment the next line to search LPT1 using native code
+#OpenCard.terminals=com.ibutton.oc.terminal.jib.iButtonCardTerminalFactory|iButtonAdapter|iBUTTON_PORT_TYPE_LEGACY_PARALLEL|LPT1
+#  Uncomment the next line to search LPT2 using native code
+#OpenCard.terminals=com.ibutton.oc.terminal.jib.iButtonCardTerminalFactory|iButtonAdapter|iBUTTON_PORT_TYPE_LEGACY_PARALLEL|LPT2
+</pre></code>
+
+While properties files of this style will still be supported, they are 
+supported through the deprecated API (note that the class <code>
+com.ibutton.oc.terminal.jib.iButtonCardTerminalFactory</code> is 
+deprecated).  The new, preferred format of the <b>opencard.properties</b>
+file is:
+
+<code><pre>
+#Only the last uncommented line will be used to search for iButtons.
+#  Uncomment the next line to search COM1 using pure java code
+#OpenCard.terminals=com.dalsemi.onewire.jib.terminal.JiBCardTerminalFactory|OneWireAdapter|ONEWIRE_PORT_TYPE_SERIAL|COM1
+#  Uncomment the next line to search COM2 using pure java code
+OpenCard.terminals=com.dalsemi.onewire.jib.terminal.JiBCardTerminalFactory|OneWireAdapter|ONEWIRE_PORT_TYPE_SERIAL|COM2
+#  Uncomment the next line to search COM1 using native code
+#OpenCard.terminals=com.dalsemi.onewire.jib.terminal.JiBCardTerminalFactory|OneWireAdapter|ONEWIRE_PORT_TYPE_LEGACY_SERIAL|COM1
+#  Uncomment the next line to search COM2 using native code
+#OpenCard.terminals=com.dalsemi.onewire.jib.terminal.JiBCardTerminalFactory|OneWireAdapter|ONEWIRE_PORT_TYPE_LEGACY_SERIAL|COM2
+#  This line will search the LPT1 for iButtons.
+#OpenCard.terminals=com.dalsemi.onewire.jib.terminal.JiBCardTerminalFactory|OneWireAdapter|ONEWIRE_PORT_TYPE_LEGACY_PARALLEL|LPT1
+#  Uncomment the next line to search LPT2 using native code
+#OpenCard.terminals=com.dalsemi.onewire.jib.terminal.JiBCardTerminalFactory|OneWireAdapter|ONEWIRE_PORT_TYPE_LEGACY_PARALLEL|LPT2
+</pre></code>
+
+Note that with the addition of USB support, the following lines 
+would be recognized to select USB communications with the 
+<u>i</u>Button:
+<pre><code>
+#  This line will search USB slot 1 for iButtons.
+#OpenCard.terminals=com.dalsemi.onewire.jib.terminal.JiBCardTerminalFactory|OneWireAdapter|ONEWIRE_PORT_TYPE_LEGACY_USB|USB1
+#  This line will search USB slot 2 for iButtons.
+#OpenCard.terminals=com.dalsemi.onewire.jib.terminal.JiBCardTerminalFactory|OneWireAdapter|ONEWIRE_PORT_TYPE_LEGACY_USB|USB2
+</code></pre>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<!-- ----------------------------end of the document -->
+
+<p><img src="Image3.gif" width="536" height="5"></p>
+
+<p><font size="2" face="Arial, helvetica"><b><u>i</u></b><b>Button
+Homepage: </b></font><a href="http://www.ibutton.com/"><font
+size="2" face="Arial, helvetica"><b>http://www.ibutton.com/</b></font></a><font
+size="2" face="Arial, helvetica"><b> </b></font></p>
+
+<p><img src="dsc.jpg" width="96" height="39"></p>
+</body>
+</html>
