@@ -96,6 +96,9 @@
 #include <string.h>
 #include <signal.h>
 
+#ifdef SMALL_MEMORY_TARGET
+#include <picoos.h>
+#endif
 #include "ds2480.h"
 #include "ownet.h"
 
@@ -416,6 +419,9 @@ long msGettick(void)
 //
 void msDelay(int len)
 {
+#ifdef SMALL_MEMORY_TARGET
+   posTaskSleep(MS(len));
+#else
    struct timespec s;              // Set aside memory space on the stack
    struct timespec left;
    sigset_t set;
@@ -431,6 +437,7 @@ void msDelay(int len)
      s = left;
 
    sigprocmask(SIG_SETMASK, &save, NULL);
+#endif
 }
 
 static void sigBlock(sigset_t* save)
