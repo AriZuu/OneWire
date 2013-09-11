@@ -225,7 +225,7 @@ extern int owHasErrors(void);
    //Prints the stack out to the given file.
    #define OWERROR_DUMP(fileno) while(owHasErrors()) owPrintErrorMsg(fileno);
    extern void owPrintErrorMsg(FILE *);
-   extern void owPrintErrorMsgStd();
+   extern void owPrintErrorMsgStd(void);
    extern char *owGetErrorMsg(int);
 #endif
 

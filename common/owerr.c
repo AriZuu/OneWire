@@ -80,7 +80,7 @@ int owHasErrors(void);
 #endif
 #ifndef SMALL_MEMORY_TARGET
    void owPrintErrorMsg(FILE *);
-   void owPrintErrorMsgStd();
+   void owPrintErrorMsgStd(void);
    char *owGetErrorMsg(int);
 #endif
 

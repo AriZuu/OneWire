@@ -94,6 +94,7 @@
 #include <errno.h>
 #include <sys/time.h>
 #include <string.h>
+#include <signal.h>
 
 #include "ds2480.h"
 #include "ownet.h"
@@ -103,6 +104,15 @@ int fd[MAX_PORTNUM];
 SMALLINT fd_init;
 struct termios origterm;
 
+SMALLINT _OpenCOM(int portnum, char *port_zstr);
+void _CloseCOM(int portnum);
+SMALLINT _WriteCOM(int portnum, int outlen, uchar *outbuf);
+int _ReadCOM(int portnum, int inlen, uchar *inbuf);
+void _FlushCOM(int portnum);
+void _BreakCOM(int portnum);
+void _SetBaudCOM(int portnum, uchar new_baud);
+static void sigBlock(sigset_t* old);
+static void sigRestore(sigset_t* old);
 
 //---------------------------------------------------------------------------
 // Attempt to open a com port.  Keep the handle in ComID.
@@ -158,7 +168,7 @@ int OpenCOMEx(char *port_zstr)
 // Returns: TRUE(1)  - success, COM port opened
 //          FALSE(0) - failure, could not open specified port
 //
-SMALLINT OpenCOM(int portnum, char *port_zstr)
+SMALLINT _OpenCOM(int portnum, char *port_zstr)
 {
    struct termios t;               // see man termios - declared as above
    int rc;
@@ -232,7 +242,7 @@ SMALLINT OpenCOM(int portnum, char *port_zstr)
 // 'portnum'  - number 0 to MAX_PORTNUM-1.  This number was provided to
 //              OpenCOM to indicate the port number.
 //
-void CloseCOM(int portnum)
+void _CloseCOM(int portnum)
 {
    // restore tty settings
    tcsetattr(fd[portnum], TCSAFLUSH, &origterm);
@@ -251,7 +261,7 @@ void CloseCOM(int portnum)
 //               all other functions in this library.
 // Returns 1 for success and 0 for failure
 //
-SMALLINT WriteCOM(int portnum, int outlen, uchar *outbuf)
+SMALLINT _WriteCOM(int portnum, int outlen, uchar *outbuf)
 {
    long count = outlen;
    int i = write(fd[portnum], outbuf, outlen);
@@ -273,7 +283,7 @@ SMALLINT WriteCOM(int portnum, int outlen, uchar *outbuf)
 // Returns:  TRUE(1)  - success
 //           FALSE(0) - failure
 //
-int ReadCOM(int portnum, int inlen, uchar *inbuf)
+int _ReadCOM(int portnum, int inlen, uchar *inbuf)
 {
    fd_set         filedescr;
    struct timeval tval;
@@ -311,7 +321,7 @@ int ReadCOM(int portnum, int inlen, uchar *inbuf)
 // 'portnum'  - number 0 to MAX_PORTNUM-1.  This number was provided to
 //              OpenCOM to indicate the port number.
 //
-void FlushCOM(int portnum)
+void _FlushCOM(int portnum)
 {
    tcflush(fd[portnum], TCIOFLUSH);
 }
@@ -324,7 +334,7 @@ void FlushCOM(int portnum)
 // 'portnum'  - number 0 to MAX_PORTNUM-1.  This number was provided to
 //              OpenCOM to indicate the port number.
 //
-void BreakCOM(int portnum)
+void _BreakCOM(int portnum)
 {
    int duration = 0;              // see man termios break may be
    tcsendbreak(fd[portnum], duration);     // too long
@@ -342,11 +352,11 @@ void BreakCOM(int portnum)
 // PARMSET_57600    0x04
 // PARMSET_115200   0x06
 //
-void SetBaudCOM(int portnum, uchar new_baud)
+void _SetBaudCOM(int portnum, uchar new_baud)
 {
    struct termios t;
    int rc;
-   speed_t baud;
+   speed_t baud = B9600;
 
    // read the attribute structure
    rc = tcgetattr(fd[portnum], &t);
@@ -408,10 +418,101 @@ void msDelay(int len)
 {
    struct timespec s;              // Set aside memory space on the stack
    struct timespec left;
+   sigset_t set;
+   sigset_t save;
+ 
+   sigemptyset(&set);
+   sigaddset(&set, SIGALRM);
+   sigprocmask(SIG_UNBLOCK, &set, &save);
 
    s.tv_sec = len / 1000;
    s.tv_nsec = (len - (s.tv_sec * 1000)) * 1000000;
    while (nanosleep(&s, &left) == -1 && errno == EINTR)
      s = left;
+
+   sigprocmask(SIG_SETMASK, &save, NULL);
+}
+
+static void sigBlock(sigset_t* save)
+{
+  sigset_t set;
+ 
+  sigemptyset(&set);
+  sigaddset(&set, SIGALRM);
+  sigprocmask(SIG_BLOCK, &set, save);
+}
+
+static void sigRestore(sigset_t* old)
+{
+  sigprocmask(SIG_SETMASK, old, NULL);
+}
+
+SMALLINT OpenCOM(int portnum, char *port_zstr)
+{
+   SMALLINT ret;
+   sigset_t save;
+
+   sigBlock(&save);
+   ret = _OpenCOM(portnum, port_zstr);
+   sigRestore(&save);
+   return ret;
+}
+
+void CloseCOM(int portnum)
+{
+   sigset_t save;
+
+   sigBlock(&save);
+   _CloseCOM(portnum);
+   sigRestore(&save);
+}
+
+void FlushCOM(int portnum)
+{
+   sigset_t save;
+
+   sigBlock(&save);
+   _FlushCOM(portnum);
+   sigRestore(&save);
+}
+
+SMALLINT WriteCOM(int portnum, int outlen, uchar *outbuf)
+{
+   SMALLINT ret;
+   sigset_t save;
+
+   sigBlock(&save);
+   ret = _WriteCOM(portnum, outlen, outbuf);
+   sigRestore(&save);
+   return ret;
+}
+
+int ReadCOM(int portnum, int inlen, uchar *inbuf)
+{
+   int ret;
+   sigset_t save;
+
+   sigBlock(&save);
+   ret = _ReadCOM(portnum, inlen, inbuf);
+   sigRestore(&save);
+   return ret;
+}
+
+void BreakCOM(int portnum)
+{
+   sigset_t save;
+
+   sigBlock(&save);
+   _BreakCOM(portnum);
+   sigRestore(&save);
+}
+
+void SetBaudCOM(int portnum, uchar new_baud)
+{
+   sigset_t save;
+
+   sigBlock(&save);
+   _SetBaudCOM(portnum, new_baud);
+   sigRestore(&save);
 }
 

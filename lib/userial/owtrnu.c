@@ -277,7 +277,7 @@ SMALLINT owWritePacketStd(int portnum, int start_page, uchar *write_buf,
 {
    uchar construct_buffer[32];
    uchar i,buffer_cnt=0,start_address,do_access;
-   ushort lastcrc16;
+   ushort lastcrc16 = 0;
 
    // check to see if data too long to fit on device
    if (write_len > 29)
