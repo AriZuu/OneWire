@@ -278,24 +278,19 @@ int ReadCOM(int portnum, int inlen, uchar *inbuf)
    fd_set         filedescr;
    struct timeval tval;
    int            cnt;
-   int  	  sret;
 
    // loop to wait until each byte is available and read it
    for (cnt = 0; cnt < inlen; cnt++)
    {
       // set a descriptor to wait for a character available
-      do {
-         FD_ZERO(&filedescr);
-         FD_SET(fd[portnum],&filedescr);
-         // set timeout to 10ms
-         tval.tv_sec = 0;
-         tval.tv_usec = 10000;
+      FD_ZERO(&filedescr);
+      FD_SET(fd[portnum],&filedescr);
+      // set timeout to 10ms
+      tval.tv_sec = 0;
+      tval.tv_usec = 10000;
 
       // if byte available read or return bytes read
-         sret = select(fd[portnum]+1,&filedescr,NULL,NULL,&tval);
-      } while (sret == -1 && errno == EINTR);
-
-      if (sret != 0)
+      if (select(fd[portnum]+1,&filedescr,NULL,NULL,&tval) != 0)
       {
          if (read(fd[portnum],&inbuf[cnt],1) != 1)
             return cnt;
