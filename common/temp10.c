@@ -96,6 +96,22 @@ int ReadTemperature(int portnum, uchar *SerialNum, float *Temp)
                // verify CRC8 is correct
                if (lastcrc8 == 0x00)
                {
+                 if (SerialNum[0] == 0x28) {
+
+                   tsht = send_block[1];
+                   tsht |= send_block[2] << 8;
+
+                   if (send_block[2] & 0x80) {
+
+                     tsht ^= 0xffff;
+                     tsht++;
+                     tsht = -tsht;
+
+                   }
+
+                   tmp = tsht / 16.0;
+                 }
+                 else {
                   // calculate the high-res temperature
                   tsht = send_block[1]/2;
                   if (send_block[2] & 0x01)
@@ -109,6 +125,7 @@ int ReadTemperature(int portnum, uchar *SerialNum, float *Temp)
                      return FALSE;
                   else
                      tmp = tmp - (float)0.25 + (cpc - cr)/cpc;
+                 }
 
                   *Temp = tmp;
                   // success
